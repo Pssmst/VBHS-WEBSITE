@@ -1,0 +1,24 @@
+[ ] Ensure classes must be placed AFTER their prerequisites (make cells above, below, and behind prerequisite classes unavailable)
+[ ] Make sure to account for double-blocked courses by seeping down into a free elective course and coloring the tile-outline a different color to refer to the double-blocked courses
+[ ] Find a way to set the searchContainer to fixed without breaking it
+[ ] When placing certain subject courses, change unavailable cells that are above and below the available cells to a new class name called .flexCourse, which are have a yellow background instead of red. upon placing a course in a flexCourse cell, it will function as a normal course, but have a yellow border and a little tag saying “Flex Class” somewhere on it
+[ ] To fix the weird sizing problem for single-width table columns, try hiding the table in a different way when needing to?
+[ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
+[ ] Above the table can go a “took PAP Algebra 1 in 8th grade” checkbox that changes a lot of stuff, including the course pathways tab
+[ ] Find a way to tackle the Human Body Systems rule lmao
+[ ] Provide information about classes when hovering over them in the course pathways tab
+[ ] Overhaul line colors to only be random upon startup, so the user doesn’t get lost in a maze of faulty color-association
+
+THIRD TAB: STAFF AND SCHOOL
+
+[ ] Dynamically add and display new properties to the course catalog courses called “teachers” and “room”
+[ ] Create “teacher” (textbox) and “room” (dropdown) search filters
+[ ] Webscrape photos of staff members from vbhs website using their names from the csv and display their photos when prompted (also display all of them with emails dynamically added using their names in another div probably at the bottom which can be scrolled through (maybe even searched!)
+[ ] Also include their course schedules, also taken from the csv file
+[ ] Include map of floor 1 and floor 2 of school (made up of several images of the whole map with one room in red; repeat for each room, keep in a “rooms folder,” then display the images dynamically)
+
+[ ] Rooms light up in red when:
+    [ ] The user hovers over the room on the map
+    [ ] The user hovers over a course in the course catalog (highlights what room that class is in)
+
+[ ] When hovering over a room, display what course it contains and what teacher belongs in it somewhere on the screen idk

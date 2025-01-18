@@ -1,0 +1,573 @@
+body {
+    background-color: rgb(24, 24, 24);
+    font-family: Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    margin: 0;
+    overflow-y:hidden;
+}
+
+header {
+    margin-bottom: 10px;
+}
+
+button {
+    cursor: pointer;
+}
+
+input.checkbox {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ANIMATIONS /////////////////////////////////////////////////////////////////////////////////*/
+
+@keyframes outlineFlashGray {
+    0% {
+        background-color: transparent;
+        outline: 1px solid rgb(90, 90, 90);
+    }
+}
+
+@keyframes outlineFlashGreen {
+    0% {
+        background-color: transparent;
+        outline: 1px solid rgb(0, 255, 23);
+    }
+}
+
+@keyframes outlineFlashWhite {
+    0% {
+        background-color: transparent;
+        outline: 1px solid rgb(255, 255, 255);
+    }
+}
+
+@keyframes rotateStar {
+    100% {
+        transform: rotate(360deg); /* Rotate to 360 degrees */
+    }
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes flashGreen {
+    0% {
+        outline: 10px solid rgb(6, 95, 18);
+        background-color: rgb(6, 95, 18);
+    }
+}
+
+@keyframes flashPurple {
+    0% {
+        outline: 10px solid rgb(133, 54, 161);
+        background-color: rgb(134, 59, 161);
+    }
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#scheduleContainer {
+    position: fixed;
+    width: 66%;
+    height: 100%;
+    left: 1%;
+    
+    background-color: rgb(32, 32, 32);
+    box-shadow: inset 0 0 9px black;
+    border: 4px solid rgb(0, 102, 36);
+    border-radius: 6px;
+    padding: 2vh;
+}
+
+#toggleScheduleButtonContainer {
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+    top: -24px;
+    gap: 5px;
+}
+.toggleScheduleButton {
+    width: 150px;
+    height: 24px;
+}
+
+/* table ***************************************************************************/
+#table {
+    width: 100%;
+    border: 1px solid transparent;
+    table-layout: fixed; /* Ensures columns maintain their fixed width */
+}
+
+th, td {
+    position: relative;
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease;
+
+    width: 10%; /* Set a fixed width for each column */
+    height: 5vh; /* Ensures columns are of equal width */
+
+    border: 1px solid rgb(24, 24, 24);
+    border-radius: 5px;
+    outline: 0px solid transparent;
+
+    text-align: center;
+    padding: 8px;
+    z-index: 1; /* Layer the td above other elements */
+}
+
+th {
+    background-color: rgb(50, 50, 50);
+}
+
+th:hover {
+    animation: outlineFlashWhite .3s alternate;
+    background-color: rgba(150, 150, 150, .5);
+    outline: 6px solid rgba(150, 150, 150, .5);
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    z-index: 10; /* Ensure hover state is above everything else */
+}
+
+td {
+    font-size: .8em;
+    background-color: rgb(32, 32, 32);
+}
+td:hover {
+    animation: outlineFlashGray .3s alternate;
+    background-color: rgba(100, 100, 100, .5);
+    outline: 6px solid rgba(100, 100, 100, .5);
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    z-index: 10; /* Ensure hover state is above everything else */
+}
+td.occupied {
+    animation: flashGreen .4s ease-out;
+    background-color: rgb(42, 42, 42);
+}
+td.honors {
+    animation: flashPurple .45s ease-out;
+    background-color: rgb(71, 44, 75);
+}
+td.honors:hover {
+    background-color: rgba(147, 67, 158, .5);
+    outline: 6px solid rgba(117, 67, 158, 0.5);
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    z-index: 10; /* Ensure hover state is above everything else */
+}
+td.CONC {
+    background-image: linear-gradient(to bottom right, rgb(130, 17, 148), rgb(0, 225, 255));
+}
+td.advancedPlacement {
+    background-image: linear-gradient(to bottom right, rgb(130, 17, 148), rgb(255, 102, 0));
+}
+td.unavailable {
+    background-color: rgb(34, 16, 16);
+    background-image: linear-gradient(to bottom right, transparent, transparent);
+}
+
+#table td:not(:first-child), #table th:not(:first-child) {
+    width: 11.1111%; /* Ensures columns are of equal width */
+    overflow: hidden; /* Prevents overflowing text */
+    text-overflow: ellipsis; /* Adds "..." if text overflows */
+}
+
+/* Course Pathways ***************************************************************************/
+
+#pathwayContainer {
+    position: relative;
+    display: none;
+    width: 100%;
+}
+
+#pathwayVisualizer {
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    border-radius: 10px;
+    width: 100%;
+    height: 70vh;
+
+    margin: 0;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#pathwayData {
+    display: block;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    gap: 3px;
+    height: 100%;
+
+    border-left: 3px dashed rgba(255, 255, 255, 0.25);
+    border-right: 3px dashed rgba(255, 255, 255, 0.25);
+}
+
+.column:empty {
+    border: 0px solid transparent;
+}
+
+.tile {
+    background-color: #686868;
+    border-radius: 8px;
+    width: 100px;
+    height: 35px;
+    margin: 4px;
+    font-size: .6em;
+
+    /* Centers the text vertically and horizontally */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center; 
+
+    padding: 3px;
+    overflow-x: wrap;
+
+    z-index: 1000;
+}
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.line {
+    stroke-width: 1.5;
+    fill: none;
+}
+
+#survey {
+    top: 50px;
+    position: relative;
+}
+
+
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#classContainer {
+    position: absolute;
+    height: 100%;
+
+    right: 1%;
+    width: 29%;
+
+    overflow-y: scroll;
+}
+
+ul {
+    margin-left: 20px;
+}
+
+/* h1 ***************************************************************************/
+.subjectContainer {
+    background-color: rgb(32, 32, 32);
+    box-shadow: inset 0 0 9px black;
+    border: 4px solid rgb(0, 102, 36);
+    border-radius: 6px;
+
+    padding: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.subjectHeader {
+    margin-top: 7px;
+    margin-bottom: 10px;
+}
+
+/* h2 ***************************************************************************/
+.offeringHeader {
+    display: inline-block;
+    color: rgb(0, 255, 13);
+    padding-left: 36px;
+
+    outline: 0px solid transparent;
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 10px;
+    
+}
+.offeringHeader::before {
+    color: rgb(0, 255, 13);
+    content: var(--icon, "⮟");
+    position: absolute;
+    margin-left: -32px;
+    margin-top: -3px;
+}
+.offeringHeader:hover {
+    background-color: rgb(50, 50, 50);
+    outline: 8px solid rgb(50, 50, 50);
+    animation: outlineFlashGreen .3s alternate;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+}
+
+/* h3 ***************************************************************************/
+.courseContainer {
+    outline: 0px solid transparent;
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 10px;
+    position: relative;
+}
+.courseContainer:hover, .courseContainer.clicked {
+    background-color: rgb(50, 50, 50);
+    outline: 8px solid rgb(50, 50, 50);
+    animation: outlineFlashGray .3s alternate;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+}
+.courseContainer:hover.used {
+    background-color: rgb(48, 24, 26);
+    outline: 8px solid rgb(48, 24, 26);
+    animation: outlineFlashGray .3s alternate;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+}
+
+/* Course code display at top left */
+.courseCode {
+    color: rgba(97, 97, 97, 0);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0);
+
+    position: absolute; /* Positions the courseCode absolutely within the courseContainer */
+    bottom: 0;
+    right: 0;
+    margin-right: 12px;
+    margin-bottom: 0px;
+}
+.courseContainer:hover .courseCode {
+    transition: color 0.25s ease;
+    color: rgba(97, 97, 97);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, .2);
+}
+.courseContainer:hover.used .courseCode {
+    color: rgb(128, 40, 40);
+}
+
+/* ACT and GPA display at left */
+.prerequisiteStat {
+    color: rgb(255, 255, 255);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0);
+    text-align: center;
+    line-height: 1em;
+
+    left: -7px;
+
+    position: absolute;
+    width: 50px;
+    margin: 0;
+}
+
+.prerequisiteStat#preTitle {
+    font-size: 0.7em;
+    line-height: 2.2em;
+    z-index: 30;
+}
+.prerequisiteStat#preTitle.ps_1 {
+    top: 30px;
+}
+.prerequisiteStat#preTitle.ps_2 {
+    top: 75px;
+}
+.prerequisiteStat#preTitle.ps_3 {
+    top: 120px;
+}
+.prerequisiteStat#preTitle.ps_4 {
+    top: 30px;
+}
+
+.prerequisiteStat#preNumber {
+    font-size: 1em;
+    width: 40px;
+    height: 40px;
+
+    line-height: 40px;
+    text-align: center;
+
+    transform: translate(13%, 12%);
+    border-radius: 50%;
+
+    z-index: 20;
+}
+.prerequisiteStat#preNumber.ps_1 {
+    background-color: hsla(219, 86%, 10%, 0.6);
+    top: 30px;
+}
+.prerequisiteStat#preNumber.ps_2 {
+    background-color: hsla(0, 86%, 10%, 0.6);
+    top: 75px;
+}
+.prerequisiteStat#preNumber.ps_3 {
+    background-color: hsla(129, 86%, 10%, 0.6);
+    top: 120px;
+}
+.prerequisiteStat#preNumber.ps_4 {
+    background-color: hsla(219, 86%, 10%, 0.6);
+    top: 30px;
+    font-size: .7em;
+}
+
+
+/* Course header styling*/
+.courseHeader {
+    margin-left: 32px;
+    margin-bottom: 0;
+}
+.courseHeader::before {
+    content: '⯌';
+    position: absolute;
+    left: 8px;
+    margin-top: -2.5px;
+    display: inline-block;
+}
+.used {
+    color: rgb(255, 147, 147);
+}
+.courseContainer.clicked .courseHeader::before { /* Star rotation effect */
+    animation: rotateStar 4s infinite linear;
+}
+
+.mouseBox {
+    position: absolute;
+    font-size: 0.85em;
+
+    /* Center EVERYTHING */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    
+    width: 80px;
+    height: 80px;
+    outline: 8px solid rgba(150, 150, 150, 0.5);
+    background-color: rgba(150, 150, 150, 0.5);
+    border-radius: 10px;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.66);
+
+    pointer-events: none; /* Ignore mouse events */
+    animation: grow 0.2s cubic-bezier(0, 0, 0, 1.2);
+    overflow-x: wrap;
+    z-index: 200; /* Ensure it stays on top of other elements */
+}
+
+/* Honors styling*/
+.courseHeader.honors::before {
+    background: rgb(165, 81, 179);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.courseHeader.honors {
+    background: rgb(189, 78, 209);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.mouseBox.honors {
+    background-color: rgba(189, 78, 209, .5);
+    outline: 8px solid rgba(189, 78, 209, .5);
+}
+
+/* CONC styling*/
+.courseHeader.CONC::before {
+    background: rgb(166, 31, 255);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.courseHeader.CONC {
+    background: linear-gradient(to right, rgb(166, 31, 255), rgb(0, 255, 200));
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.mouseBox.CONC {
+    background-image: linear-gradient(to bottom right, rgba(130, 17, 148, .5), rgba(0, 225, 255, .5));
+    outline: 8px solid rgba(189, 78, 209, .5);
+}
+
+/* AP styling*/
+.courseHeader.advancedPlacement::before {
+    background: rgb(255, 0, 140);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.courseHeader.advancedPlacement {
+    background: linear-gradient(to right, rgb(255, 0, 140), rgb(255, 174, 0));
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.mouseBox.advancedPlacement {
+    background-image: linear-gradient(to bottom right, rgba(101, 9, 116, .5), rgba(255, 123, 0, .5));
+    outline: 8px solid rgba(189, 78, 209, .5);
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#searchContainer {
+    background-color: rgb(32, 32, 32);
+    box-shadow: inset 0 0 9px black;
+    border: 4px solid rgb(0, 102, 36);
+    border-radius: 6px;
+
+    padding: 20px;
+    padding-bottom: 0px;
+    margin-bottom: 20px;
+}
+
+#searchboxContainer {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: row; /* Stack buttons vertically */
+    justify-content: space-between;
+}
+#searchboxNames {
+    height: 20px;
+}
+#searchbarResults {
+    margin: 0;
+    margin-top: 5px;
+}
+
+#advancedSearchContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+#visibilityButtonContainer {
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+    top: 1cqh;
+    gap: 5px;
+}
+.visibilityButton {
+    width: 100px;
+    height: 24px;
+}
+
+.notDiscoveredBySearch {
+    display: none !important;
+}
