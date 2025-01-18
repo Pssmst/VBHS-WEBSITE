@@ -199,8 +199,9 @@ const courses = {
             },
             {
                 name: "Honors PAP Geometry",
-                description: "[This class is for students who took PAP Algebra 1 in 8th grade!] Study of dimensional shapes, perimeter, area, volume, triangle, quadrilaterals, polygons, circles, and trigonometric ratios with extensions. ",
-                prerequisites: [],
+                note: "This class is for students who took PAP Algebra 1 in 8th grade!",
+                description: "Study of dimensional shapes, perimeter, area, volume, triangle, quadrilaterals, polygons, circles, and trigonometric ratios with extensions. ",
+                prerequisites: ['PAP Algebra 1'],
                 credits: 1,
                 courseLength: 1,
                 occurences: 1,
@@ -210,6 +211,7 @@ const courses = {
             },
             {
                 name: "Geometry",
+                note: "This class is for students who did NOT take PAP Algebra 1 in 8th grade!",
                 description: "Study of dimensional shapes, perimeter, area, volume, relationships involving triangles, quadrilaterals, polygons, circles, and trigonometric ratios.",
                 prerequisites: ['PAP Algebra 1'],
                 credits: 1,
@@ -264,7 +266,7 @@ const courses = {
             {
                 name: "CONC College Algebra/Trigonometry",
                 description: "(Designed for juniors or seniors who have met the ACT requirement for concurrent credit) In-depth study of pre-calculus and trigonometric concepts. Satisfies the fourth year of Mathematics required for unconditional admission to Arkansas' colleges and universities. College Credit for Algebra and Trig (6 hours) Prerequisite for Calculus AB or BC.",
-                prerequisites: ['PAP Algebra 1', 'Algebra 2', 'Geometry', 'ACT 19 Reading', 'ACT 19 Math'],
+                prerequisites: ['Algebra 2', 'Geometry', 'ACT 19 Reading', 'ACT 19 Math'],
                 credits: 2,
                 courseLength: 1,
                 occurences: 1,
@@ -329,7 +331,8 @@ const courses = {
             },
             {
                 name: "AP Calculus AB",
-                description: "Study of Calculus 1; preparation for AP Calculus AB exam. Students can earn 4 hours of college credit. (Double blocked).",
+                note: "Double-blocked class (takes up 2 periods!)",
+                description: "Study of Calculus 1; preparation for AP Calculus AB exam. Students can earn 4 hours of college credit.",
                 prerequisites: ['CONC College Algebra/Trigonometry'],
                 credits: 1,
                 courseLength: 1,
@@ -341,7 +344,8 @@ const courses = {
             },
             {
                 name: "AP Calculus BC",
-                description: "Study of Calculus 1 & Calculus 2; preparation for AP Calculus BC examination. Students can earn up to 8 hours of college credit. Course meets for two periods. Required: A on transcript in Con PreCal/Trig OR teacher recommendation to take BC. (Double blocked).",
+                note: "Double-blocked class (takes up 2 periods!)",
+                description: "Study of Calculus 1 & Calculus 2; preparation for AP Calculus BC examination. Students can earn up to 8 hours of college credit. Course meets for two periods. Required: A on transcript in Con PreCal/Trig OR teacher recommendation to take BC.",
                 prerequisites: ['CONC College Algebra/Trigonometry'],
                 credits: 1,
                 courseLength: 1,
@@ -377,7 +381,7 @@ const courses = {
                 courseCode: 420000,
             },
             {
-                name: "Biology Integrated Honors",
+                name: "Honors Biology Integrated",
                 description: "Study of cells, genetics, microorganisms, plants, animals and ecology. This course also prepares students to be ready to take future college level AP courses.",
                 prerequisites: [],
                 credits: 1,
@@ -442,7 +446,8 @@ const courses = {
             },
             {
                 name: "AP Chemistry",
-                description: "This two semester course is a college level study of atomic structure, chemical reactions and kinetic theory with labs and outside of class work; meets third science requirement; includes preparation for AP exam, which can earn students college credit with a passing score. Recommended prerequisites include successful completion of a general high school chemistry course AND Algebra 2. Course meets for two periods daily.",
+                note: "Double-blocked class (takes up 2 periods!)",
+                description: "This two semester course is a college level study of atomic structure, chemical reactions and kinetic theory with labs and outside of class work; meets third science requirement; includes preparation for AP exam, which can earn students college credit with a passing score. Recommended prerequisites include successful completion of a general high school chemistry course AND Algebra 2.",
                 prerequisites: ['Algebra 2'],
                 credits: 1,
                 courseLength: 1,
@@ -455,7 +460,7 @@ const courses = {
             {
                 name: "Physics",
                 description: "Study of the laws that govern the universe.",
-                prerequisites: ['PAP Algebra 1', 'Algebra 2'],
+                prerequisites: ['Algebra 2'],
                 credits: 1,
                 courseLength: 1,
                 occurences: 1,
@@ -685,7 +690,8 @@ const courses = {
             },
             {
                 name: "AP Government & Politics",
-                description: "This two semester college-level course will help students cultivate their understanding of U.S. government and politics through analysis of data and text-based sources as they explore topics like constitutionalism, liberty and order, civic participation in a representative democracy, competing policy-making interests, and methods of political analysis. Emphasis is placed on class discussion, use of primary and secondary sources, U.S. Supreme Court case studies, critical reading, and analytical writing. Students will have the opportunity to earn college credit by taking the AP Exam at the end of the year. *** can count as the Civics graduation requirement.",
+                note: "Can count as the Civics graduation requirement.",
+                description: "This two semester college-level course will help students cultivate their understanding of U.S. government and politics through analysis of data and text-based sources as they explore topics like constitutionalism, liberty and order, civic participation in a representative democracy, competing policy-making interests, and methods of political analysis. Emphasis is placed on class discussion, use of primary and secondary sources, U.S. Supreme Court case studies, critical reading, and analytical writing. Students will have the opportunity to earn college credit by taking the AP Exam at the end of the year.",
                 prerequisites: [],
                 credits: 1,
                 courseLength: 1,
@@ -709,7 +715,8 @@ const courses = {
             },
             {
                 name: "CONC World Civilization 1 & 2",
-                description: "College level study of world history from 1000 to present; concurrent credit through ATU; up to 6 hours credit ***can count as the World History graduation requirement.",
+                note: "Can count as the World History graduation requirement.",
+                description: "College level study of world history from 1000 to present; concurrent credit through ATU; up to 6 hours credit.",
                 prerequisites: [],
                 credits: 1,
                 courseLength: 1,
@@ -1128,7 +1135,8 @@ const courses = {
             },
             {
                 name: "Computerized Accounting 2",
-                description: "A two-semester course emphasizing advanced accounting principles. ***can take the place of a 4th year math requirement (past Algebra II).",
+                note: "Can take the place of a 4th year math requirement (past Algebra II).",
+                description: "A two-semester course emphasizing advanced accounting principles.",
                 prerequisites: ['Computerized Accounting 1'],
                 credits: 1,
                 courseLength: 1,
@@ -1190,7 +1198,8 @@ const courses = {
             },
             {
                 name: "Principles of Engineering",
-                description: "Students are exposed to the basic principles of electrical, chemical, civil, and mechanical engineering disciplines and apply their learning by building and programming VEX robotics structures, such as chocolate chip cookie topper, surgical robot arm, marble sorter, soccer goal light, compound lifting mechanism, 3-floor elevator, and donut-delivering robot. ***can take the place of the 3rd year science requirement per ADE.**. (Level Two).",
+                note: "Can take the place of the 3rd year science requirement per ADE. (Level Two).",
+                description: "Students are exposed to the basic principles of electrical, chemical, civil, and mechanical engineering disciplines and apply their learning by building and programming VEX robotics structures, such as chocolate chip cookie topper, surgical robot arm, marble sorter, soccer goal light, compound lifting mechanism, 3-floor elevator, and donut-delivering robot.",
                 prerequisites: ['Introduction to Engineering Design'],
                 credits: 1,
                 courseLength: 1,
@@ -1201,8 +1210,9 @@ const courses = {
             },
             {
                 name: "Computer Integrated Manufacturing",
-                description: "Students will learn about modern manufacturing processes by utilizing a variety of software skills, the CAD skills they learned in IED, and CAM (which takes a CAD drawing file and uses the information to create g-code). A CNC machine then follows the instructions in the g-code and uses lasers or water jets to cut away metal from the stock block to physically create the machined part the student designed in CAD...a really neat process! Students will also build and program prototype manufacturing systems using VEX equipment, a Lynxmotion robot arm, and ROBOT-C programming they learned in POE. This course teaches skill sets in high demand by several manufacturers in the River Valley area. ***can take the place of the 3rd year science requirement AND is weighted with a 5.0 by the ADE.** (Level Three).",
-                prerequisites: ['Principles of Engineering'],
+                note: "Can take the place of the 3rd year science requirement AND is weighted with a 5.0 by the ADE. (Level Three).",
+                description: "Students will learn about modern manufacturing processes by utilizing a variety of software skills, the CAD skills they learned in IED, and CAM (which takes a CAD drawing file and uses the information to create g-code). A CNC machine then follows the instructions in the g-code and uses lasers or water jets to cut away metal from the stock block to physically create the machined part the student designed in CAD...a really neat process! Students will also build and program prototype manufacturing systems using VEX equipment, a Lynxmotion robot arm, and ROBOT-C programming they learned in POE. This course teaches skill sets in high demand by several manufacturers in the River Valley area.",
+                prerequisites: ['Introduction to Engineering Design'],
                 credits: 1,
                 courseLength: 1,
                 occurences: 1,
@@ -1213,8 +1223,9 @@ const courses = {
             },
             {
                 name: "Engineering Design & Development",
-                description: "In this capstone course, students apply the engineering design process and perform research to choose and justify a technical problem. The teams design, acquire materials, build, and test their solutions while working closely with industry professionals who provide mentoring opportunities. Finally, the student teams formally present and defend their original solution to an outside panel. ***can take place of the 4th year math requirement (past Algebra II).**.",
-                prerequisites: ['Computer Integrated Manufacturing'],
+                note: "Can take place of the 4th year math requirement (past Algebra II).",
+                description: "In this capstone course, students apply the engineering design process and perform research to choose and justify a technical problem. The teams design, acquire materials, build, and test their solutions while working closely with industry professionals who provide mentoring opportunities. Finally, the student teams formally present and defend their original solution to an outside panel.",
+                prerequisites: ['Introduction to Engineering Design'],
                 credits: 1,
                 courseLength: 1,
                 occurences: 1,
@@ -1225,7 +1236,8 @@ const courses = {
         "Computer Science": [
             {
                 name: "Programming 1",
-                description: "Exposes students to a diverse set of computational thinking concepts, fundamentals, and tools, allowing them to gain understanding and build confidence. Students use visual, block-based programming and seamlessly transition to text-based programming with languages such as Python® to create apps and develop websites, and learn how to make computers work together to put their design into practice. They apply computational thinking practices, build their vocabulary, and collaborate just as computing professionals do to create products that address topics and problems important to them. Students will work with MIT App Inventor, VEX Robots and text based programming (Python). (Level One) ***can take the place of a 3rd year science OR a 4th year math per ADE.",
+                note: "(Level One) Can take the place of a 3rd year science OR a 4th year math per ADE.",
+                description: "Exposes students to a diverse set of computational thinking concepts, fundamentals, and tools, allowing them to gain understanding and build confidence. Students use visual, block-based programming and seamlessly transition to text-based programming with languages such as Python® to create apps and develop websites, and learn how to make computers work together to put their design into practice. They apply computational thinking practices, build their vocabulary, and collaborate just as computing professionals do to create products that address topics and problems important to them. Students will work with MIT App Inventor, VEX Robots and text based programming (Python).",
                 prerequisites: [],
                 credits: 1,
                 courseLength: 1,
@@ -1235,7 +1247,8 @@ const courses = {
             },
             {
                 name: "Programming 2",
-                description: "Using Python® as a primary tool and incorporating multiple platforms and languages for computation, this course aims to develop computational thinking, generate excitement about career paths that utilize computing, and introduce professional tools that foster creativity and collaboration. While this course can be a student's first in computer science, students without prior computing experience are encouraged to start with Introduction to Computer Science. Projects and problems include: printing images using python text based languages, visualization of data, basic python games, cybersecurity, how the internet works, creating customer coder, using sensors and the data from those sensors, and real world simulations. (Level Two) ***can take the place of a 3rd year science OR a 4th year math per ADE.",
+                note: "(Level Two) Can take the place of a 3rd year science OR a 4th year math per ADE.",
+                description: "Using Python® as a primary tool and incorporating multiple platforms and languages for computation, this course aims to develop computational thinking, generate excitement about career paths that utilize computing, and introduce professional tools that foster creativity and collaboration. While this course can be a student's first in computer science, students without prior computing experience are encouraged to start with Introduction to Computer Science. Projects and problems include: printing images using python text based languages, visualization of data, basic python games, cybersecurity, how the internet works, creating customer coder, using sensors and the data from those sensors, and real world simulations.",
                 prerequisites: ['Programming 1'],
                 credits: 1,
                 courseLength: 1,
@@ -1245,7 +1258,8 @@ const courses = {
             },
             {
                 name: "AP Computer Science A",
-                description: "Introductory college-level computer science course. Students cultivate their understanding of coding through analyzing, writing, and testing code as they explore concepts like modularity, variables, and control structures. (Level Three) ) ***can take the place of a 3rd year science OR a 4th year math per ADE.",
+                note: "(Level Three) Can take the place of a 3rd year science OR a 4th year math per ADE.",
+                description: "Introductory college-level computer science course. Students cultivate their understanding of coding through analyzing, writing, and testing code as they explore concepts like modularity, variables, and control structures.",
                 prerequisites: [],
                 credits: 1,
                 courseLength: 1,
@@ -1257,7 +1271,8 @@ const courses = {
             },
             {
                 name: "Cybersecurity 1",
-                description: "Whether seeking a career in the growing field of cybersecurity or learning to defend their own personal data or a company's data, students in Cybersecurity establish an ethical code of conduct while learning to defend data in today's complex cyber world. ***can take the place of a 3rd year science OR a 4th year math per ADE.",
+                note: "Can take the place of a 3rd year science OR a 4th year math per ADE.",
+                description: "Whether seeking a career in the growing field of cybersecurity or learning to defend their own personal data or a company's data, students in Cybersecurity establish an ethical code of conduct while learning to defend data in today's complex cyber world.",
                 prerequisites: [],
                 credits: 1,
                 courseLength: 1,
@@ -1267,7 +1282,8 @@ const courses = {
             },
             {
                 name: "Cybersecurity 2",
-                description: "Part two of Cyber Security 1. ***can take the place of a 3rd year science OR a 4th year math per ADE.",
+                note: "Can take the place of a 3rd year science OR a 4th year math per ADE.",
+                description: "Part 2 of Cybersecurity.",
                 prerequisites: ['Cybersecurity 1'],
                 credits: 1,
                 courseLength: 1,
@@ -1277,7 +1293,8 @@ const courses = {
             },
             {
                 name: "Cybersecurity 3",
-                description: "Part 3 of Cybersecurity ***can take the place of a 3rd year science OR a 4th year math per ADE.",
+                note: "Can take the place of a 3rd year science OR a 4th year math per ADE.",
+                description: "Part 3 of Cybersecurity",
                 prerequisites: ['Cybersecurity 2'],
                 credits: 1,
                 courseLength: 1,
@@ -1321,7 +1338,8 @@ const courses = {
             },
             {
                 name: "Human Body Systems",
-                description: "Students examine the interactions of human body systems as they explore identity, power, movement, protection, and homeostasis in the body. Exploring science in action, students build organs and tissues on a skeletal Maniken®; use data acquisition software to monitor body functions such as muscle movement, reflex and voluntary action, and respiration; and take on the roles of biomedical professionals to solve real-world medical cases. ***can take place of the 3rd year science requirement for graduation per ADE.**.",
+                note: "Can take place of the 3rd year science requirement for graduation per ADE.",
+                description: "Students examine the interactions of human body systems as they explore identity, power, movement, protection, and homeostasis in the body. Exploring science in action, students build organs and tissues on a skeletal Maniken®; use data acquisition software to monitor body functions such as muscle movement, reflex and voluntary action, and respiration; and take on the roles of biomedical professionals to solve real-world medical cases.",
                 prerequisites: ['Principles of Biomedical Sciences'], // IF taking in 10th grade
                 credits: 1,
                 courseLength: 1,
@@ -1365,7 +1383,8 @@ const courses = {
             },
             {
                 name: "CASE Principles of Agricultural Science (Plant)",
-                description: "A foundation-level course teaching students the form and function of plant systems. Students experience various plant science concepts through inquiry-based exercises lled with activities, projects, and problems utilizing laboratory and practical experiences. Student experiences will include the study of plant anatomy and physiology, classication, and the fundamentals of production and harvesting. ***can take place of the 3rd year science requirement and is weighted with a 5.0 by the ADE.** (Level Two).",
+                note: "Can take place of the 3rd year science requirement and is weighted with a 5.0 by the ADE. (Level Two).",
+                description: "A foundation-level course teaching students the form and function of plant systems. Students experience various plant science concepts through inquiry-based exercises lled with activities, projects, and problems utilizing laboratory and practical experiences. Student experiences will include the study of plant anatomy and physiology, classication, and the fundamentals of production and harvesting. ",
                 prerequisites: ['Survey of Agricultural Systems'],
                 credits: 1,
                 courseLength: 1,
@@ -1377,7 +1396,8 @@ const courses = {
             },
             {
                 name: "CASE Natural Resources & Ecology",
-                description: "An agricultural class for students who are interested in earth sciences and man's interactions with nature. ***can be used as the 3rd science requirement for graduation and is weighted with a 5.0 by the ADE.. (Level Two).",
+                note: "Can be used as the 3rd science requirement for graduation and is weighted with a 5.0 by the ADE.. (Level Two).",
+                description: "An agricultural class for students who are interested in earth sciences and man's interactions with nature.",
                 prerequisites: ['Survey of Agricultural Systems'],
                 credits: 1,
                 courseLength: 1,
@@ -2120,7 +2140,8 @@ const courses = {
         "Western Arkansas Technical Center (WATC)": [
             {
                 name: "Automotive Technology",
-                description: "The increasing sophistication of automotive technology now requires workers who can use computerized shop equipment and work with electronic components, while maintaining their skills with traditional hand tools. The ability to diagnose the source of a problem quickly and accurately requires good reasoning ability and a thorough knowledge of automobiles. Students will learn how to inspect, maintain and repair vehicles. Courses include: Automotive Theory and Maintenance*, Intro to Transmissions and Drive Trains, Braking Systems, Automotive Engines, Automotive Electrical Systems, Emission Control Systems I, Suspension and Steering, Automotive A/C and Heating, *NOTE: This course must be passed with a “C” or better to continue in the automotive program.",
+                note: "This course must be passed with a “C” or better to continue in the automotive program.",
+                description: "The increasing sophistication of automotive technology now requires workers who can use computerized shop equipment and work with electronic components, while maintaining their skills with traditional hand tools. The ability to diagnose the source of a problem quickly and accurately requires good reasoning ability and a thorough knowledge of automobiles. Students will learn how to inspect, maintain and repair vehicles. Courses include: Automotive Theory and Maintenance*, Intro to Transmissions and Drive Trains, Braking Systems, Automotive Engines, Automotive Electrical Systems, Emission Control Systems I, Suspension and Steering, Automotive A/C and Heating",
                 prerequisites: [],
                 credits: 1,
                 courseLength: 1,
@@ -2132,7 +2153,8 @@ const courses = {
             },
             {
                 name: "Computer Aided Design (CAD)",
-                description: "Students in this two-year program begin by learning traditional board drafting methods and progress to the use of state-of-the-art equipment to produce beginning-level engineering graphics. Students who successfully complete both years of the program earn 31 hours of college credit. Good candidates for the CGT program will have strong math ability as well as mechanical and visual aptitude. Courses Include: Engineering Graphics I*, 3D Visualization,CAD-2D Design Level I*, CAD Concepts and Applications, Digital Design I—Digital Design II, and character Animation. *NOTE: This course must be passed with a “C” or better to continue in the CADD program.",
+                note: "This course must be passed with a “C” or better to continue in the automotive program.",
+                description: "Students in this two-year program begin by learning traditional board drafting methods and progress to the use of state-of-the-art equipment to produce beginning-level engineering graphics. Students who successfully complete both years of the program earn 31 hours of college credit. Good candidates for the CGT program will have strong math ability as well as mechanical and visual aptitude. Courses Include: Engineering Graphics I*, 3D Visualization,CAD-2D Design Level I*, CAD Concepts and Applications, Digital Design I—Digital Design II, and character Animation.",
                 prerequisites: [],
                 credits: 1,
                 courseLength: 1,

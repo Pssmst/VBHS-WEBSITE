@@ -27,8 +27,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
     }
 }
 
-console.log(courses);
-console.log(courseMap);
+//console.log(courses); console.log(courseMap);
 
 // Setup ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,20 +80,6 @@ function openAll() {
     }
 }
 
-function openPathways() {
-    document.getElementById('table').style.display = 'none';
-    document.getElementById('pathwayContainer').style.display = 'block';
-}
-
-function openTable() {
-    svg.innerHTML = ''; // Clear existing lines
-    document.getElementById('pathwayContainer').style.display = 'none';
-    document.getElementById('table').style.display = 'block';
-    document.getElementById('table').style.width = '100%';
-    document.getElementById('table').style.border = '1px solid transparent';
-    document.getElementById('table').style.tableLayout = 'fixed';
-}
-
 const excludedPrerequisites = ["ACT 19 Reading", "ACT 19 Math", "ACT 19 English", "GPA 2.0", "Job Required", "Must Audition"];
 
 for (const [subject, offerings] of Object.entries(courses)) {
@@ -129,14 +114,21 @@ for (const [subject, offerings] of Object.entries(courses)) {
                 else if (!course.grades[i] && course.grades[i+1])  {gradesIndicator += "◑"} // false true
                 else if (!course.grades[i] && !course.grades[i+1]) {gradesIndicator += "○"} // false false
             }
-
-            newElement('h3', `${course.name}_courseContainer`, `${course.name}\u00A0 ${gradesIndicator}`, `${course.name}_courseHeader`, 'courseHeader');
             
+            // Create container and header
+            newElement('h3', `${course.name}_courseContainer`, `${course.name}\u00A0 ${gradesIndicator}`, `${course.name}_courseHeader`, 'courseHeader');
+            const courseHeader = document.getElementById(`${course.name}_courseHeader`);
+            
+            // Details ////////////////////////////////////////////////////////////////////////////////////
+
+            // Create note underneath the course name (header)
+            if (course.note) {
+                newElement('p', `${course.name}_courseContainer`, "Note: " + course.note, '', 'note');
+            }
+
+            // Create details unordered list to add stuff to
             const ulDetails = document.createElement('ul');
             document.getElementById(`${course.name}_courseContainer`).appendChild(ulDetails);
-            
-            // Apply details ////////////////////////////////////////////////////////////////////////////////////
-            const courseHeader = document.getElementById(`${course.name}_courseHeader`);
             let details = [];
 
             if (course.description.length > 0) {
@@ -195,7 +187,6 @@ for (const [subject, offerings] of Object.entries(courses)) {
                 details.push(`Concurrent through ${course.CONC}`);
                 courseHeader.classList.add('CONC');
             }
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             let courseCodeString = (course.courseCode != -1 ? `#${course.courseCode}` : 'WATC');
             newElement('p', `${course.name}_courseContainer`, courseCodeString, '', 'courseCode');
@@ -231,34 +222,64 @@ function getLeftmostTH(elementUnderCursor) {
     return null;
 }
 
-function getFulfilledPrerequisites(elementUnderCursor, prerequisites) {
-    // Ensure the elementUnderCursor is a table cell (TD or TH)
-    if (elementUnderCursor && (elementUnderCursor.tagName === 'TD' || elementUnderCursor.tagName === 'TH')) {
-        const table = elementUnderCursor.closest('table'); // Get table containing cell
-        const cellIndex = elementUnderCursor.cellIndex; // Get column index of the current cell
-        let prereqsUsed = {};
+let papAlgebra1Taken = false;
 
-        if (table) {
-            // Loop through all rows of the table
-            Array.from(table.rows).forEach(row => {
-                const cell = row.cells[cellIndex - 1]; // Get the cell to the left
-                for (prerequisite in prerequisites) {
-                    if (cell && cell.textContent == string) {
-                        prereqsUsed[prerequisite] = true;
+function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLength) {
+    // Remove excluded prerequisites
+    prerequisites = prerequisites.filter(prerequisite => !excludedPrerequisites.includes(prerequisite));
+    let prereqsUsed = {};
+
+    // Prevents cells from being placed directly underneath or above their prerequisites---ONLY in front
+    // Changes depending whether it's a semester-long class or not
+    let offset;
+    if (courseLength == 1) { offset = 2; }
+    else { offset = 1; }
+    
+    if (prerequisites && prerequisites.length > 0) {
+        if (elementUnderCursor.tagName === 'TD') {
+            const table = document.getElementById('table');
+            const cellIndex = elementUnderCursor.cellIndex; // Get column index of the current cell
+
+            if (table) {
+                // Loop through each row of the table
+                Array.from(table.rows).forEach(row => {
+                    // Iterate over the cells to the left of the current cell
+                    for (let i = cellIndex - offset; i >= 1; i--) {
+                        const cell = row.cells[i];
+                        if (cell) {
+                            for (const prerequisite of prerequisites) {
+                                if (cell.textContent.includes(prerequisite)) {
+                                    prereqsUsed[prerequisite] = true;
+                                }
+                                // Account for the algebra 1 checkbox
+                                else if (prerequisite === "PAP Algebra 1" && papAlgebra1Taken) {
+                                    prereqsUsed[prerequisite] = true;
+                                }
+                                // Only set to false if the prerequisite hasn't been set to true yet
+                                else if (!(prerequisite in prereqsUsed)) {
+                                    prereqsUsed[prerequisite] = false;
+                                }
+                            }
+                        }
                     }
-                }
-            });
+                });
+            }
         }
+    } else { 
+        return {"": true}; // Return true by default dictionary if prerequisites are empty
     }
+
     return prereqsUsed;
 }
 
-function checkForQualities(course, elementUnderCursor) {
+function setCellModifiers(course, elementUnderCursor, allowedSubjects) {
     elementUnderCursor.textContent = course.name;
     elementUnderCursor.classList.add('occupied');
-    if (course.honors) { elementUnderCursor.classList.add('honors'); }
+    if (course.honors)            { elementUnderCursor.classList.add('honors'); }
     if (course.advancedPlacement) { elementUnderCursor.classList.add('advancedPlacement'); }
-    if (course.CONC) { elementUnderCursor.classList.add('CONC'); }
+    if (course.CONC)              { elementUnderCursor.classList.add('CONC'); }
+    if (course.CONC)              { elementUnderCursor.classList.add('CONC'); }
+    if (!allowedSubjects)         { elementUnderCursor.classList.add('flexCourse'); }
 }
 
 const tableCells = document.querySelectorAll('td');
@@ -290,9 +311,15 @@ for (const [subject, offerings] of Object.entries(courses)) {
 
                     // Scans all cells
                     tableCells.forEach(cell => {
-                        const isAllowedSubject = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
-                        const isAllowedGrade = findAllowedGrades(course.grades).includes(Number(cell.id[1]));
-                        if (!(isAllowedSubject && isAllowedGrade)) { // If none of these things are true, then make the cell unavailable
+                        const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
+                        const allowedCertainGrades = findAllowedGrades(course.grades).includes(Number(cell.id[1]));
+                        
+                        // Classes that are not allowed by subject but share the same grade can be flex classes
+                        if (!allowedSubjects && allowedCertainGrades) {
+                            cell.classList.add('flexCourseSpot');
+                        }
+
+                        else if (!(allowedSubjects && allowedCertainGrades)) { // If none of these things are true, then make the cell unavailable
                             cell.classList.add('unavailable');
                         }
                     });
@@ -300,18 +327,23 @@ for (const [subject, offerings] of Object.entries(courses)) {
 
                 function resetAvailability() {
                     tableCells.forEach(cell => cell.classList.remove('unavailable'));
+                    tableCells.forEach(cell => cell.classList.remove('flexCourseSpot'));
                 }
 
                 function handleDrop(e) {
                     let elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
-                    const fulfilledPrerequities = getFulfilledPrerequisites(cell, course.prerequisites);
-                
-                    if (
-                        elementUnderCursor &&
-                        elementUnderCursor.tagName === 'TD' &&
-                        [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(elementUnderCursor)) &&
-                        findAllowedGrades(course.grades).includes(Number(elementUnderCursor.id[1]))
-                    ) {
+
+                    // Do same logic as in the moveBox function but instead of for each cell, it's for the elementUnderCursor
+                    const allowedCertainGrades = findAllowedGrades(course.grades).includes(Number(elementUnderCursor.id[1]));
+
+                    // See if any prerequisite is not fulfilled
+                    const fulfilledPrerequities = getFulfilledPrerequisites(elementUnderCursor, course.prerequisites, course.courseLength);
+                    let allPrerequisitesFulfilled = !Object.values(fulfilledPrerequities).some(fulfilled => !fulfilled);
+
+                    if (elementUnderCursor && elementUnderCursor.tagName === 'TD' && allowedCertainGrades && allPrerequisitesFulfilled) {
+                        // Surprise tool for later
+                        const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(elementUnderCursor));
+
                         // Handle previous class if it exists
                         if (elementUnderCursor.textContent.trim()) {
                             const previousClassName = elementUnderCursor.textContent.trim();
@@ -331,10 +363,11 @@ for (const [subject, offerings] of Object.entries(courses)) {
                             if (nextCell && nextCell.tagName === 'TD' && !nextCell.textContent.trim()) {
                                 elementUnderCursor.setAttribute('colspan', '2');
                                 nextCell.style.display = 'none';
-                                checkForQualities(course, elementUnderCursor, courseContainer);
+                                setCellModifiers(course, elementUnderCursor, allowedSubjects);
+                        
                             }
                         } else if (!elementUnderCursor.textContent.trim()) {
-                            checkForQualities(course, elementUnderCursor, courseContainer);
+                            setCellModifiers(course, elementUnderCursor, allowedSubjects);
                         }
                     }
                     // Update what is used
@@ -378,6 +411,7 @@ tableCells.forEach(cell => {
         cell.classList.remove('honors');
         cell.classList.remove('advancedPlacement');
         cell.classList.remove('CONC');
+        cell.classList.remove('flexCourse');
         courseContainer = document.querySelector(`[id="${cell.textContent}_courseContainer"]`);
         if (courseContainer) { courseContainer.classList.remove('used'); }
 
@@ -619,14 +653,19 @@ function generatePathways(specifiedPathwayID) {
                         currentCourses.push(currentCourseName);
 
                         if (currentPathway.has(currentCourseName)) { continue; }  // Skip if the course is already in this pathway
-                        currentPathway.add(currentCourseName);                    // Add
+                        currentPathway.add(currentCourseName);                    // Add courseName to currentPathway
                         const currentCourse = courseMap.get(currentCourseName);   // Find the course object
                         
                         // Ensure the course tile exists (if it doesn't, make one)
                         // THIS STUPID BLOCK OF CODE HAS BEEN THE ROOT OF MY PROBLEMS FOR 14 HOURS NOW AND I JUST FIGURED IT OUT AND I AM SO MAD
                         if (!document.getElementById(currentCourseName)) {
                             if (pathwayID == specifiedPathwayID || specifiedPathwayID == 0) {
-                                newElement('div', getFirstOccurrence(currentCourse), currentCourseName, currentCourseName, 'tile');
+                                if (papAlgebra1Taken && currentCourseName == "PAP Algebra 1") {
+                                    newElement('div', 0, currentCourseName, currentCourseName, 'tile');
+                                }
+                                else {
+                                    newElement('div', getFirstOccurrence(currentCourse), currentCourseName, currentCourseName, 'tile');
+                                }
                             }
                         }
 
@@ -645,9 +684,6 @@ function generatePathways(specifiedPathwayID) {
                         }
                     }
 
-                    // "Usually the best answer is the easiest one."
-                    //                            - GLaDOS
-                    // I DON'T KNOW WHY THIS WORKS HELP ME
                     const allElementsFound = currentCourses.every(course => previousCourses.includes(course));
                     //console.log(pathwayID, previousCourses, currentCourses);
 
@@ -670,7 +706,21 @@ function generatePathways(specifiedPathwayID) {
 let specifiedPathwayID = 1;
 let numOfPathways = generatePathways(specifiedPathwayID);
 
-// For the buttons
+
+function openPathways() {
+    document.getElementById('table').style.display = 'none';
+    document.getElementById('pathwayContainer').style.display = 'block';
+    numOfPathways = generatePathways(specifiedPathwayID);
+}
+
+function openTable() {
+    svg.innerHTML = ''; // Clear existing lines
+    document.getElementById('pathwayContainer').style.display = 'none';
+    document.getElementById('table').style.display = 'block';
+    document.getElementById('table').style.width = '100%';
+    document.getElementById('table').style.border = '1px solid transparent';
+    document.getElementById('table').style.tableLayout = 'fixed';
+}
 
 function incrementPathwayID() {
     if (specifiedPathwayID < numOfPathways) {
@@ -681,9 +731,19 @@ function incrementPathwayID() {
 }
 
 function decrementPathwayID() {
-    if (specifiedPathwayID > 0) { // Ensure pathway ID doesn't go below 1
+    if (specifiedPathwayID > 1) { // Ensure pathway ID doesn't go below 1 (an ID of 0 shows all pathways at once as a dev tool)
         specifiedPathwayID--;
         removeAllTiles(); // Remove all tiles before generating new pathways
         numOfPathways = generatePathways(specifiedPathwayID);
     }
+}
+
+function setPAPAlgebra1ToUsed() {
+    if (!papAlgebra1Taken) { document.getElementById(`PAP Algebra 1_courseContainer`).classList.add('used'); }
+    else { document.getElementById(`PAP Algebra 1_courseContainer`).classList.remove('used'); }
+    papAlgebra1Taken = !papAlgebra1Taken;
+
+    // Do pathway stuff
+    removeAllTiles();
+    numOfPathways = generatePathways(specifiedPathwayID);
 }

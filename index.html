@@ -9,172 +9,170 @@
 <body>
     <header>© Brannon Davidson 2025</header>
 
-    <div id="scheduleContainer">
+    <div id="appContainer">
+        <div id="scheduleContainer">
     
-        <div id="toggleScheduleButtonContainer">
-            <button class="toggleScheduleButton" onclick="openTable()">4-Year Plan</button>
-            <button class="toggleScheduleButton" onclick="openPathways()">Course Pathways</button>
+            <div id="toggleScheduleButtonContainer">
+                <button class="toggleScheduleButton" onclick="openTable()">4-Year Plan</button>
+                <button class="toggleScheduleButton" onclick="openPathways()">Course Pathways</button>
+            </div>
+    
+            <input type="checkbox" id="Algebra1Checkbox" class="checkbox" onclick="setPAPAlgebra1ToUsed()"> <label for="Algebra 1">Took "PAP Algebra 1" in 8th Grade</label>
+            <table id="table" border="1" cellspacing="0">
+    
+                <tr>
+                    <th></th>
+                    <th colspan="2">Freshman</th>
+                    <th colspan="2">Sophomore</th>
+                    <th colspan="2">Junior</th>
+                    <th colspan="2">Senior</th>
+                </tr>
+    
+                <tr>
+                    <th>English</th>
+                    <td id="r1"></td>
+                    <td id="r2"></td>
+                    <td id="r3"></td>
+                    <td id="r4"></td>
+                    <td id="r5"></td>
+                    <td id="r6"></td>
+                    <td id="r7"></td>
+                    <td id="r8"></td>
+                </tr>
+    
+                <tr>
+                    <th>Math</th>
+                    <td id="m1"></td>
+                    <td id="m2"></td>
+                    <td id="m3"></td>
+                    <td id="m4"></td>
+                    <td id="m5"></td>
+                    <td id="m6"></td>
+                    <td id="m7"></td>
+                    <td id="m8"></td>
+                </tr>
+    
+                <tr>
+                    <th>Science</th>
+                    <td id="s1"></td>
+                    <td id="s2"></td>
+                    <td id="s3"></td>
+                    <td id="s4"></td>
+                    <td id="s5"></td>
+                    <td id="s6"></td>
+                    <td id="s7"></td>
+                    <td id="s8"></td>
+                </tr>
+    
+                <tr>
+                    <th>Social Studies</th>
+                    <td id="h1"></td>
+                    <td id="h2"></td>
+                    <td id="h3"></td>
+                    <td id="h4"></td>
+                    <td id="h5"></td>
+                    <td id="h6"></td>
+                    <td id="h7"></td>
+                    <td id="h8"></td>
+                </tr>
+    
+                <tr>
+                    <th>Elective 1</th>
+                    <td id="e1a"></td>
+                    <td id="e2a"></td>
+                    <td id="e3a"></td>
+                    <td id="e4a"></td>
+                    <td id="e5a"></td>
+                    <td id="e6a"></td>
+                    <td id="e7a"></td>
+                    <td id="e8a"></td>
+                </tr>
+    
+                <tr>
+                    <th>Elective 2</th>
+                    <td id="e1b"></td>
+                    <td id="e2b"></td>
+                    <td id="e3b"></td>
+                    <td id="e4b"></td>
+                    <td id="e5b"></td>
+                    <td id="e6b"></td>
+                    <td id="e7b"></td>
+                    <td id="e8b"></td>
+                </tr>
+    
+                <tr>
+                    <th>Elective 3</th>
+                    <td id="e1c"></td>
+                    <td id="e2c"></td>
+                    <td id="e3c"></td>
+                    <td id="e4c"></td>
+                    <td id="e5c"></td>
+                    <td id="e6c"></td>
+                    <td id="e7c"></td>
+                    <td id="e8c"></td>
+                </tr>
+            </table>
+    
+            <div id="pathwayContainer">
+                <p id="pathwayData">Pathways loaded</p>
+                <button onclick="decrementPathwayID()">Decrement Pathway ID</button>
+                <button onclick="incrementPathwayID()">Increment Pathway ID</button>
+    
+                <div id="pathwayVisualizer">
+                    <div class="column" id="0"> <label>8th Grade</label> </div>
+                    <div class="column" id="1"> <label>Freshman, Semester 1</label> </div>
+                    <div class="column" id="2"> <label>Freshman, Semester 2</label> </div>
+                    <div class="column" id="3"> <label>Sophomore, Semester 1</label> </div>
+                    <div class="column" id="4"> <label>Sophomore, Semester 2</label> </div>
+                    <div class="column" id="5"> <label>Junior, Semester 1</label> </div>
+                    <div class="column" id="6"> <label>Junior, Semester 2</label> </div>
+                    <div class="column" id="7"> <label>Senior, Semester 1</label> </div>
+                    <div class="column" id="8"> <label>Senior, Semester 2</label> </div>
+                </div>
+            </div>
+    
+            <svg id="svg-lines"></svg>
         </div>
-
-        <table id="table" border="1" cellspacing="0">
-
-            <tr>
-                <th></th>
-                <th colspan="2">Freshman</th>
-                <th colspan="2">Sophomore</th>
-                <th colspan="2">Junior</th>
-                <th colspan="2">Senior</th>
-            </tr>
-
-            <tr>
-                <th>English</th>
-                <td id="r1"></td>
-                <td id="r2"></td>
-                <td id="r3"></td>
-                <td id="r4"></td>
-                <td id="r5"></td>
-                <td id="r6"></td>
-                <td id="r7"></td>
-                <td id="r8"></td>
-            </tr>
-
-            <tr>
-                <th>Math</th>
-                <td id="m1"></td>
-                <td id="m2"></td>
-                <td id="m3"></td>
-                <td id="m4"></td>
-                <td id="m5"></td>
-                <td id="m6"></td>
-                <td id="m7"></td>
-                <td id="m8"></td>
-            </tr>
-
-            <tr>
-                <th>Science</th>
-                <td id="s1"></td>
-                <td id="s2"></td>
-                <td id="s3"></td>
-                <td id="s4"></td>
-                <td id="s5"></td>
-                <td id="s6"></td>
-                <td id="s7"></td>
-                <td id="s8"></td>
-            </tr>
-
-            <tr>
-                <th>Social Studies</th>
-                <td id="h1"></td>
-                <td id="h2"></td>
-                <td id="h3"></td>
-                <td id="h4"></td>
-                <td id="h5"></td>
-                <td id="h6"></td>
-                <td id="h7"></td>
-                <td id="h8"></td>
-            </tr>
-
-            <tr>
-                <th>Elective 1</th>
-                <td id="e1a"></td>
-                <td id="e2a"></td>
-                <td id="e3a"></td>
-                <td id="e4a"></td>
-                <td id="e5a"></td>
-                <td id="e6a"></td>
-                <td id="e7a"></td>
-                <td id="e8a"></td>
-            </tr>
-
-            <tr>
-                <th>Elective 2</th>
-                <td id="e1b"></td>
-                <td id="e2b"></td>
-                <td id="e3b"></td>
-                <td id="e4b"></td>
-                <td id="e5b"></td>
-                <td id="e6b"></td>
-                <td id="e7b"></td>
-                <td id="e8b"></td>
-            </tr>
-
-            <tr>
-                <th>Elective 3</th>
-                <td id="e1c"></td>
-                <td id="e2c"></td>
-                <td id="e3c"></td>
-                <td id="e4c"></td>
-                <td id="e5c"></td>
-                <td id="e6c"></td>
-                <td id="e7c"></td>
-                <td id="e8c"></td>
-            </tr>
-        </table>
-
-        <div id="pathwayContainer">
-            <p id="pathwayData">Pathways loaded</p>
-            <button onclick="decrementPathwayID()">Decrement Pathway ID</button>
-            <button onclick="incrementPathwayID()">Increment Pathway ID</button>
-
-            <div id="pathwayVisualizer">
-                <div class="column" id="0"></div>
-                <div class="column" id="1"></div>
-                <div class="column" id="2"></div>
-                <div class="column" id="3"></div>
-                <div class="column" id="4"></div>
-                <div class="column" id="5"></div>
-                <div class="column" id="6"></div>
-                <div class="column" id="7"></div>
-                <div class="column" id="8"></div>
-                <div class="column" id="9"></div>
-                <div class="column" id="10"></div>
-            </div>
-        </div>
-
-        <svg id="svg-lines"></svg>
-    </div>
-
-    <div id="classContainer">
-        <div id="searchContainer">
-
-            <div id="searchboxContainer">
-                <input type="text" id="searchboxNames" class="searchbox" placeholder="Search course name..." autocomplete="off">
-                <p id="searchbarResults">Course catalog loaded.</p>
-            </div>
-
-            <div id="advancedSearchContainer">
-                <div id="searchGrades">
-                    <div> <input type="checkbox" id="freshman" class="checkbox"> <label for="Freshman">Freshman</label> </div>
-                    <div> <input type="checkbox" id="sophomore" class="checkbox"> <label for="Sophomore">Sophomore</label> </div>
-                    <div> <input type="checkbox" id="junior" class="checkbox"> <label for="Junior">Junior</label> </div>
-                    <div> <input type="checkbox" id="senior" class="checkbox"> <label for="Senior">Senior</label> </div>
+    
+        <div id="rightContainer">
+            <div id="searchContainer">
+    
+                <div id="searchboxContainer">
+                    <input type="text" id="searchboxNames" class="searchbox" placeholder="Search course name..." autocomplete="off">
+                    <p id="searchbarResults">Course catalog loaded.</p>
                 </div>
-
-                <div id="searchCredits">
-                    <div> <input type="checkbox" id="creditHalf" class="checkbox"> <label for="0.5 Credits">0.5 Credits</label> </div>
-                    <div> <input type="checkbox" id="credit1" class="checkbox"> <label for="1 Credit">1 Credit</label> </div>
-                    <div> <input type="checkbox" id="credit2" class="checkbox"> <label for="2 Credits">2 Credits</label> </div>
+        
+                <div id="advancedSearchContainer">
+                    <div id="searchGrades">
+                        <div> <input type="checkbox" id="freshman" class="checkbox"> <label for="Freshman">Freshman</label> </div>
+                        <div> <input type="checkbox" id="sophomore" class="checkbox"> <label for="Sophomore">Sophomore</label> </div>
+                        <div> <input type="checkbox" id="junior" class="checkbox"> <label for="Junior">Junior</label> </div>
+                        <div> <input type="checkbox" id="senior" class="checkbox"> <label for="Senior">Senior</label> </div>
+                    </div>
+        
+                    <div id="searchCredits">
+                        <div> <input type="checkbox" id="creditHalf" class="checkbox"> <label for="0.5 Credits">0.5 Credits</label> </div>
+                        <div> <input type="checkbox" id="credit1" class="checkbox"> <label for="1 Credit">1 Credit</label> </div>
+                        <div> <input type="checkbox" id="credit2" class="checkbox"> <label for="2 Credits">2 Credits</label> </div>
+                    </div>
+        
+                    <div id="searchLevels">
+                        <div> <input type="checkbox" id="honors" class="checkbox"> <label for="Honors">Honors</label> </div>
+                        <div> <input type="checkbox" id="conc" class="checkbox"> <label for="CONC">CONC</label> </div>
+                        <div> <input type="checkbox" id="ap" class="checkbox"> <label for="AP">AP / 5.0 GPA</label> </div>
+                    </div>
                 </div>
-
-                <div id="searchLevels">
-                    <div> <input type="checkbox" id="honors" class="checkbox"> <label for="Honors">Honors</label> </div>
-                    <div> <input type="checkbox" id="conc" class="checkbox"> <label for="CONC">CONC</label> </div>
-                    <div> <input type="checkbox" id="ap" class="checkbox"> <label for="AP">AP</label> </div>
+        
+                <div id="visibilityButtonContainer">
+                    <button class="visibilityButton" onclick="openAll()">Open All</button>
+                    <button class="visibilityButton" onclick="collapseAll()">Collapse All</button>
                 </div>
             </div>
-
-            <div id="visibilityButtonContainer">
-                <button class="visibilityButton" onclick="openAll()">Open All</button>
-                <button class="visibilityButton" onclick="collapseAll()">Collapse All</button>
-            </div>
+        
+            <div id="classContainer"></div>
         </div>
     </div>
     
     <script src="courses.js"></script>
     <script src="script.js"></script>
 </body>
-<<<<<<< HEAD
-</html>
-=======
-</html>
->>>>>>> 3e8faf10676a8534f31766ccb779f7a31ab9a912
