@@ -20,7 +20,7 @@ input.checkbox {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 /* ANIMATIONS /////////////////////////////////////////////////////////////////////////////////*/
@@ -38,6 +38,14 @@ input.checkbox {
         outline: 1px solid rgb(0, 255, 23);
     }
 }
+
+@keyframes outlineFlashRed {
+    0% {
+        background-color: transparent;
+        outline: 1px solid rgb(145, 49, 65);
+    }
+}
+
 
 @keyframes outlineFlashWhite {
     0% {
@@ -110,7 +118,10 @@ input.checkbox {
 #rightContainer {
     position: relative;
     width: 29%;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    height: 100%; /* Take full height of parent */
+    overflow: hidden; /* Prevent unnecessary overflow */
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -197,9 +208,9 @@ td.CONC {
 td.advancedPlacement {
     background-image: linear-gradient(to bottom right, rgb(130, 17, 148), rgb(255, 102, 0));
 }
-td.flexCourse {
+td.extraElective {
     animation: flashGold .4s ease-out;
-    outline: 6px solid rgba(133, 75, 0, 0.5);
+    outline: 6px solid rgba(255, 145, 0, .5);
     z-index: 5;
 }
 
@@ -208,7 +219,7 @@ td.unavailable {
     background-color: rgb(34, 16, 16);
     background-image: linear-gradient(to bottom right, transparent, transparent);
 }
-td.flexCourseSpot {
+td.extraElectiveSpot {
     background-color: rgb(58, 42, 17);
     background-image: linear-gradient(to bottom right, transparent, transparent);
 }
@@ -223,8 +234,8 @@ td.flexCourseSpot {
 
 #pathwayContainer {
     position: relative;
-    display: none;
     width: 100%;
+    table-layout: fixed; /* Ensures columns maintain their fixed width */
 }
 
 #pathwayVisualizer {
@@ -232,13 +243,12 @@ td.flexCourseSpot {
     justify-content: space-between;
     background-color: black;
     border-radius: 10px;
-    width: 100%;
-    height: 70vh;
+
+    width: auto;
+    height: 50vh;
 
     margin: 0;
-
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
 }
 
 #pathwayData {
@@ -314,15 +324,13 @@ svg {
 /*////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 #searchContainer {
+    flex: 0; /* Allow equal height proportion */
     background-color: rgb(32, 32, 32);
     box-shadow: inset 0 0 9px black;
     border: 4px solid rgb(0, 102, 36);
     border-radius: 6px;
-
-    position: relative;
     padding: 20px;
-    padding-bottom: 0px;
-    margin-bottom: 4%;
+    margin-bottom: 2%;
 }
 
 #searchboxContainer {
@@ -357,17 +365,16 @@ svg {
 }
 
 .notDiscoveredBySearch {
-    display: none !important;
+    display: none;
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 #classContainer {
-    position: relative;
-    height: 74%;
-    width: 100%;
-    overflow-y: scroll;
-    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 10px;
 }
 #classContainer > div { /* Aw yeah epic child operator use */
     background-color: rgb(32, 32, 32);
@@ -384,7 +391,6 @@ ul {
 .subjectContainer {
     padding: 20px;
     padding-bottom: 20px;
-    margin-bottom: 10px;
 }
 
 .subjectHeader {
@@ -397,18 +403,12 @@ ul {
     display: inline-block;
     color: rgb(0, 255, 13);
     padding-left: 36px;
+    margin-bottom: 10px;
 
+    position: relative; /* Ensures :before aligns with the header */
     outline: 0px solid transparent;
     transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease;
     border-radius: 10px;
-    
-}
-.offeringHeader::before {
-    color: rgb(0, 255, 13);
-    content: var(--icon, "⮟");
-    position: absolute;
-    margin-left: -32px;
-    margin-top: -3px;
 }
 .offeringHeader:hover {
     background-color: rgb(50, 50, 50);
@@ -417,25 +417,62 @@ ul {
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
 }
 
+.offeringHeader::before {
+    position: absolute;
+    content: var(--icon, "⮟");
+    color: rgb(0, 255, 13);
+    left: 0;
+    top: .5em;
+    transform: translateY(-50%);
+    margin-left: 4px; /* Fine-tune spacing */
+}
+
 /* h3 ***************************************************************************/
 .courseContainer {
-    outline: 0px solid transparent;
-    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease;
-    border-radius: 10px;
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease, color .25s ease;
     position: relative;
+    outline: 0px solid transparent;
+    border-radius: 10px;
 }
-.courseContainer:hover, .courseContainer.clicked {
+.courseContainer:hover {
     background-color: rgb(50, 50, 50);
     outline: 8px solid rgb(50, 50, 50);
     animation: outlineFlashGray .3s alternate;
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
 }
-.courseContainer:hover.used {
+.courseContainer.clicked {
+    background-color: rgb(50, 50, 50);
+    outline: 8px solid rgb(50, 50, 50);
+}
+
+.courseContainer.used {
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease, color .25s ease;
+    color: rgb(255, 147, 147);
+}
+.courseContainer.used:hover {
+    animation: outlineFlashRed .3s alternate;
     background-color: rgb(48, 24, 26);
     outline: 8px solid rgb(48, 24, 26);
-    animation: outlineFlashGray .3s alternate;
-    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
 }
+
+/* Note display under the header */
+.note {
+    transition: color .25s ease;
+    color: rgb(255, 255, 255, .5);
+    font-style: italic;
+    padding-left: 30px;
+}
+.courseContainer.used .note {
+    transition: color 0.4s ease;
+    color: rgba(255, 126, 126, 0.5);
+}
+.flex {
+    transition: color .25s ease;
+    color: rgba(255, 193, 7);
+    font-style: italic;
+    padding-left: 30px;
+}
+
 
 /* Course code display at top left */
 .courseCode {
@@ -524,7 +561,7 @@ ul {
 /* Course header styling*/
 .courseHeader {
     margin-left: 32px;
-    margin-bottom: 0;
+    margin-bottom: -4px;
 }
 .courseHeader::before {
     content: '⯌';
@@ -533,16 +570,8 @@ ul {
     margin-top: -2.5px;
     display: inline-block;
 }
-.used {
-    color: rgb(255, 147, 147);
-}
 .courseContainer.clicked .courseHeader::before { /* Star rotation effect */
     animation: rotateStar 4s infinite linear;
-}
-.note {
-    font-style: italic;
-    color: rgba(255, 255, 255, .5);
-    padding-left: 32px;
 }
 
 .mouseBox {
@@ -555,10 +584,6 @@ ul {
     text-align: center;
     justify-content: center;
     
-    width: 80px;
-    height: 80px;
-    outline: 8px solid rgba(150, 150, 150, 0.5);
-    background-color: rgba(150, 150, 150, 0.5);
     border-radius: 10px;
     box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.66);
 
@@ -566,6 +591,44 @@ ul {
     animation: grow 0.2s cubic-bezier(0, 0, 0, 1.2);
     overflow-x: wrap;
     z-index: 200; /* Ensure it stays on top of other elements */
+    
+    background-color: rgba(150, 150, 150, .6);
+    outline: 6px solid rgba(201, 201, 201, .6);
+}
+.mouseBox.honors {
+    background-color: rgba(189, 78, 209, .6);
+    outline: 6px solid rgba(232, 99, 255, .6);
+}
+.mouseBox.CONC {
+    background-image: linear-gradient(to bottom right, rgba(130, 17, 148, .5), rgba(0, 225, 255, .6));
+    outline: 6px solid rgba(189, 78, 209, .6);
+}
+.mouseBox.advancedPlacement {
+    background-image: linear-gradient(to bottom right, rgba(101, 9, 116, .6), rgba(255, 123, 0, .6));
+    outline: 6px solid rgba(189, 78, 209, .6);
+}
+
+.mouseBox:has(#flexAppendage) {
+    outline: 6px solid rgba(255, 174, 0, 0.6);
+}
+
+.mouseBox #flexAppendage {
+    position: absolute;
+    text-align: center;
+    color: black;
+    background-color: rgb(255, 187, 0);
+    border-radius: 10px;
+
+    /* Center EVERYTHING */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+    min-width: 60px;
+    height: 18px;
+    bottom: 54.5px;
+    left: 0px;
 }
 
 /* Honors styling*/
@@ -581,10 +644,6 @@ ul {
     -webkit-background-clip: text; 
             background-clip: text;
 }
-.mouseBox.honors {
-    background-color: rgba(189, 78, 209, .5);
-    outline: 8px solid rgba(189, 78, 209, .5);
-}
 
 /* CONC styling*/
 .courseHeader.CONC::before {
@@ -599,10 +658,6 @@ ul {
     -webkit-background-clip: text; 
             background-clip: text;
 }
-.mouseBox.CONC {
-    background-image: linear-gradient(to bottom right, rgba(130, 17, 148, .5), rgba(0, 225, 255, .5));
-    outline: 8px solid rgba(189, 78, 209, .5);
-}
 
 /* AP styling*/
 .courseHeader.advancedPlacement::before {
@@ -616,8 +671,4 @@ ul {
     -webkit-text-fill-color: transparent; 
     -webkit-background-clip: text; 
             background-clip: text;
-}
-.mouseBox.advancedPlacement {
-    background-image: linear-gradient(to bottom right, rgba(101, 9, 116, .5), rgba(255, 123, 0, .5));
-    outline: 8px solid rgba(189, 78, 209, .5);
 }

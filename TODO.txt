@@ -1,13 +1,15 @@
 [✓] Ensure classes must be placed AFTER their prerequisites (make cells above, below, and behind prerequisite classes unavailable)
-[✓] When placing certain subject courses, change unavailable cells that are above and below the available cells to a new class name called .flexCourse, which are have a yellow background instead of red. upon placing a course in a flexCourse cell, it will function as a normal course, but have a yellow border and a little tag saying “Flex Course somewhere on it
 [✓] Find a way to set the searchContainer to fixed without breaking it
 [✓] Above the table can go a “took PAP Algebra 1 in 8th grade” checkbox that changes a lot of stuff, including the course pathways tab
-[✓] Incorporate the flex courses lol
+[✓] When placing certain subject courses, change unavailable cells that are above and below the available cells to a new class name called .flexCourse, which are have a yellow background instead of red. upon placing a course in a flexCourse cell, it will function as a normal course, but have a yellow border and a little tag saying “Flex Course” somewhere on it (oops, I accidentally mistook the flex courses for "Extra Electives")
+[✓] Incorporate the flex courses lol (oops, I accidentally mistook the flex courses for "Extra Electives")
+[✓] To fix the weird sizing problem for single-width table columns, try hiding the table in a different way when needing to?
+
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+[ ] ACTUALLY incorporate the ACTUAL flex courses (half done now)
 [ ] Make sure to account for double-blocked courses by seeping down into a free elective course and coloring the tile-outline a different color to refer to the double-blocked courses
-[ ] To fix the weird sizing problem for single-width table columns, try hiding the table in a different way when needing to?
 [ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
 [ ] Find a way to tackle the Human Body Systems rule lmao
 [ ] Provide information about classes when hovering over them in the course pathways tab

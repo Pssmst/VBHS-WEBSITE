@@ -26,7 +26,6 @@ for (const [subject, offerings] of Object.entries(courses)) {
         }
     }
 }
-
 //console.log(courses); console.log(courseMap);
 
 // Setup ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,13 +122,29 @@ for (const [subject, offerings] of Object.entries(courses)) {
 
             // Create note underneath the course name (header)
             if (course.note) {
-                newElement('p', `${course.name}_courseContainer`, "Note: " + course.note, '', 'note');
+                newElement('p', `${course.name}_courseContainer`, `Note: ${course.note}`, '', 'note');
+            }
+            
+            if (course.flex) {
+                let flexStrings = [];
+                for (flex of course.flex) {
+                    if      (flex == "Science")              {flexStrings.push("3rd year Science")}
+                    else if (flex == "Math")                 {flexStrings.push("4th year Math")}
+                    else if (flex == "Civics")               {flexStrings.push("Civics")}
+                    else if (flex == "World History")        {flexStrings.push("World History")}
+                    else if (flex == "Math after Algebra 2") {flexStrings.push("4th year Math (after Algebra 2)")}
+                }
+                newElement('p', `${course.name}_courseContainer`, `Flex: Can count towards the ${flexStrings.join(' OR ')} graduation requirement.`, '', 'note', 'flex');
             }
 
             // Create details unordered list to add stuff to
             const ulDetails = document.createElement('ul');
             document.getElementById(`${course.name}_courseContainer`).appendChild(ulDetails);
             let details = [];
+
+            if (course.doubleBlocked) {
+                details.push(`Double-blocked class (2-period course!)`);
+            }
 
             if (course.description.length > 0) {
                 details.push(`${course.description}`);
@@ -168,8 +183,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
                 details.push(`Prerequisite to: ${course.postrequisites.join(', ')}`);
             }
 
-            details.push(`Credits: ${course.credits}`);
-            details.push(course.courseLength == 1 ? "Year-long course" : "One-semester course");
+            details.push(`Credits: ${course.credits} (${course.courseLength == 1 ? "One-year" : "One-semester"})`);
             if (course.occurences > 1) {
                 details.push(`Can take ${course.occurences} times`);
             }
@@ -179,7 +193,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
             }
 
             if (course.advancedPlacement) {
-                details.push("Weighted on a 5-point scale!");
+                details.push("Weighted on a 5-point scale");
                 courseHeader.classList.add('advancedPlacement');
             }
 
@@ -279,16 +293,21 @@ function setCellModifiers(course, elementUnderCursor, allowedSubjects) {
     if (course.advancedPlacement) { elementUnderCursor.classList.add('advancedPlacement'); }
     if (course.CONC)              { elementUnderCursor.classList.add('CONC'); }
     if (course.CONC)              { elementUnderCursor.classList.add('CONC'); }
-    if (!allowedSubjects)         { elementUnderCursor.classList.add('flexCourse'); }
+    if (!allowedSubjects)         { elementUnderCursor.classList.add('extraElective'); }
 }
 
 const tableCells = document.querySelectorAll('td');
 
+// Surprise tool for later (contains all courses that are in the table)
+let coursesInTable = [];
+            
 for (const [subject, offerings] of Object.entries(courses)) {
     for (const [offering, coursesArray] of Object.entries(offerings)) {
         for (const course of coursesArray) {
 
             const courseElement = document.getElementById(`${course.name}_courseContainer`);
+
+
             courseElement.addEventListener('click', function (event) {
                 if (courseElement.classList.contains('used')) return;
 
@@ -297,37 +316,49 @@ for (const [subject, offerings] of Object.entries(courses)) {
 
                 // Create the mousebox
                 const mouseBox = document.createElement('div');
+                document.body.appendChild(mouseBox);
+
+                // Determine size and contents
+                if (course.courseLength == 1) {
+                    mouseBox.style.width = `160px`;
+                    mouseBox.style.height = `60px`;
+                }
+                else {
+                    mouseBox.style.width = `80px`;
+                    mouseBox.style.height = `80px`;
+                }
+                mouseBox.textContent = course.name;
+
+                // MouseBox modifiers
                 mouseBox.classList.add('mouseBox');
+                mouseBox.id = 'mouseBox';
                 if (course.honors) { mouseBox.classList.add('honors'); }
                 if (course.CONC) { mouseBox.classList.add('CONC'); }
                 if (course.advancedPlacement) { mouseBox.classList.add('advancedPlacement'); }
-                mouseBox.textContent = course.name;
-                document.body.appendChild(mouseBox);
+                if (course.flex) { newElement('div', 'mouseBox', 'flex', 'flexAppendage'); }
 
                 function moveBox(e) {
                     mouseBox.style.position = 'absolute';
-                    mouseBox.style.left = `${e.pageX - 40}px`; // Offset by 40px
-                    mouseBox.style.top = `${e.pageY - 40}px`; // Offset by 30px
+                    // Places mouse in center of mousebox
+                    mouseBox.style.left = `${e.pageX - mouseBox.clientWidth/2}px`;
+                    mouseBox.style.top = `${e.pageY - mouseBox.clientHeight/2}px`;
 
-                    // Scans all cells
+                    // Iterate through every cell for gaming purposes
                     tableCells.forEach(cell => {
                         const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
                         const allowedCertainGrades = findAllowedGrades(course.grades).includes(Number(cell.id[1]));
                         
-                        // Classes that are not allowed by subject but share the same grade can be flex classes
-                        if (!allowedSubjects && allowedCertainGrades) {
-                            cell.classList.add('flexCourseSpot');
-                        }
-
-                        else if (!(allowedSubjects && allowedCertainGrades)) { // If none of these things are true, then make the cell unavailable
+                        // Unavailable cells (i forgot how it works lmao)
+                        if (!(allowedSubjects && allowedCertainGrades)) {
                             cell.classList.add('unavailable');
                         }
+                        
                     });
                 }
 
                 function resetAvailability() {
                     tableCells.forEach(cell => cell.classList.remove('unavailable'));
-                    tableCells.forEach(cell => cell.classList.remove('flexCourseSpot'));
+                    //tableCells.forEach(cell => cell.classList.remove('extraElectiveSpot'));
                 }
 
                 function handleDrop(e) {
@@ -341,8 +372,6 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     let allPrerequisitesFulfilled = !Object.values(fulfilledPrerequities).some(fulfilled => !fulfilled);
 
                     if (elementUnderCursor && elementUnderCursor.tagName === 'TD' && allowedCertainGrades && allPrerequisitesFulfilled) {
-                        // Surprise tool for later
-                        const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(elementUnderCursor));
 
                         // Handle previous class if it exists
                         if (elementUnderCursor.textContent.trim()) {
@@ -352,9 +381,12 @@ for (const [subject, offerings] of Object.entries(courses)) {
                                 previousClassContainer.classList.remove('used');
                             }
                         }
+                        
+                        // Surprise tool for later
+                        const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(elementUnderCursor));
                 
                         // Place the new class
-                        if (course.courseLength === 1 || course.courseLength === 2) {
+                        if (course.courseLength === 1) {
                             if (Number(elementUnderCursor.id[1]) % 2 === 0) {
                                 elementUnderCursor = elementUnderCursor.previousElementSibling;
                             }
@@ -366,19 +398,58 @@ for (const [subject, offerings] of Object.entries(courses)) {
                                 setCellModifiers(course, elementUnderCursor, allowedSubjects);
                         
                             }
-                        } else if (!elementUnderCursor.textContent.trim()) {
+                        }
+                        // If the course is a semester course and the cell under the cursor is empty
+                        else if (!elementUnderCursor.textContent) {
                             setCellModifiers(course, elementUnderCursor, allowedSubjects);
                         }
                     }
-                    // Update what is used
+
+                    // Scan all cells for cell contents
+                    let tableHasAlgebra2AndWhere = [false, ''];
                     tableCells.forEach(cell => {
-                        if (cell.textContent.trim().length > 0) {
+                        if (cell.textContent) {
+                            coursesInTable.push(courseMap.get(cell.textContent)); // Thank goodness I made that courseMap earlier
+                            
                             const courseContainer = document.getElementById(`${cell.textContent.trim()}_courseContainer`);
                             if (courseContainer) {
                                 courseContainer.classList.add('used');
                             }
                         }
+
+                        if (cell.textContent.includes("Algebra 2")) {
+                            tableHasAlgebra2AndWhere = [true, cell.id];
+                        }
                     });
+
+                    // Find flex courses in table and then determine what spots are available for extra electives
+                    for (let courseInTable of coursesInTable) {
+                        if (courseInTable.flex) {
+                            for (flex of courseInTable.flex) {
+                                if (flex == "Science") {
+                                    document.getElementById('s5').classList.add('extraElectiveSpot');
+                                    document.getElementById('s6').classList.add('extraElectiveSpot');
+                                }
+                                if (flex == "Math") {
+                                    document.getElementById('m7').classList.add('extraElectiveSpot');
+                                    document.getElementById('m8').classList.add('extraElectiveSpot');
+                                }
+                                if (flex == "Math after Algebra 2" && tableHasAlgebra2AndWhere[0]) {
+                                    for (let id = Number(tableHasAlgebra2AndWhere[1])+2; id <= 8; id++) {
+                                        document.getElementById(`m${id}`).classList.add('extraElectiveSpot');
+                                    }
+                                }
+                                if (flex == "World History") {
+                                    console.log("CHANGE COURSES IN THE COURSE CATALOG AND DISPLAY AS FULFILLED BENEATH");
+                                }
+                                if (flex == "Civics") {
+                                    console.log("CHANGE COURSES IN THE COURSE CATALOG AND DISPLAY AS FULFILLED BENEATH");
+                                }
+                            }
+                        }
+                    }
+                    // ^^ COOL, now find a way to REMOVE that once the class is gone
+
                     cleanup();
                 }
                 
@@ -406,12 +477,13 @@ for (const [subject, offerings] of Object.entries(courses)) {
 // Double-click listener to handle unmerging of cells
 tableCells.forEach(cell => {
     cell.addEventListener('dblclick', function() {
-
+        
         cell.classList.remove('occupied');
         cell.classList.remove('honors');
         cell.classList.remove('advancedPlacement');
         cell.classList.remove('CONC');
-        cell.classList.remove('flexCourse');
+        cell.classList.remove('extraElective');
+
         courseContainer = document.querySelector(`[id="${cell.textContent}_courseContainer"]`);
         if (courseContainer) { courseContainer.classList.remove('used'); }
 
@@ -586,8 +658,8 @@ function drawLines(pathways) {
             const toElem = document.getElementById(to);
 
             // For line drawing...
-            const x_offset = 12;
-            const y_offset = 33;
+            const x_offset = 19;
+            const y_offset = 42;
 
             if (fromElem && toElem) {
                 // Get bounding rectangles
@@ -708,18 +780,16 @@ let numOfPathways = generatePathways(specifiedPathwayID);
 
 
 function openPathways() {
-    document.getElementById('table').style.display = 'none';
-    document.getElementById('pathwayContainer').style.display = 'block';
+    document.getElementById('table').classList.add('hidden');
+    document.getElementById('pathwayContainer').classList.remove('hidden');
+
     numOfPathways = generatePathways(specifiedPathwayID);
 }
 
 function openTable() {
     svg.innerHTML = ''; // Clear existing lines
-    document.getElementById('pathwayContainer').style.display = 'none';
-    document.getElementById('table').style.display = 'block';
-    document.getElementById('table').style.width = '100%';
-    document.getElementById('table').style.border = '1px solid transparent';
-    document.getElementById('table').style.tableLayout = 'fixed';
+    document.getElementById('pathwayContainer').classList.add('hidden');
+    document.getElementById('table').classList.remove('hidden');
 }
 
 function incrementPathwayID() {
