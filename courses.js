@@ -450,7 +450,7 @@ const courses = {
             {
                 name: "AP Chemistry",
                 description: "This two semester course is a college level study of atomic structure, chemical reactions and kinetic theory with labs and outside of class work; meets third science requirement; includes preparation for AP exam, which can earn students college credit with a passing score. Recommended prerequisites include successful completion of a general high school chemistry course AND Algebra 2.",
-                prerequisites: ['Algebra 2'],
+                prerequisites: [],
                 credits: 1,
                 courseLength: 1,
                 occurences: 1,
@@ -581,7 +581,7 @@ const courses = {
                 credits: .5,
                 courseLength: .5,
                 occurences: 1,
-                grades: [false, false, true, true, true, true, true, true],
+                grades: [true, true, true, true, true, true, true, true],
                 courseCode: 474300,
             },
         ]
@@ -1285,7 +1285,7 @@ const courses = {
             },
             {
                 name: "Cybersecurity 2",
-                description: "Part 2 of Cybersecurity.",
+                description: '',
                 prerequisites: ['Cybersecurity 1'],
                 flex: ['Science', 'Math'],
                 credits: 1,
@@ -1296,7 +1296,7 @@ const courses = {
             },
             {
                 name: "Cybersecurity 3",
-                description: "Part 3 of Cybersecurity",
+                description: '',
                 prerequisites: ['Cybersecurity 2'],
                 flex: ['Science', 'Math'],
                 credits: 1,
@@ -1322,6 +1322,7 @@ const courses = {
                 name: "Robotics 2",
                 description: "Advanced coding course. Students learn Python and C/C++ and in the context of programming a Vex 5 robot. For students interested in competitive robotics, this course is recommended.",
                 prerequisites: [],
+                flex: ['Science', 'Math'],
                 credits: 1,
                 courseLength: 1,
                 occurences: 1,

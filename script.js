@@ -5,7 +5,12 @@ const courseMap = new Map();
 for (const [subject, offerings] of Object.entries(courses)) {
     for (const [offering, coursesArray] of Object.entries(offerings)) {
         for (const course of coursesArray) {
-            course.postrequisites = []; // Assign each course a new postrequisites property :)
+
+            // Add missing properties to each course (VERY IMPORTANT!)
+            course.postrequisites = [];
+            if (!("flex" in course)) {course.flex = [];}
+            //if (!("honors" in course)) {course.honors = false;}
+
             courseMap.set(course.name.trim(), course);
         }
     }
@@ -125,14 +130,14 @@ for (const [subject, offerings] of Object.entries(courses)) {
                 newElement('p', `${course.name}_courseContainer`, `Note: ${course.note}`, '', 'note');
             }
             
-            if (course.flex) {
+            if (course.flex.length > 0) {
                 let flexStrings = [];
-                for (flex of course.flex) {
-                    if      (flex == "Science")              {flexStrings.push("3rd year Science")}
-                    else if (flex == "Math")                 {flexStrings.push("4th year Math")}
-                    else if (flex == "Civics")               {flexStrings.push("Civics")}
-                    else if (flex == "World History")        {flexStrings.push("World History")}
-                    else if (flex == "Math after Algebra 2") {flexStrings.push("4th year Math (after Algebra 2)")}
+                for (f of course.flex) {
+                    if      (f == "Science")              {flexStrings.push("3rd year Science")}
+                    else if (f == "Math")                 {flexStrings.push("4th year Math")}
+                    else if (f == "Civics")               {flexStrings.push("Civics")}
+                    else if (f == "World History")        {flexStrings.push("World History")}
+                    else if (f == "Math after Algebra 2") {flexStrings.push("4th year Math (after Algebra 2)")}
                 }
                 newElement('p', `${course.name}_courseContainer`, `Flex: Can count towards the ${flexStrings.join(' OR ')} graduation requirement.`, '', 'note', 'flex');
             }
@@ -236,6 +241,16 @@ function getLeftmostTH(elementUnderCursor) {
     return null;
 }
 
+function getTextContent(cell) {
+    // Get only text nodes (ignores child elements)
+    const textContent = Array.from(cell.childNodes)
+    .filter(node => node.nodeType === Node.TEXT_NODE)
+    .map(node => node.textContent.trim())
+    .join(' ');
+
+    return textContent;
+}
+
 let papAlgebra1Taken = false;
 
 function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLength) {
@@ -262,7 +277,7 @@ function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLeng
                         const cell = row.cells[i];
                         if (cell) {
                             for (const prerequisite of prerequisites) {
-                                if (cell.textContent.includes(prerequisite)) {
+                                if (getTextContent(cell).includes(prerequisite)) {
                                     prereqsUsed[prerequisite] = true;
                                 }
                                 // Account for the algebra 1 checkbox
@@ -289,27 +304,46 @@ function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLeng
 function setCellModifiers(course, elementUnderCursor, allowedSubjects) {
     elementUnderCursor.textContent = course.name;
     elementUnderCursor.classList.add('occupied');
+
     if (course.honors)            { elementUnderCursor.classList.add('honors'); }
     if (course.advancedPlacement) { elementUnderCursor.classList.add('advancedPlacement'); }
     if (course.CONC)              { elementUnderCursor.classList.add('CONC'); }
-    if (course.CONC)              { elementUnderCursor.classList.add('CONC'); }
-    if (!allowedSubjects)         { elementUnderCursor.classList.add('extraElective'); }
+
+    // Basic flex course indicator
+    if (course.flex && course.flex.length > 0) {
+        elementUnderCursor.classList.add('flexCourse');
+        newElement('div', elementUnderCursor.id, 'f', 'flexCourseIndicator', 'indicator');
+    }
+
+    // Extra elective (WITHOUT flex credit substituting it) [BAD]
+    if (!allowedSubjects) {
+        elementUnderCursor.classList.add('extraElective');
+        newElement('div', elementUnderCursor.id, 'EE', `${elementUnderCursor.id}_extraElectiveBad`, 'extraElectiveBadIndicator', 'indicator');
+
+        const goodIndicator = document.getElementById(`${elementUnderCursor.id}_extraElectiveGood`);
+        if (goodIndicator) { goodIndicator.remove(); }
+    }
+
+    // Extra elective (WITH flex credit substituting it) [GOOD]
+    if (!allowedSubjects && elementUnderCursor.classList.contains('flexCourseSpot')) {
+        elementUnderCursor.classList.add('extraElective');
+        newElement('div', elementUnderCursor.id, 'EE', `${elementUnderCursor.id}_extraElectiveGood`, 'extraElectiveGoodIndicator', 'indicator');
+
+        const badIndicator = document.getElementById(`${elementUnderCursor.id}_extraElectiveBad`);
+        if (badIndicator) { badIndicator.remove(); }
+    }
 }
 
 const tableCells = document.querySelectorAll('td');
 
-// Surprise tool for later (contains all courses that are in the table)
-let coursesInTable = [];
-            
 for (const [subject, offerings] of Object.entries(courses)) {
     for (const [offering, coursesArray] of Object.entries(offerings)) {
         for (const course of coursesArray) {
 
             const courseElement = document.getElementById(`${course.name}_courseContainer`);
 
-
             courseElement.addEventListener('click', function (event) {
-                if (courseElement.classList.contains('used')) return;
+                if (courseElement.classList.contains('used')) {return};
 
                 const courseContainer = document.querySelector(`[id="${course.name}_courseContainer"]`);
                 courseContainer.classList.add('clicked'); // Start the rotation
@@ -335,7 +369,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
                 if (course.honors) { mouseBox.classList.add('honors'); }
                 if (course.CONC) { mouseBox.classList.add('CONC'); }
                 if (course.advancedPlacement) { mouseBox.classList.add('advancedPlacement'); }
-                if (course.flex) { newElement('div', 'mouseBox', 'flex', 'flexAppendage'); }
+                if (course.flex.length > 0) { newElement('div', 'mouseBox', 'flex', 'flexAppendage'); }
 
                 function moveBox(e) {
                     mouseBox.style.position = 'absolute';
@@ -347,18 +381,17 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     tableCells.forEach(cell => {
                         const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
                         const allowedCertainGrades = findAllowedGrades(course.grades).includes(Number(cell.id[1]));
+                        const isFlexSpot = cell.classList.contains('flexCourseSpot');
                         
-                        // Unavailable cells (i forgot how it works lmao)
-                        if (!(allowedSubjects && allowedCertainGrades)) {
+                        // If this condition is true, make the cell unavailable
+                        if (!(allowedSubjects && allowedCertainGrades) && !isFlexSpot) {
                             cell.classList.add('unavailable');
                         }
-                        
                     });
                 }
 
                 function resetAvailability() {
                     tableCells.forEach(cell => cell.classList.remove('unavailable'));
-                    //tableCells.forEach(cell => cell.classList.remove('extraElectiveSpot'));
                 }
 
                 function handleDrop(e) {
@@ -392,7 +425,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
                             }
                             const nextCell = elementUnderCursor.nextElementSibling;
                 
-                            if (nextCell && nextCell.tagName === 'TD' && !nextCell.textContent.trim()) {
+                            if (nextCell && nextCell.tagName === 'TD' && !nextCell.textContent) {
                                 elementUnderCursor.setAttribute('colspan', '2');
                                 nextCell.style.display = 'none';
                                 setCellModifiers(course, elementUnderCursor, allowedSubjects);
@@ -405,45 +438,46 @@ for (const [subject, offerings] of Object.entries(courses)) {
                         }
                     }
 
-                    // Scan all cells for cell contents
+                    let coursesInTable = [];
                     let tableHasAlgebra2AndWhere = [false, ''];
-                    tableCells.forEach(cell => {
-                        if (cell.textContent) {
-                            coursesInTable.push(courseMap.get(cell.textContent)); // Thank goodness I made that courseMap earlier
-                            
-                            const courseContainer = document.getElementById(`${cell.textContent.trim()}_courseContainer`);
-                            if (courseContainer) {
-                                courseContainer.classList.add('used');
-                            }
-                        }
 
-                        if (cell.textContent.includes("Algebra 2")) {
+                    // Scan all cells for cell contents
+                    tableCells.forEach(cell => {
+                        coursesInTable.push(courseMap.get(getTextContent(cell))); // Thank goodness I made that courseMap earlier
+                        const courseContainer = document.getElementById(`${getTextContent(cell)}_courseContainer`);
+                        
+                        if (courseContainer) { courseContainer.classList.add('used'); }
+
+                        if (getTextContent(cell).includes("Algebra 2")) {
                             tableHasAlgebra2AndWhere = [true, cell.id];
                         }
                     });
 
                     // Find flex courses in table and then determine what spots are available for extra electives
-                    for (let courseInTable of coursesInTable) {
-                        if (courseInTable.flex) {
-                            for (flex of courseInTable.flex) {
-                                if (flex == "Science") {
-                                    document.getElementById('s5').classList.add('extraElectiveSpot');
-                                    document.getElementById('s6').classList.add('extraElectiveSpot');
-                                }
-                                if (flex == "Math") {
-                                    document.getElementById('m7').classList.add('extraElectiveSpot');
-                                    document.getElementById('m8').classList.add('extraElectiveSpot');
-                                }
-                                if (flex == "Math after Algebra 2" && tableHasAlgebra2AndWhere[0]) {
-                                    for (let id = Number(tableHasAlgebra2AndWhere[1])+2; id <= 8; id++) {
-                                        document.getElementById(`m${id}`).classList.add('extraElectiveSpot');
+                    if (coursesInTable.length > 0) {
+                        for (let courseInTable of coursesInTable) {
+                            if (courseInTable && courseInTable.flex) {  // Check if it's valid
+                                for (let f of courseInTable.flex) {
+                                    if (f === "Science") {
+                                        document.getElementById('s5')?.classList.add('flexCourseSpot');
+                                        document.getElementById('s6')?.classList.add('flexCourseSpot');
                                     }
-                                }
-                                if (flex == "World History") {
-                                    console.log("CHANGE COURSES IN THE COURSE CATALOG AND DISPLAY AS FULFILLED BENEATH");
-                                }
-                                if (flex == "Civics") {
-                                    console.log("CHANGE COURSES IN THE COURSE CATALOG AND DISPLAY AS FULFILLED BENEATH");
+                                    if (f === "Math") {
+                                        document.getElementById('m7')?.classList.add('flexCourseSpot');
+                                        document.getElementById('m8')?.classList.add('flexCourseSpot');
+                                    }
+                                    if (f === "Math after Algebra 2" && tableHasAlgebra2AndWhere[0]) {
+                                        for (let id = Number(tableHasAlgebra2AndWhere[1]) + 2; id <= 8; id++) {
+                                        document.getElementById(`m${id}`)?.classList.add('flexCourseSpot');
+                                        }
+                                    }
+                                    if (f === "World History") {
+                                        console.log("CHANGE COURSES IN THE COURSE CATALOG AND DISPLAY AS FULFILLED BENEATH");
+                                    }
+                                    if (f === "Civics") {
+                                        console.log("CHANGE COURSES IN THE COURSE CATALOG AND DISPLAY AS FULFILLED BENEATH");
+                                    }
+                                    console.log(f);
                                 }
                             }
                         }
@@ -477,14 +511,19 @@ for (const [subject, offerings] of Object.entries(courses)) {
 // Double-click listener to handle unmerging of cells
 tableCells.forEach(cell => {
     cell.addEventListener('dblclick', function() {
-        
+
         cell.classList.remove('occupied');
         cell.classList.remove('honors');
         cell.classList.remove('advancedPlacement');
         cell.classList.remove('CONC');
         cell.classList.remove('extraElective');
 
-        courseContainer = document.querySelector(`[id="${cell.textContent}_courseContainer"]`);
+        // THIS IS A BAD FIX! You'll eventually have to implement it to where it saves every current flex course and deletes the slot upon very specific circumstances
+        if (courseMap.get(getTextContent(cell)).flex.length > 0) {
+            tableCells.forEach(cell2 => cell2.classList.remove('flexCourseSpot'));
+        }
+
+        courseContainer = document.querySelector(`[id="${getTextContent(cell)}_courseContainer"]`);
         if (courseContainer) { courseContainer.classList.remove('used'); }
 
         // If the cell has merged (colspan="2"), unmerge it
@@ -523,6 +562,7 @@ const senior = document.getElementById('senior');
 const honors = document.getElementById('honors');
 const conc = document.getElementById('conc');
 const ap = document.getElementById('ap');
+const flex = document.getElementById('flex');
 
 searchboxNames.addEventListener('input', () => search());
 creditHalf.addEventListener('input', () => search());
@@ -535,6 +575,7 @@ senior.addEventListener('input', () => search());
 honors.addEventListener('input', () => search());
 conc.addEventListener('input', () => search());
 ap.addEventListener('input', () => search());
+flex.addEventListener('input', () => search());
 
 function search() {
     const searchString = searchboxNames.value.trim().toLowerCase();
@@ -546,8 +587,8 @@ function search() {
         for (const [offering, coursesArray] of Object.entries(offerings)) {
             for (const course of coursesArray) {
                 let elementToHide = document.getElementById(`${course.name}_courseContainer`);
-                if (elementToHide) {
 
+                if (elementToHide) {
                     // Determine if course matches name search
                     const matchesName = (searchString === "" || course.name.toLowerCase().includes(searchString));
 
@@ -573,7 +614,10 @@ function search() {
                         (ap.checked && course.advancedPlacement) ||
                         (!honors.checked && !conc.checked && !ap.checked);
 
-                    if (matchesName && matchesCredit && matchesGrades && matchesLevel) {
+                    // Determine if course is a flex course
+                    const isFlex = (flex.checked && course.flex.length > 0) || (!flex.checked);
+
+                    if (matchesName && matchesCredit && matchesGrades && matchesLevel && isFlex) {
                         elementToHide.classList.remove('notDiscoveredBySearch');
                         numOfCoursesFound++;
                     } else {
