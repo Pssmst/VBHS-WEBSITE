@@ -4,7 +4,7 @@ body {
     color: rgb(255, 255, 255);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
     margin: 0;
-    overflow-y:hidden;
+    overflow-y: hidden;
 }
 
 header {
@@ -27,21 +27,18 @@ input.checkbox {
 
 @keyframes outlineFlashGray {
     0% {
-        background-color: transparent;
         outline: 1px solid rgb(90, 90, 90);
     }
 }
 
 @keyframes outlineFlashGreen {
     0% {
-        background-color: transparent;
         outline: 1px solid rgb(0, 255, 23);
     }
 }
 
 @keyframes outlineFlashRed {
     0% {
-        background-color: transparent;
         outline: 1px solid rgb(145, 49, 65);
     }
 }
@@ -49,7 +46,6 @@ input.checkbox {
 
 @keyframes outlineFlashWhite {
     0% {
-        background-color: transparent;
         outline: 1px solid rgb(255, 255, 255);
     }
 }
@@ -75,6 +71,13 @@ input.checkbox {
     0% {
         outline: 10px solid rgb(6, 95, 18);
         background-color: rgb(6, 95, 18);
+    }
+}
+
+@keyframes flashGray {
+    0% {
+        outline: 10px solid rgb(121, 121, 121);
+        background-color: rgb(100, 100, 100);
     }
 }
 
@@ -105,7 +108,7 @@ input.checkbox {
 #appContainer {
     position: absolute;
     display: flex;
-    flex-direction: row; /* SET TO `row-reverse` TO SWAP LEFT AND RIGHT PANELS! */
+    flex-direction: row; /* SET TO `row-reverse` TO FLIP LEFT AND RIGHT PANELS! */
     justify-content: space-evenly;
     width: 100%;
     height: 90%;
@@ -113,7 +116,6 @@ input.checkbox {
 
 #scheduleContainer {
     position: relative;
-
     width: 66%;
     
     background-color: rgb(32, 32, 32);
@@ -133,7 +135,6 @@ input.checkbox {
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////*/
-
 
 #toggleScheduleButtonContainer {
     display: flex;
@@ -171,10 +172,11 @@ th, td {
     z-index: 1; /* Layer the td above other elements */
 }
 
+
 th {
     background-color: rgb(50, 50, 50);
+    font-size: 1em;
 }
-
 th:hover {
     animation: outlineFlashWhite .3s alternate;
     background-color: rgba(150, 150, 150, .5);
@@ -185,12 +187,11 @@ th:hover {
 
 td {
     font-size: .8em;
-    background-color: rgb(32, 32, 32);
 }
 td:hover {
     animation: outlineFlashGray .3s alternate;
-    background-color: rgba(100, 100, 100, .5);
-    outline: 6px solid rgba(100, 100, 100, .5);
+    background-color: rgb(40, 40, 40);
+    outline: 6px solid rgba(80, 80, 80, 0.5);
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
     z-index: 10; /* Ensure hover state is above everything else */
 }
@@ -200,24 +201,25 @@ td.flexCourseSpot {
     background-color: rgb(58, 42, 17);
     background-image: linear-gradient(to bottom right, transparent, transparent);
 }
-
-/* Cell modifiers */
-td.occupied {
-    animation: flashGreen .5s ease-out;
-    background-color: rgb(42, 42, 42);
-}
 td.occupied.flexCourseSpot {
     animation: flashGold .5s ease-out;
 }
+
+/* Cell modifiers */
+td.regular {
+    animation: flashGray .5s ease-out;
+    background-color: rgb(42, 42, 42);
+}
+td.regular:hover {
+    background-color: rgb(60, 60, 60);
+    outline: 6px solid rgba(140, 140, 140, 0.5);
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    z-index: 10; /* Ensure hover state is above everything else */
+}
+
 td.honors {
     animation: flashPurple .5s ease-out;
     background-color: rgb(71, 44, 75);
-}
-td.honors:hover {
-    background-color: rgba(147, 67, 158, .5);
-    outline: 6px solid rgba(117, 67, 158, 0.5);
-    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
-    z-index: 10; /* Ensure hover state is above everything else */
 }
 td.CONC {
     background-image: linear-gradient(to bottom right, rgb(130, 17, 148), rgb(0, 225, 255));
@@ -225,6 +227,13 @@ td.CONC {
 td.advancedPlacement {
     background-image: linear-gradient(to bottom right, rgb(130, 17, 148), rgb(255, 102, 0));
 }
+td.honors:hover {
+    background-color: rgba(147, 67, 158, .5);
+    outline: 6px solid rgba(117, 67, 158, 0.5);
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    z-index: 10; /* Ensure hover state is above everything else */
+}
+
 td.extraElective {
     animation: flashRed .5s ease-out;
     z-index: 5;
@@ -237,9 +246,9 @@ td.unavailable {
     outline: 0px solid transparent;
 }
 
+/* Cell width and height */
 #table td:not(:first-child), #table th:not(:first-child) {
     width: 11.1111%; /* Ensures columns are of equal width */
-    overflow: hidden; /* Prevents overflowing text */
     text-overflow: ellipsis; /* Adds "..." if text overflows */
 }
 
@@ -258,19 +267,40 @@ td.unavailable {
     font-size: .7em;
     text-align: center;
     font-weight: bold;
+    line-height: 1.35em;
 
     width: 12px;
     height: 12px;
+
     padding: 3px;
     margin: 4px;
     top: 0px;
-    left: 0px;
+    right: 0px;
+
+    overflow: hidden;
 }
 
 .flexCourseIndicator {
+    transition: top .2s ease, left .2s ease, width .2s ease, font-size .2s ease, line-height .2s ease;
     color: black;
     background-color: rgb(255, 187, 0);
     outline: 1px solid black;
+
+    left: 0px;
+    font-size: .6em;
+    font-weight: 100;
+    line-height: 1.6em;
+}
+td:hover .flexCourseIndicator {
+    outline: 0px solid transparent;
+    top: -13px;
+    left: 4px;
+    width: 50px;
+    font-size: .85em;
+    line-height: 1.2em;
+}
+td:hover .flexCourseIndicator.selfCredit {
+    width: 100px;
 }
 
 .extraElectiveBadIndicator {
@@ -280,9 +310,9 @@ td.unavailable {
 }
 
 .extraElectiveGoodIndicator {
-    color: white;
+    color: rgb(0, 39, 29);
     background-color: rgb(57, 236, 81);
-    outline: 1px solid rgb(0, 56, 42);
+    outline: 1px solid rgb(0, 39, 29);
 }
 
 
@@ -532,23 +562,28 @@ ul {
 
 /* Course code display at top left */
 .courseCode {
+    transition: opacity .2s ease, color .2s ease, text-shadow .2s ease;
     color: rgba(97, 97, 97, 0);
     text-shadow: 7px 7px 10px rgba(0, 0, 0, 0);
 
-    position: absolute; /* Positions the courseCode absolutely within the courseContainer */
+    position: absolute;
     bottom: 0;
     right: 0;
     margin-right: 12px;
     margin-bottom: 0px;
 }
-.courseContainer:hover .courseCode {
-    transition: color 0.25s ease;
-    color: rgba(97, 97, 97);
-    text-shadow: 7px 7px 10px rgba(0, 0, 0, .2);
+
+.courseContainer:hover .courseCode, .courseContainer.clicked .courseCode {
+    opacity: 1;
+    color: rgba(97, 97, 97, 1);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0.2);
 }
-.courseContainer:hover.used .courseCode {
+.courseContainer:hover.used .courseCode, .courseContainer.used.clicked .courseCode {
+    opacity: 1;
     color: rgb(128, 40, 40);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
 }
+
 
 /* ACT and GPA display at left */
 .prerequisiteStat {
@@ -646,7 +681,7 @@ ul {
     pointer-events: none; /* Ignore mouse events */
     animation: grow 0.2s cubic-bezier(0, 0, 0, 1.2);
     overflow-x: wrap;
-    z-index: 200; /* Ensure it stays on top of other elements */
+    z-index: 999999; /* Ensure it stays on top of other elements */
     
     background-color: rgba(150, 150, 150, .6);
     outline: 6px solid rgba(201, 201, 201, .6);
