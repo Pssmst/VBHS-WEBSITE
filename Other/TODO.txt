@@ -17,9 +17,6 @@
 [ ] Fix weird course :before element clipping
 [ ] Add file export of classes and lines in the scheduler
 
-
-
-
 [ ] ACTUALLY incorporate the ACTUAL flex courses
 [ ] Make sure to account for double-blocked courses by seeping down into a free elective course and coloring the tile-outline a different color to refer to the double-blocked courses
 [ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
@@ -33,3 +30,13 @@
 [ ] Include map of floor 1 and floor 2 of school (made up of several images of the whole map with one room in red; repeat for each room, keep in a “rooms folder,” then display the images dynamically)
 [ ] Rooms light up in red when the user hovers over the room on the map and when the user hovers over a course in the course catalog (highlights what room that class is in)
 [ ] When hovering over a room, display what course it contains and what teacher belongs in it somewhere on the screen idk
+
+
+
+QUESTIONS:
+
+Q: It says that Honors Chemistry Integrated is a flex credit to a 3rd year science, when the course itself is a third year science. Because of this, if you take Honors Chemistry Integrated during your fourth year, can you take whatever you want your third year in place of science?
+A: 
+
+Q: CONC Physical Education and CONC Health are both listed as 1 credit, but are only a semester long. Should this be the case?
+A: 
