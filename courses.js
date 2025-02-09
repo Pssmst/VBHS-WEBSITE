@@ -489,6 +489,7 @@ const courses = {
         "Social Studies Course Offerings": [
             {
                 name: "Professional Oral Communication",
+                note: "Required to graduate.",
                 description: "This one semester graduation requirement course provides career exploration, interests, and programs of study.",
                 prerequisites: [],
                 credits: .5,
@@ -576,6 +577,7 @@ const courses = {
             },
             {
                 name: "Economics & Personal Finance",
+                note: "Required to graduate.",
                 description: "This one semester course studies the law of supply and demand, forms of business, labor unions, government finances and influence on the economy, money and prices, inflation and deflation cycles. The course relates history and politics to the study of economics.",
                 prerequisites: [],
                 credits: .5,
@@ -944,7 +946,8 @@ const courses = {
         "JROTC": [
             {
                 name: "Army ROTC Health",
-                description: "Meets state graduation requirement for Health & Safety credit.",
+                note: "Meets state graduation requirement for Health & Safety credit.",
+                description: "",
                 prerequisites: [],
                 credits: .5,
                 courseLength: .5,
@@ -954,7 +957,8 @@ const courses = {
             },
             {
                 name: "Army ROTC PE",
-                description: "Meets state graduation requirement for Physical Education credit.",
+                note: "Meets state graduation requirement for Physical Education credit.",
+                description: "",
                 prerequisites: [],
                 credits: .5,
                 courseLength: .5,
@@ -1738,6 +1742,7 @@ const courses = {
         "Physical Education": [
             {
                 name: "Physical Activity",
+                note: "Meets state graduation requirement for Physical Education credit.",
                 description: "Active participation in aerobic, strength training, and flexibility development; various individual and team activities.",
                 prerequisites: [],
                 credits: .5,
@@ -1748,6 +1753,7 @@ const courses = {
             },
             {
                 name: "CONC Physical Education",
+                note: "Meets state graduation requirement for Physical Education credit.",
                 description: "",
                 prerequisites: ['ACT 19 Reading'],
                 credits: 1,
@@ -1760,6 +1766,7 @@ const courses = {
             },
             {
                 name: "Health",
+                note: "Meets state graduation requirement for Health & Safety credit.",
                 description: "Personal health, safety and fitness, including first aid, nutrition, drug and alcohol abuse, STD's, eating disorders, mental disorders, First Aid & CPR.",
                 prerequisites: [],
                 credits: .5,
@@ -1770,6 +1777,7 @@ const courses = {
             },
             {
                 name: "CONC Health",
+                note: "Meets state graduation requirement for Health & Safety credit.",
                 description: "",
                 prerequisites: ['ACT 19 Reading'],
                 credits: 1,
