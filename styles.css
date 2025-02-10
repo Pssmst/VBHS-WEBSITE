@@ -201,6 +201,11 @@ td.flexCourseSpot {
     background-color: rgb(58, 42, 17);
     background-image: linear-gradient(to bottom right, transparent, transparent);
 }
+td.flexCourseSpot:hover {
+    outline: 6px solid rgba(138, 101, 0, 0.5);
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    z-index: 10; /* Ensure hover state is above everything else */
+}
 td.occupied.flexCourseSpot {
     animation: flashGold .5s ease-out;
 }
@@ -385,7 +390,7 @@ td:hover .flexCourseIndicator.selfCredit {
     padding: 3px;
     overflow-x: wrap;
 
-    z-index: 1000;
+    z-index: 100;
 }
 
 svg {
@@ -417,6 +422,7 @@ svg {
     border-radius: 6px;
     padding: 20px;
     margin-bottom: 2%;
+    z-index: 99999;
 }
 
 #searchboxContainer {
@@ -681,7 +687,7 @@ ul {
     pointer-events: none; /* Ignore mouse events */
     animation: grow 0.2s cubic-bezier(0, 0, 0, 1.2);
     overflow-x: wrap;
-    z-index: 999999; /* Ensure it stays on top of other elements */
+    z-index: 9999999; /* Ensure it stays on top of other elements */
     
     background-color: rgba(150, 150, 150, .6);
     outline: 6px solid rgba(201, 201, 201, .6);
