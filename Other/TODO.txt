@@ -10,6 +10,13 @@
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+[ ] ACTUALLY incorporate the ACTUAL flex courses
+[ ] Make sure to account for double-blocked courses by seeping down into a free elective course and coloring the tile-outline a different color to refer to the double-blocked courses
+[ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
+[ ] Find a way to tackle the Human Body Systems rule lmao
+[ ] Provide information about classes when hovering over them in the course pathways tab
+[ ] Overhaul line colors to only be random upon startup, so the user doesn’t get lost in a maze of faulty color-association
+
 [ ] Whenever user places class in spot that’s being accounted for by another flex class, tell the user that that class is already accounted for by the flex course
 [ ] Automatically delete PAP Algebra 1 off the table if the checkbox is suddenly selected (do this in that one thing that does logic about papalgebra1)
 [ ] LET THE USER PICK UP AND MOVE COURSES FROM THE TABLE BY SINGLE CLICKING IT (JUST MAKE ANOTHER MOUSEBOX)
@@ -17,12 +24,6 @@
 [ ] Fix weird course :before element clipping
 [ ] Add file export of classes and lines in the scheduler
 
-[ ] ACTUALLY incorporate the ACTUAL flex courses
-[ ] Make sure to account for double-blocked courses by seeping down into a free elective course and coloring the tile-outline a different color to refer to the double-blocked courses
-[ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
-[ ] Find a way to tackle the Human Body Systems rule lmao
-[ ] Provide information about classes when hovering over them in the course pathways tab
-[ ] Overhaul line colors to only be random upon startup, so the user doesn’t get lost in a maze of faulty color-association
 [ ] Dynamically add and display new properties to the course catalog courses called “teachers” and “room”
 [ ] Create “teacher” (textbox) and “room” (dropdown) search filters
 [ ] Webscrape photos of staff members from vbhs website using their names from the csv and display their photos when prompted (also display all of them with emails dynamically added using their names in another div probably at the bottom which can be scrolled through (maybe even searched!)
@@ -39,4 +40,7 @@ Q: It says that Honors Chemistry Integrated is a flex credit to a 3rd year scien
 A: 
 
 Q: CONC Physical Education and CONC Health are both listed as 1 credit, but are only a semester long. Should this be the case?
+A: 
+
+Q: What does it mean for something to count as a fourth-year math after algebra 2? Does it mean it only counts as a fourth year math IF it comes after an Algebra 2 class?
 A: 
