@@ -98,7 +98,7 @@ input.checkbox {
 
 @keyframes flashGold {
     0% {
-        outline: 10px solid rgb(145, 113, 8);
+        outline: 10px solid rgba(255, 174, 0, 0.6);
         background-color: rgb(110, 77, 6);
     }
 }
@@ -158,7 +158,7 @@ input.checkbox {
 
 th, td {
     position: relative;
-    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease;
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease, z-index 0.25s ease, color 0.25s ease, border 0.25s ease;
 
     width: 10%; /* Set a fixed width for each column */
     height: 5vh; /* Ensures columns are of equal width */
@@ -172,7 +172,6 @@ th, td {
     z-index: 1; /* Layer the td above other elements */
 }
 
-
 th {
     background-color: rgb(50, 50, 50);
     font-size: 1em;
@@ -184,6 +183,9 @@ th:hover {
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
     z-index: 10; /* Ensure hover state is above everything else */
 }
+table th:first-child { /* Style subject headers */
+    width: 6%;
+} 
 
 td {
     font-size: .8em;
@@ -197,17 +199,20 @@ td:hover {
 }
 
 /* Cell spot (goes before everything else)*/
-td.flexCourseSpot {
+td.flexCourseSpot, td.flexCourseSpot.unavailable:not(.occupied) {
     background-color: rgb(58, 42, 17);
     background-image: linear-gradient(to bottom right, transparent, transparent);
 }
 td.flexCourseSpot:hover {
-    outline: 6px solid rgba(138, 101, 0, 0.5);
+    outline: 6px solid rgba(126, 81, 22, 0.5);
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
     z-index: 10; /* Ensure hover state is above everything else */
 }
 td.occupied.flexCourseSpot {
     animation: flashGold .5s ease-out;
+}
+td.occupied.flexCourseSpot:hover {
+    outline: 6px solid rgba(150, 95, 23, 0.5);
 }
 
 /* Cell modifiers */
@@ -245,8 +250,16 @@ td.extraElective {
 }
 
 /* Cell spot */
+
 td.unavailable {
     background-color: rgb(34, 16, 16);
+    border: 1px solid rgb(27, 12, 12);
+    background-image: linear-gradient(to bottom right, transparent, transparent);
+    outline: 0px solid transparent;
+}
+td.semiUnavailable {
+    background-color: rgb(37,25,25);
+    border: 1px solid rgb(32, 19, 19);
     background-image: linear-gradient(to bottom right, transparent, transparent);
     outline: 0px solid transparent;
 }
@@ -265,8 +278,8 @@ td.unavailable {
     outline: 0px solid transparent;
 
     position: absolute;
-    pointer-events: none;
     border-radius: 10px;
+    user-select: none;
 
     font-family: "Gill Sans", sans-serif;
     font-size: .7em;
@@ -304,8 +317,9 @@ td:hover .flexCourseIndicator {
     font-size: .85em;
     line-height: 1.2em;
 }
-td:hover .flexCourseIndicator.selfCredit {
-    width: 100px;
+td:hover .flexCourseIndicator.advancedBar {
+    width: 110px;
+    cursor: pointer;
 }
 
 .extraElectiveBadIndicator {
