@@ -675,11 +675,12 @@ ul {
     margin-bottom: -4px;
 }
 .courseHeader::before {
-    content: '⯌';
+    content: '✦';
     position: absolute;
     left: 8px;
     margin-top: -2.5px;
     display: inline-block;
+    transform-origin: 50% 40%;
 }
 .courseContainer.clicked .courseHeader::before { /* Star rotation effect */
     animation: rotateStar 4s infinite linear;
