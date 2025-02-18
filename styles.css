@@ -528,7 +528,7 @@ ul {
     content: var(--icon, "⮟");
     color: rgb(0, 255, 13);
     left: 0;
-    top: 50%;
+    top: 16px;
     transform: translateY(-50%);
     margin-left: 4px; /* Fine-tune spacing */
 }
