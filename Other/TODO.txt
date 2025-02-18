@@ -20,8 +20,8 @@
 [ ] Whenever user places class in spot that’s being accounted for by another flex class, tell the user that that class is already accounted for by the flex course
 [ ] Automatically delete PAP Algebra 1 off the table if the checkbox is suddenly selected (do this in that one thing that does logic about papalgebra1)
 [ ] LET THE USER PICK UP AND MOVE COURSES FROM THE TABLE BY SINGLE CLICKING IT (JUST MAKE ANOTHER MOUSEBOX)
-[ ] Set green :before element to have top: 16px instead of the em stuff or whatever
-[ ] Fix weird course :before element clipping
+[✓] Set green :before element to have top: 16px instead of the em stuff or whatever
+[✓] Fix weird course :before element clipping
 [ ] Add file export of classes and lines in the scheduler
 
 [ ] Dynamically add and display new properties to the course catalog courses called “teachers” and “room”
