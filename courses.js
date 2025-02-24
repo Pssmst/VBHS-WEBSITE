@@ -605,7 +605,7 @@ const courses = {
         "Social Studies Electives": [
             {
                 name: "Arkansas History",
-                description: "Discover why Arkansas is considered the “Land of Opportunity”. This one semester course provides a study of the political and cultural history of the state of Arkansas from its earliest inhabitants to the Louisiana Purchase up until present day.",
+                description: `Discover why Arkansas is considered the “Land of Opportunity”. This one semester course provides a study of the political and cultural history of the state of Arkansas from its earliest inhabitants to the Louisiana Purchase up until present day.`,
                 prerequisites: [],
                 credits: .5,
                 courseLength: .5,
@@ -2082,7 +2082,7 @@ const courses = {
             },
             {
                 name: "Programmable Controllers",
-                description: "Provides the student with an overview of the selection, programming, and operations of programmable logic controllers (PLCs).  The student will learn how to program PLCs using "ladder logic" diagrams in computer simulations (utilizing LogixPro software) and then in the actual hardware wired up to a relay control system (which the students previously learned how to use in the Industrial Automation course).",
+                description: `Provides the student with an overview of the selection, programming, and operations of programmable logic controllers (PLCs).  The student will learn how to program PLCs using "ladder logic" diagrams in computer simulations (utilizing LogixPro software) and then in the actual hardware wired up to a relay control system (which the students previously learned how to use in the Industrial Automation course).`,
                 prerequisites: ['Fundamentals of Electricity (DC & AC)'],
                 credits: .5,
                 courseLength: .5,
