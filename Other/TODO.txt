@@ -1,28 +1,30 @@
-[✓] Ensure classes must be placed AFTER their prerequisites (make cells above, below, and behind prerequisite classes unavailable)
-[✓] Find a way to set the searchContainer to fixed without breaking it
-[✓] Above the table can go a “took PAP Algebra 1 in 8th grade” checkbox that changes a lot of stuff, including the course pathways tab
-[✓] When placing certain subject courses, change unavailable cells that are above and below the available cells to a new class name called .flexCourse, which are have a yellow background instead of red. upon placing a course in a flexCourse cell, it will function as a normal course, but have a yellow border and a little tag saying “Flex Course” somewhere on it (oops, I accidentally mistook the flex courses for "Extra Electives")
-[✓] Incorporate the flex courses lol (oops, I accidentally mistook the flex courses for "Extra Electives")
-[✓] To fix the weird sizing problem for single-width table columns, try hiding the table in a different way when needing to?
+TABLE ------------------------------------
 
-[✓] Make “extra elective” slots (placing a course in correct year but wrong subject) have a dark red outline (#e6080880) instead of yellow (give yellow outline to classes within the granted flex class tile)
-[✓] Order the dark yellow flex class tile at the back so it doesn’t override honors and regular course colors
+[ ] Fix OR logic flex courses (science or math)
+    - Add a conditional to ensure advancedFlexbars[cell.id][0] exists before doing anything (I think that's the problem?)
+    - I believe the flexCourse class is not being removed properly from the table cells. Actually, I don't think it's getting deleted at all... anywhere
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-[ ] ACTUALLY incorporate the ACTUAL flex courses
-[ ] Make sure to account for double-blocked courses by seeping down into a free elective course and coloring the tile-outline a different color to refer to the double-blocked courses
-[ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
-[ ] Find a way to tackle the Human Body Systems rule lmao
+[ ] Make sure to account for double-blocked courses by seeping down into a unoccupied elective cell and coloring the tile-outline a different color to refer to the double-blocked courses
+[ ] Find a way to tackle the Human Body Systems rule lmao (see courses.js)
 [ ] Provide information about classes when hovering over them in the course pathways tab
-[ ] Overhaul line colors to only be random upon startup, so the user doesn’t get lost in a maze of faulty color-association
 
-[ ] Whenever user places class in spot that’s being accounted for by another flex class, tell the user that that class is already accounted for by the flex course
-[ ] Automatically delete PAP Algebra 1 off the table if the checkbox is suddenly selected (do this in that one thing that does logic about papalgebra1)
-[ ] LET THE USER PICK UP AND MOVE COURSES FROM THE TABLE BY SINGLE CLICKING IT (JUST MAKE ANOTHER MOUSEBOX)
-[✓] Set green :before element to have top: 16px instead of the em stuff or whatever
+[ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
+    - Requirements met by flex credits should be colored golden instead of white
+
+[ ] Automatically delete PAP Algebra 1 off the table if the checkbox is suddenly selected (do this in that one thing that does logic about papalgebra1 or something)
+[ ] Let the user pick up and move courses from the table by single-clicking them
 [✓] Fix weird course :before element clipping
-[ ] Add file export of classes and lines in the scheduler
+
+[ ] Add file export of classes and lines in the scheduler (will require lots of blood, sweat, and tears to do this)
+    - Counselors are heavily against any kind of automated access to the catalog or csv-ifying the data, so some real tricky metadata reading will be required
+
+PATHWAYS ------------------------------------
+
+[ ] Overhaul line colors to only be random upon startup, so the user doesn’t get lost in a maze of faulty color-association
+[ ] Currently everything is broken (again). Try overhauling the algorithm (again) to fix it :)
+[ ] Beautify the pathways page with css (match the styling with table cells)
+
+EXTRA (VERY LOW-PRIORITY) ------------------------------------
 
 [ ] Dynamically add and display new properties to the course catalog courses called “teachers” and “room”
 [ ] Create “teacher” (textbox) and “room” (dropdown) search filters
@@ -32,9 +34,7 @@
 [ ] Rooms light up in red when the user hovers over the room on the map and when the user hovers over a course in the course catalog (highlights what room that class is in)
 [ ] When hovering over a room, display what course it contains and what teacher belongs in it somewhere on the screen idk
 
-
-
-QUESTIONS:
+QUESTIONS ------------------------------------
 
 Q: It says that Honors Chemistry Integrated is a flex credit to a 3rd year science, when the course itself is a third year science. Because of this, if you take Honors Chemistry Integrated during your fourth year, can you take whatever you want your third year in place of science?
 A: 
