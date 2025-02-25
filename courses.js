@@ -2071,7 +2071,11 @@ const courses = {
                 name: "Fundamentals of Electricity (DC & AC)",
                 description: "A study of the fundamental principles of AC and DC, Ohm's law, and the power equation. Series, parallel, series parallel circuits, and DC meters are introduced. Students will learn how circuits work and how to troubleshoot any problems with the circuit, which will help them in the following semester with their soldering projects.",
                 prerequisites: [],
+<<<<<<< HEAD
                 credits: 1,
+=======
+                credits: .5,
+>>>>>>> a077eac7004560443831ae4b311f5e7b8d229cae
                 courseLength: .5,
                 occurences: 1,
                 grades: [false, false, true, true, true, true, true, true],
@@ -2083,7 +2087,11 @@ const courses = {
                 name: "Introduction to Industrial Robots",
                 description: "The course will develop the skills required to solder and solder electronic devices and circuit board mounted components, and will require the student to master the use of common electronic instruments in order to measure and troubleshoot circuits.  In addition, students will learn to correctly select components and build a circuit on a bread board by following a schematic diagram.  Students will demonstrate their soldering skills by successfully completing 3 soldering projects (My Place, Awesome USA, and The Awesome Cube) using both through-hole and surface mount soldering.  Teaches the basic operation and programming of the six-axis ABB robotic arm using a teach pendant. The manufacturing engineer or technician of today is faced with the selection, operation, programming, and troubleshooting of robot systems on a factory floor.  In the manufacturing facilities of the future, robotic literacy may become as important as personal computer literacy has become in the office of today.  This class is very hands-on and a favorite among the students.",
                 prerequisites: ['Fundamentals of Electricity (DC & AC)'],
+<<<<<<< HEAD
                 credits: 1,
+=======
+                credits: .5,
+>>>>>>> a077eac7004560443831ae4b311f5e7b8d229cae
                 courseLength: .5,
                 occurences: 1,
                 grades: [false, false, false, true, true, true, true, true],
@@ -2095,8 +2103,13 @@ const courses = {
                 name: "Introduction to Industrial Automation",
                 description: "Covers fundamentals of motors and motor control. Includes switches, relays, transformers, three-phase power systems, DC motors, single-phase motors, three-phase motors, overload protection, and motor controllers. The National Electrical Code standards for all circuits are emphasized.",
                 prerequisites: ['Fundamentals of Electricity (DC & AC)'],
+<<<<<<< HEAD
                 credits: 2,
                 courseLength: 1,
+=======
+                credits: .5,
+                courseLength: .5,
+>>>>>>> a077eac7004560443831ae4b311f5e7b8d229cae
                 occurences: 1,
                 grades: [false, false, false, false, true, true, true, true],
                 honors: true,
@@ -2107,8 +2120,13 @@ const courses = {
                 name: "Programmable Controllers",
                 description: `Provides the student with an overview of the selection, programming, and operations of programmable logic controllers (PLCs).  The student will learn how to program PLCs using "ladder logic" diagrams in computer simulations (utilizing LogixPro software) and then in the actual hardware wired up to a relay control system (which the students previously learned how to use in the Industrial Automation course).`,
                 prerequisites: ['Fundamentals of Electricity (DC & AC)'],
+<<<<<<< HEAD
                 credits: 2,
                 courseLength: 1,
+=======
+                credits: .5,
+                courseLength: .5,
+>>>>>>> a077eac7004560443831ae4b311f5e7b8d229cae
                 occurences: 1,
                 grades: [false, false, false, false, true, true, true, true],
                 honors: true,
