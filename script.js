@@ -542,8 +542,8 @@ for (const [subject, offerings] of Object.entries(courses)) {
                         mouseBox.style.height = `60px`;
                     }
                     else {
-                        mouseBox.style.width = `80px`;
-                        mouseBox.style.height = `80px`;
+                        mouseBox.style.width = `90px`;
+                        mouseBox.style.height = `70px`;
                     }
                     mouseBox.textContent = course.name;
 
