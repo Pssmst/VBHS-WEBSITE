@@ -6,30 +6,19 @@ TABLE ------------------------------------
 
 [ ] Make sure to account for double-blocked courses by seeping down into a unoccupied elective cell and coloring the tile-outline a different color to refer to the double-blocked courses
 [ ] Find a way to tackle the Human Body Systems rule lmao (see courses.js)
-<<<<<<< HEAD
 
 [ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
     - Requirements met by flex credits should be colored golden instead of white
 
-=======
-[ ] Provide information about classes when hovering over them in the course pathways tab
-
-[ ] Create new div under the table that shows what courses you still need to have to meet the graduation requirement, as well as how many honors credits you have
-    - Requirements met by flex credits should be colored golden instead of white
-
->>>>>>> a077eac7004560443831ae4b311f5e7b8d229cae
 [ ] Automatically delete PAP Algebra 1 off the table if the checkbox is suddenly selected (do this in that one thing that does logic about papalgebra1 or something)
 [ ] Let the user pick up and move courses from the table by single-clicking them
 [✓] Fix weird course :before element clipping
 
-<<<<<<< HEAD
 CATALOG PANEL ------------------------------------
 
 [ ] The stupid '✦' :before pseudo-element doesn't like rotating on its center ONLY on chromebook. It rotates fine on computer...??????? Fix it...
 [ ] The stupid '➤' :before pseudo-element also looks weird on chromebook. Fix it...
 
-=======
->>>>>>> a077eac7004560443831ae4b311f5e7b8d229cae
 [ ] Add file export of classes and lines in the scheduler (will require lots of blood, sweat, and tears to do this)
     - Counselors are heavily against any kind of automated access to the catalog or csv-ifying the data, so some real tricky metadata reading will be required
 
@@ -37,10 +26,7 @@ PATHWAYS ------------------------------------
 
 [ ] Overhaul line colors to only be random upon startup, so the user doesn’t get lost in a maze of faulty color-association
 [ ] Currently everything is broken (again). Try overhauling the algorithm (again) to fix it :)
-<<<<<<< HEAD
 [ ] Provide information about classes when hovering over them in the course pathways tab
-=======
->>>>>>> a077eac7004560443831ae4b311f5e7b8d229cae
 [ ] Beautify the pathways page with css (match the styling with table cells)
 
 EXTRA (VERY LOW-PRIORITY) ------------------------------------
