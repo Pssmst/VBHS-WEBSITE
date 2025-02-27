@@ -550,9 +550,6 @@ ul {
 .courseContainer.clicked:hover {
     background-color: rgb(50, 50, 50);
     outline: 8px solid rgb(50, 50, 50);
-}
-
-.courseContainer.clicked:not(.courseCode:hover):hover {
     cursor: grabbing;
 }
 
@@ -597,6 +594,9 @@ ul {
     right: 0;
     margin-right: 12px;
     margin-bottom: 0px;
+}
+.courseCode:hover {
+    cursor: text !important;
 }
 
 .courseContainer:hover .courseCode, .courseContainer.clicked .courseCode {
