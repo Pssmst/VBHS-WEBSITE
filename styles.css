@@ -545,6 +545,7 @@ ul {
     outline: 8px solid rgb(50, 50, 50);
     animation: outlineFlashGray .3s alternate;
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    cursor: grab;
 }
 .courseContainer.clicked {
     background-color: rgb(50, 50, 50);
@@ -559,6 +560,7 @@ ul {
     animation: outlineFlashRed .3s alternate;
     background-color: rgb(48, 24, 26);
     outline: 8px solid rgb(48, 24, 26);
+    cursor: not-allowed;
 }
 
 /* Note display under the header */
