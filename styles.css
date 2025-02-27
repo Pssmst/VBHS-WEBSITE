@@ -547,9 +547,12 @@ ul {
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
     cursor: grab;
 }
-.courseContainer.clicked {
+.courseContainer.clicked:not(.courseCode:hover) {
     background-color: rgb(50, 50, 50);
     outline: 8px solid rgb(50, 50, 50);
+}
+.courseContainer.clicked:hover {
+    cursor: grabbing;
 }
 
 .courseContainer.used {
