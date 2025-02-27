@@ -297,6 +297,9 @@ td.semiUnavailable {
 
     overflow: hidden;
 }
+.indicator:hover {
+    cursor: help;
+}
 
 .flexCourseIndicator {
     transition: top .2s ease, left .2s ease, width .2s ease, font-size .2s ease, line-height .2s ease;
