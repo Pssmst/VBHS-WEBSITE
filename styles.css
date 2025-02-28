@@ -524,6 +524,7 @@ ul {
     outline: 8px solid rgb(50, 50, 50);
     animation: outlineFlashGreen .3s alternate;
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    cursor: pointer;
 }
 
 .offeringHeader::before {
