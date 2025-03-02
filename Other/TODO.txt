@@ -1,7 +1,6 @@
 TABLE ------------------------------------
 
 [ ] Fix OR logic flex courses (science or math)
-    - Add a conditional to ensure advancedFlexbars[cell.id][0] exists before doing anything (I think that's the problem?)
     - I believe the flexCourse class is not being removed properly from the table cells. Actually, I don't think it's getting deleted at all... anywhere
 
 [ ] Make sure to account for double-blocked courses by seeping down into a unoccupied elective cell and coloring the tile-outline a different color to refer to the double-blocked courses
