@@ -2,7 +2,7 @@
 
 const svg = document.getElementById('svg-lines');
 
-function drawLine(fromElem, toElem, color, x_offset, y_offset) {
+function drawLine(fromElem, from_xOffset, from_yOffset, toElem, to_xOffset, to_yOffset, color) {
     if (fromElem && toElem) {
        // Get bounding rectangles
        const fromRect = fromElem.getBoundingClientRect();
@@ -10,11 +10,11 @@ function drawLine(fromElem, toElem, color, x_offset, y_offset) {
        const svgRect = svg.getBoundingClientRect(); // Get SVG's position
  
        // Calculate start and end positions relative to the SVG container
-       const x1 = fromRect.left + fromRect.width / 2 - svgRect.left + window.scrollX;
-       const y1 = fromRect.top + fromRect.height / 2 - svgRect.top + window.scrollY;
+       const x1 = fromRect.left + fromRect.width / 2 - svgRect.left + window.scrollX + from_xOffset;
+       const y1 = fromRect.top + fromRect.height / 2 - svgRect.top + window.scrollY + from_yOffset;
  
-       const x2 = toRect.left + toRect.width / 2 - svgRect.left + window.scrollX + x_offset;
-       const y2 = toRect.top + toRect.height / 2 - svgRect.top + window.scrollY + y_offset;
+       const x2 = toRect.left + toRect.width / 2 - svgRect.left + window.scrollX + to_xOffset;
+       const y2 = toRect.top + toRect.height / 2 - svgRect.top + window.scrollY + to_yOffset;
  
        // Create an SVG line
        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -44,6 +44,7 @@ svg.style.zIndex = '100'; // Max z-index value
 // Setup ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const courseMap = new Map(); // Create a lookup map for all courses
+const excludedPrerequisites = ["ACT 19 Reading", "ACT 19 Math", "ACT 19 English", "GPA 2.0", "Job Required", "Must Audition", "Band or choir enrollment required"];
 
 // First pass: Populate courseMap with enhanced course objects
 for (const [subject, offerings] of Object.entries(courses)) {
@@ -53,6 +54,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
             // Add missing properties to each course (VERY IMPORTANT!)
             course.postrequisites = [];
             if (!("flex" in course)) {course.flex = "";}
+            if (!("prerequisites" in course)) {course.prerequisites = [];}
 
             courseMap.set(course.name, { 
                 ...course, 
@@ -122,8 +124,6 @@ function openAll() {
         }
     }
 }
-
-const excludedPrerequisites = ["ACT 19 Reading", "ACT 19 Math", "ACT 19 English", "GPA 2.0", "Job Required", "Must Audition"];
 
 for (const [subject, offerings] of Object.entries(courses)) {
     newElement('div', 'classContainer', '', subject, 'subjectContainer'); // Container for each subject (holds offerings)
@@ -466,7 +466,7 @@ function determineWhichEE() {
 
             // Listen for clicks on the parent element and filter by class
             document.addEventListener('click', (event) => {
-                if (event.target && event.target.classList.contains('advancedBar')) {
+                if (event.target && event.target.classList.contains('advancedBar') && advancedFlexbars[cell.id][0]) {
                     index = (advancedFlexbars[cell.id][0] + 1) % 2;
                     advancedFlexbars[cell.id][0] = index;
                     event.target.textContent = `flex (${advancedFlexbars[cell.id][1][index].toLowerCase()})`;
@@ -487,20 +487,20 @@ function updateLinesFromMouseBox(course) {
 
     for (const prerequisite of course.prerequisites) {
         let toElement = document.getElementById(`${prerequisite}_courseContainer`);
-        let offset_x = -175;
-        let offset_y = -100;
+        let xOffset = -175;
+        let yOffset = -100;
 
         const cells = document.querySelectorAll("td"); // Get all table cells
         for (const cell of cells) {
             if (getTextContent(cell).includes(prerequisite)) {
                 toElement = cell;
-                offset_x = 0;
-                offset_y = 0;
+                xOffset = 0;
+                yOffset = 0;
             }
         }
 
         if (toElement) {
-            drawLine(fromElement, toElement, 'white', offset_x, offset_y);
+            drawLine(fromElement, 0, 0, toElement, xOffset, yOffset, 'white');
         }
     }
 }
@@ -536,6 +536,8 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     const mouseBox = document.createElement('div');
                     document.body.appendChild(mouseBox);
 
+                    document.body.classList.add("grabbing");
+
                     // Determine size and contents
                     if (course.courseLength == 1) {
                         mouseBox.style.width = `160px`;
@@ -555,10 +557,10 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     if (course.advancedPlacement) { mouseBox.classList.add('advancedPlacement'); }
                     if (course.flex.length > 0) { newElement('div', `${course.name}_mouseBox`, 'flex', 'flexAppendage'); }
 
-                    // FUNCTION THAT RUNS EVERY FRAME THAT MOUSEBOX IS BEING MOVED
+                    // FUNCTION THAT RUNS EVERY FRAME THAT MOUSEBOX IS BEING MOVED AND ALSO ONCE ON-CLICK
                     function moveBox(e) {
                         mouseBox.style.position = 'absolute';
-                        // Places mouse in center of mousebox
+
                         mouseBox.style.left = `${e.pageX - mouseBox.clientWidth/2}px`;
                         mouseBox.style.top = `${e.pageY - mouseBox.clientHeight/2}px`;
 
@@ -572,7 +574,6 @@ for (const [subject, offerings] of Object.entries(courses)) {
                                 cell.classList.add('semiUnavailable');
                             }
                         });
-                        
                         updateLinesFromMouseBox(course);
                     }
 
@@ -634,6 +635,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
                         document.removeEventListener('wheel', moveBox);
                         document.removeEventListener('mouseup', handleDrop);
                         mouseBox.remove();
+                        document.body.classList.remove("grabbing");
                     }
 
                     document.addEventListener('mousemove', moveBox);
@@ -846,38 +848,16 @@ function drawPathwayLines(pathways) {
             const fromElem = document.getElementById(from);
             const toElem = document.getElementById(to);
 
-            // For line drawing...
-            const x_offset = 19;
-            const y_offset = 42;
-
             if (fromElem && toElem) {
-                // Get bounding rectangles
-                const fromRect = fromElem.getBoundingClientRect();
-                const toRect = toElem.getBoundingClientRect();
-
-                // Calculate start and end positions
-                const x1 = fromRect.right - x_offset;
-                const y1 = fromRect.top + (fromRect.height / 2) - y_offset;
-                const x2 = toRect.left - x_offset + 1;
-                const y2 = toRect.top + (toRect.height / 2) - y_offset;
-
-                // Create an SVG line
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', x1);
-                line.setAttribute('y1', y1);
-                line.setAttribute('x2', x2);
-                line.setAttribute('y2', y2);
-
-                // Set the color for the line based on the pathway
-                line.setAttribute('stroke', pathway.color);
-                line.setAttribute('class', 'line');
-
-                // Add the line to the SVG
-                svg.appendChild(line);
+                drawLine(fromElem, fromElem.clientWidth/2, 0, toElem, -toElem.clientWidth/2, 0, pathway.color);
             }
         });
     });
 }
+
+window.addEventListener("resize", function() {
+    generatePathways(specifiedPathwayID);
+});
 
 // This is the big one
 function generatePathways(specifiedPathwayID) {
@@ -931,12 +911,18 @@ function generatePathways(specifiedPathwayID) {
                         }
 
                         // Add connections for this course
-                        for (const prerequisite of currentCourse.prerequisites) {
-                            if (!excludedPrerequisites.includes(prerequisite)) { // Gotta make sure to excldue the stat prerequisites :(
-                                pathways[pathwayID].connections.push({ from: prerequisite, to: currentCourseName });
-                                stack.push(prerequisite); // Add to stack to discover connected courses
+                        try {
+                            for (const prerequisite of currentCourse.prerequisites) {
+                                if (!excludedPrerequisites.includes(prerequisite)) { // Gotta make sure to excldue the stat prerequisites :(
+                                    pathways[pathwayID].connections.push({ from: prerequisite, to: currentCourseName });
+                                    stack.push(prerequisite); // Add to stack to discover connected courses
+                                }
                             }
                         }
+                        catch (e) {
+                            console.log(currentCourseName);
+                        }
+                        
 
                         // Explore courses connected by `postrequisites`
                         for (const postrequisites of currentCourse.postrequisites) {
