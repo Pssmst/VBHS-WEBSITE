@@ -524,7 +524,7 @@ ul {
     outline: 8px solid rgb(50, 50, 50);
     animation: outlineFlashGreen .3s alternate;
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
-    cursor: pointer;
+    cursor: default;
 }
 
 .offeringHeader::before {
@@ -551,9 +551,11 @@ ul {
     box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
     cursor: grab;
 }
-.courseContainer.clicked:hover {
+.courseContainer.clicked {
     background-color: rgb(50, 50, 50);
     outline: 8px solid rgb(50, 50, 50);
+}
+.courseContainer.clicked:hover {
     cursor: grabbing;
 }
 
@@ -709,12 +711,16 @@ ul {
     box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.66);
 
     pointer-events: none; /* Ignore mouse events */
+    cursor: grabbing;
     animation: grow 0.2s cubic-bezier(0, 0, 0, 1.2);
     overflow-x: wrap;
     z-index: 9999999; /* Ensure it stays on top of other elements */
     
     background-color: rgba(150, 150, 150, .6);
     outline: 6px solid rgba(201, 201, 201, .6);
+}
+body.grabbing { /* Apply cursor to body when dragging */
+   cursor: grabbing;
 }
 .mouseBox.honors {
     background-color: rgba(189, 78, 209, .6);
