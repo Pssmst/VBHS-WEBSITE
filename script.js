@@ -43,10 +43,11 @@ svg.style.zIndex = '100'; // Max z-index value
 
 // Setup ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const courseMap = new Map(); // Create a lookup map for all courses
+const courseMap = new Map();
+// TODO: Please find a way to automate this garbage
 const excludedPrerequisites = ["ACT 19 Reading", "ACT 19 Math", "ACT 19 English", "GPA 2.0", "Job Required", "Must Audition", "Band or choir enrollment required"];
 
-// First pass: Populate courseMap with enhanced course objects
+// courseMap holds all courses and their subjects in a single, 1D array, no nesting needed
 for (const [subject, offerings] of Object.entries(courses)) {
     for (const [offering, coursesArray] of Object.entries(offerings)) {
         for (const course of coursesArray) {
@@ -64,7 +65,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
     }
 }
 
-// Second pass: Link postrequisites
+// Find all postrequisites for each class and push them to that courseMap class
 for (const course of courseMap.values()) {
     for (const prerequisite of course.prerequisites || []) {
         const prerequisiteCourse = courseMap.get(prerequisite);
@@ -85,6 +86,7 @@ function newElement(typeOfElement, parent, text, id, class1, class2, class3) {
     document.getElementById(parent).appendChild(newElement);
 }
 
+// This makes those little circles that say "19+ ACT" that look really wonky sometimes
 function createPrerequisiteStat(course, titleText, statText, order) {
     newElement('div', `${course.name}_courseContainer`, titleText, 'preTitle', 'prerequisiteStat', order);
     newElement('div', `${course.name}_courseContainer`, statText, 'preNumber', 'prerequisiteStat', order);
@@ -94,6 +96,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Toggle-based function to collapse subjects
 function toggleCollapse(id, header_id) {
     const element = document.getElementById(id);
     const header = document.getElementById(header_id);
@@ -107,6 +110,7 @@ function toggleCollapse(id, header_id) {
     }
 }
 
+// Collapses every subject at once
 function collapseAll() {
     for (const [subject, offerings] of Object.entries(courses)) {
         for (const [offering, coursesArray] of Object.entries(offerings)) {
@@ -116,6 +120,7 @@ function collapseAll() {
     }
 }
 
+// Opens every subject at once
 function openAll() {
     for (const [subject, offerings] of Object.entries(courses)) {
         for (const [offering, coursesArray] of Object.entries(offerings)) {
@@ -125,6 +130,7 @@ function openAll() {
     }
 }
 
+// Creates the master class panel on the right-hand side of the screen and populates it with all classes
 for (const [subject, offerings] of Object.entries(courses)) {
     newElement('div', 'classContainer', '', subject, 'subjectContainer'); // Container for each subject (holds offerings)
     newElement('h1', subject, subject, '', 'subjectHeader'); // Heading for the subject
@@ -193,7 +199,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
                 details.push(`${course.description}`);
             }
 
-            // This sucks but whatever lmao
+            // Creates the little colored circles to the left of each course. This sucks but whatever lmao
             if (course.prerequisites && course.prerequisites.length > 0) {
 
                 if (course.prerequisites.includes("ACT 19 Reading") && course.prerequisites.includes("ACT 19 Math")) {
@@ -257,8 +263,9 @@ for (const [subject, offerings] of Object.entries(courses)) {
     }
 }
 
-// TABLE STUFF ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// COURSE TABLE ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Takes an element of the course table and returns the text content of the leftmost cell (the subject name, like "English")
 function getLeftmostTH(elementUnderCursor) {
     // Ensure the elementUnderCursor is a table cell (TD or TH)
     if (elementUnderCursor && (elementUnderCursor.tagName === 'TD' || elementUnderCursor.tagName === 'TH')) {
@@ -269,18 +276,21 @@ function getLeftmostTH(elementUnderCursor) {
     return null;
 }
 
+// Gets the PURE text content of an element without any code that is nested inside the string
 function getTextContent(cell) {
     // Get only text nodes (ignores child elements)
     const textContent = Array.from(cell.childNodes)
     .filter(node => node.nodeType === Node.TEXT_NODE)
     .map(node => node.textContent.trim())
     .join(' ');
-
     return textContent;
 }
 
+// Should probably re-write everything that this boolean is attached to
 let algebra1Taken = false;
 
+// Returns every prerequisite that is fulfilled (placed before the course) for a course that is about to be placed on the table
+// Later, a course will only be able to be placed on the table if this function returns ALL of the course's prerequisites
 function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLength) {
     // Remove excluded prerequisites
     prerequisites = prerequisites.filter(prerequisite => !excludedPrerequisites.includes(prerequisite));
@@ -329,7 +339,7 @@ function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLeng
     return prereqsUsed;
 }
  
-// Takes in a cell and sees if it should be unavailable
+// Look at a cell and determines if it should be unavailable
 function determineIfUnavailable(subject, course, cell) {
     const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
 
@@ -339,13 +349,13 @@ function determineIfUnavailable(subject, course, cell) {
             allowedGradesArray.push(i+1);
         }
     }
-
     const allowedGrades = allowedGradesArray.includes(Number(cell.id[1]));
     const isFlexSpot = cell.classList.contains('flexCourseSpot');
     return [allowedSubjects, allowedGrades, isFlexSpot];
 }
 
 // Set cell modifiers (class, text, etc.)
+// Modifiers are the things that make the inside of the cell have cool gradient colors (or just purple)
 function setCellModifiers(course, elementUnderCursor) {
     elementUnderCursor.textContent = course.name;
     elementUnderCursor.classList.add('occupied');
@@ -357,10 +367,14 @@ function setCellModifiers(course, elementUnderCursor) {
     if (!course.honors && !course.advancedPlacement && !course.CONC) { elementUnderCursor.classList.add('regular'); }
 }
 
-// FLEX CRAP ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FLEX COURSES ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// HERE IS THE PROBLEM!
+// This is a DICTIONARY. For some reason, later in the code, I refer to this as a 2D array
+// Please look at this over again. The improper indexing of this is causing the multi-choice flex bars to not work
 let advancedFlexbars = {};
 
+// Applies and removes the flexCousreSpot modifier on cells
 function toggleFlexCourse(condition, cellIds, ifAdd) {
     cellIds.forEach(id => {
         const cell = document.getElementById(id);
@@ -374,9 +388,12 @@ function toggleFlexCourse(condition, cellIds, ifAdd) {
     });
 }
 
-// Scan all cells
+// Scans all cells for a variety of properties and blah blah blah
 function evaluateCoursesInTable(ifAdd) {
     let coursesInTable = [];
+
+    // Takes the pure text content of each cell in the table and gives its respective div in the courses panel the "used" class
+    // TODO: This needs to be modified for classes that you can place multiple times
     tableCells.forEach(cell => {
         // Thank goodness I made that courseMap earlier
         if (courseMap.get(getTextContent(cell))) {
@@ -386,7 +403,7 @@ function evaluateCoursesInTable(ifAdd) {
         if (courseContainer) { courseContainer.classList.add('used'); }
     });
 
-    // Find flex courses in table and then determine what spots are available for extra electives
+    // Finds flex courses in the table and determine what spots are available for extra electives for each flex course
     if (coursesInTable.length > 0) {
         toggleFlexCourse(true, ["s5", "s6", "m7", "m8"], false);
         for (let courseInTable of coursesInTable) {
@@ -410,14 +427,14 @@ function evaluateCoursesInTable(ifAdd) {
     }
 }
 
-// Determine which extra electives are available through flex classes and which ones are risky
+// Determines which extra electives are available through flex classes and which ones are not recommended (a red "EE")
 function determineWhichEE() {
     const flexCourseIndicators = document.querySelectorAll('.flexCourseIndicator');
     flexCourseIndicators.forEach(element => {
         element.remove();
     });
 
-    // Iterate through every cell and determine whether it's an EE given by a flex course or an EE that is from a plain unavailable cell
+    // Iterates through every cell and determines whether it's an EE given by a flex course or an EE that is from a plain unavailable cell
     tableCells.forEach(cell => {
         const subject = courseMap.get(getTextContent(cell))?.subject;
         const course = courseMap.get(getTextContent(cell)); // May sometimes be false bc of empty cells
@@ -450,7 +467,7 @@ function determineWhichEE() {
                 }
             }
 
-            // Flex course indicator
+            // Flex course indicator (small top-left yellow indicator)
             if (course.flex && course.flex.length > 0) {
                 cell.classList.add('flexCourse');
                 
