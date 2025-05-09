@@ -68,13 +68,12 @@ for (const [subject, offerings] of Object.entries(courses)) {
 // Find all postrequisites for each class and push them to that courseMap class
 for (const course of courseMap.values()) {
     for (const prerequisite of course.prerequisites || []) {
-        const prerequisiteCourse = courseMap.get(prerequisite);
-        if (prerequisiteCourse) {
-            prerequisiteCourse.postrequisites.push(course.name);
+        if (courseMap.get(prerequisite)) {
+            courseMap.get(prerequisite).postrequisites.push(course.name);
         }
     }
 }
-//console.log(courses); console.log(courseMap);
+console.log(courses); console.log(courseMap);
 
 function newElement(typeOfElement, parent, text, id, class1, class2, class3) {
     const newElement = document.createElement(typeOfElement);
@@ -265,9 +264,9 @@ for (const [subject, offerings] of Object.entries(courses)) {
 
 // COURSE TABLE ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Takes an element of the course table and returns the text content of the leftmost cell (the subject name, like "English")
+// Takes a cell of the course table and returns the text content of the leftmost cell (the subject name, like "English")
 function getLeftmostTH(elementUnderCursor) {
-    // Ensure the elementUnderCursor is a table cell (TD or TH)
+    // Ensure elementUnderCursor exists and is a table cell (TD or TH)
     if (elementUnderCursor && (elementUnderCursor.tagName === 'TD' || elementUnderCursor.tagName === 'TH')) {
         const row = elementUnderCursor.parentElement;
         const leftmostCell = row.querySelector('td, th'); // Selects the first TD or TH in the row
@@ -286,11 +285,10 @@ function getTextContent(cell) {
     return textContent;
 }
 
-// Should probably re-write everything that this boolean is attached to
 let algebra1Taken = false;
 
 // Returns every prerequisite that is fulfilled (placed before the course) for a course that is about to be placed on the table
-// Later, a course will only be able to be placed on the table if this function returns ALL of the course's prerequisites
+// A course will only be able to be placed on the table if this function returns ALL of the course's prerequisites
 function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLength) {
     // Remove excluded prerequisites
     prerequisites = prerequisites.filter(prerequisite => !excludedPrerequisites.includes(prerequisite));
@@ -374,7 +372,7 @@ function setCellModifiers(course, elementUnderCursor) {
 // Please look at this over again. The improper indexing of this is causing the multi-choice flex bars to not work
 let advancedFlexbars = {};
 
-// Applies and removes the flexCousreSpot modifier on cells
+// Applies and removes the flexCourseSpot modifier on cells
 function toggleFlexCourse(condition, cellIds, ifAdd) {
     cellIds.forEach(id => {
         const cell = document.getElementById(id);
@@ -388,14 +386,13 @@ function toggleFlexCourse(condition, cellIds, ifAdd) {
     });
 }
 
-// Scans all cells for a variety of properties and blah blah blah
+// Scans all cells for a variety of properties
 function evaluateCoursesInTable(ifAdd) {
     let coursesInTable = [];
 
     // Takes the pure text content of each cell in the table and gives its respective div in the courses panel the "used" class
     // TODO: This needs to be modified for classes that you can place multiple times
     tableCells.forEach(cell => {
-        // Thank goodness I made that courseMap earlier
         if (courseMap.get(getTextContent(cell))) {
             coursesInTable.push([courseMap.get(getTextContent(cell)), cell.id]);
         }
@@ -523,7 +520,7 @@ function updateLinesFromMouseBox(course) {
 }
 
 const tableCells = document.querySelectorAll('td');
-const courseCodeContainers = document.querySelectorAll('.courseCode'); // Select all elements wit
+const courseCodeContainers = document.querySelectorAll('.courseCode');
 
 for (const [subject, offerings] of Object.entries(courses)) {
     for (const [offering, coursesArray] of Object.entries(offerings)) {
