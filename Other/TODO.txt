@@ -11,12 +11,12 @@ TABLE ------------------------------------
 
 [ ] Automatically delete PAP Algebra 1 off the table if the checkbox is suddenly selected (do this in that one thing that does logic about papalgebra1 or something)
 [ ] Let the user pick up and move courses from the table by single-clicking them
-[✓] Fix weird course :before element clipping
 
 CATALOG PANEL ------------------------------------
 
 [ ] The stupid '✦' :before pseudo-element doesn't like rotating on its center ONLY on chromebook. It rotates fine on computer...??????? Fix it...
 [ ] The stupid '➤' :before pseudo-element also looks weird on chromebook. Fix it...
+[ ] The stupid '➤' :before pseudo-element element clipping
 
 [ ] Add file export of classes and lines in the scheduler (will require lots of blood, sweat, and tears to do this)
     - Counselors are heavily against any kind of automated access to the catalog or csv-ifying the data, so some real tricky metadata reading will be required
@@ -24,7 +24,7 @@ CATALOG PANEL ------------------------------------
 PATHWAYS ------------------------------------
 
 [ ] Overhaul line colors to only be random upon startup, so the user doesn’t get lost in a maze of faulty color-association
-[ ] Currently everything is broken (again). Try overhauling the algorithm (again) to fix it :)
+[ ] Currently everything is broken (again). Try overhauling the algorithm (again) to fix it :D
 [ ] Provide information about classes when hovering over them in the course pathways tab
 [ ] Beautify the pathways page with css (match the styling with table cells)
 
