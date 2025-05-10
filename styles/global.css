@@ -1,0 +1,112 @@
+body {
+    background-color: rgb(24, 24, 24);
+    font-family: Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    margin: 0;
+    overflow-y: hidden;
+}
+
+header {
+    margin: 10px;
+}
+
+button {
+    cursor: pointer;
+}
+
+input.checkbox {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+#appContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: row; /* SET TO `row-reverse` TO FLIP LEFT AND RIGHT PANELS! */
+    justify-content: space-evenly;
+    width: 100%;
+    height: 90%;
+}
+
+/* ANIMATIONS /////////////////////////////////////////////////////////////////////////////////*/
+
+@keyframes outlineFlashGray {
+    0% {
+        outline: 1px solid rgb(90, 90, 90);
+    }
+}
+
+@keyframes outlineFlashGreen {
+    0% {
+        outline: 1px solid rgb(0, 255, 23);
+    }
+}
+
+@keyframes outlineFlashRed {
+    0% {
+        outline: 1px solid rgb(145, 49, 65);
+    }
+}
+
+@keyframes outlineFlashWhite {
+    0% {
+        outline: 1px solid rgb(255, 255, 255);
+    }
+}
+
+@keyframes rotateStar {
+    100% {
+        transform: rotate(360deg); /* Rotate to 360 degrees */
+    }
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes flashGreen {
+    0% {
+        outline: 10px solid rgb(6, 95, 18);
+        background-color: rgb(6, 95, 18);
+    }
+}
+
+@keyframes flashGray {
+    0% {
+        outline: 10px solid rgb(121, 121, 121);
+        background-color: rgb(100, 100, 100);
+    }
+}
+
+@keyframes flashPurple {
+    0% {
+        outline: 10px solid rgb(153, 72, 183);
+        background-color: rgb(134, 59, 161);
+        
+    }
+}
+
+@keyframes flashRed {
+    0% {
+        outline: 10px solid rgb(177, 45, 45);
+        background-color: rgb(136, 35, 35);
+    }
+}
+
+@keyframes flashGold {
+    0% {
+        outline: 10px solid rgba(255, 174, 0, 0.6);
+        background-color: rgb(110, 77, 6);
+    }
+}

@@ -1,0 +1,376 @@
+#panelContainer {
+    position: relative;
+    width: 29%;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    height: 100%; /* Take full height of parent */
+    overflow: hidden; /* Prevent unnecessary overflow */
+}
+
+#classContainer {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 10px;
+}
+#classContainer > div { /* Aw yeah epic child operator use */
+    background-color: rgb(32, 32, 32);
+    box-shadow: inset 0 0 9px black;
+    border: 4px solid rgb(0, 102, 36);
+    border-radius: 6px;
+}
+
+ul {
+    margin-left: 20px;
+}
+
+/* SEARCH BAR ******************************************************************/
+#searchContainer {
+    flex: 0; /* Allow equal height proportion */
+    background-color: rgb(32, 32, 32);
+    box-shadow: inset 0 0 9px black;
+    border: 4px solid rgb(0, 102, 36);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 2%;
+    z-index: 99999;
+}
+
+#searchboxContainer {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: row; /* Stack buttons vertically */
+    justify-content: space-between;
+}
+#searchboxNames {
+    height: 20px;
+}
+#searchbarResults {
+    margin: 0;
+    margin-top: 5px;
+}
+
+#advancedSearchContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+#visibilityButtonContainer {
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+    top: 1cqh;
+    gap: 5px;
+}
+.visibilityButton {
+    width: 100px;
+    height: 24px;
+}
+
+.notDiscoveredBySearch {
+    display: none;
+}
+
+/* h1 ***************************************************************************/
+.subjectContainer {
+    padding: 20px;
+    padding-bottom: 20px;
+}
+
+.subjectHeader {
+    margin-top: 7px;
+    margin-bottom: 10px;
+}
+
+/* h2 ***************************************************************************/
+.offeringHeader {
+    display: inline-block;
+    color: rgb(0, 255, 13);
+    padding-left: 36px;
+    margin-bottom: 10px;
+
+    position: relative; /* Ensures :before aligns with the header */
+    outline: 0px solid transparent;
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 10px;
+}
+.offeringHeader:hover {
+    background-color: rgb(50, 50, 50);
+    outline: 8px solid rgb(50, 50, 50);
+    animation: outlineFlashGreen .3s alternate;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    cursor: default;
+}
+
+.offeringHeader::before {
+    position: absolute;
+    content: var(--icon, "⮟");
+    color: rgb(0, 255, 13);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 4px; /* Fine-tune spacing */
+}
+
+/* h3 ***************************************************************************/
+.courseContainer {
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease, color .25s ease;
+    position: relative;
+    outline: 0px solid transparent;
+    border-radius: 10px;
+}
+.courseContainer:hover {
+    background-color: rgb(50, 50, 50);
+    outline: 8px solid rgb(50, 50, 50);
+    animation: outlineFlashGray .3s alternate;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    cursor: grab;
+}
+.courseContainer.clicked {
+    background-color: rgb(50, 50, 50);
+    outline: 8px solid rgb(50, 50, 50);
+}
+.courseContainer.clicked:hover {
+    cursor: grabbing;
+}
+
+.courseContainer.used {
+    transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease, color .25s ease;
+    color: rgb(255, 147, 147);
+}
+.courseContainer.used:hover {
+    animation: outlineFlashRed .3s alternate;
+    background-color: rgb(48, 24, 26);
+    outline: 8px solid rgb(48, 24, 26);
+    cursor: not-allowed;
+}
+
+/* Note display under the header */
+.note {
+    transition: color .25s ease;
+    color: rgb(255, 255, 255, .5);
+    font-style: italic;
+    padding-left: 30px;
+}
+.courseContainer.used .note {
+    transition: color 0.4s ease;
+    color: rgba(255, 126, 126, 0.5);
+}
+.flex {
+    transition: color .25s ease;
+    color: rgba(255, 193, 7);
+    font-style: italic;
+    padding-left: 30px;
+}
+
+
+/* Course code display at top left */
+.courseCode {
+    transition: opacity .2s ease, color .2s ease, text-shadow .2s ease;
+    color: rgba(97, 97, 97, 0);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0);
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 12px;
+    margin-bottom: 0px;
+}
+.courseCode:hover {
+    cursor: text !important;
+}
+
+.courseContainer:hover .courseCode, .courseContainer.clicked .courseCode {
+    opacity: 1;
+    color: rgba(97, 97, 97, 1);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0.2);
+}
+.courseContainer:hover.used .courseCode, .courseContainer.used.clicked .courseCode {
+    opacity: 1;
+    color: rgb(128, 40, 40);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ACT and GPA display at left */
+.prerequisiteStat {
+    color: rgb(255, 255, 255);
+    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0);
+    text-align: center;
+    line-height: 1em;
+
+    left: -7px;
+
+    position: absolute;
+    width: 50px;
+    margin: 0;
+}
+
+.prerequisiteStat#preTitle {
+    font-size: 0.7em;
+    line-height: 2.2em;
+    z-index: 30;
+}
+.prerequisiteStat#preTitle.ps_1 {
+    top: 30px;
+}
+.prerequisiteStat#preTitle.ps_2 {
+    top: 75px;
+}
+.prerequisiteStat#preTitle.ps_3 {
+    top: 120px;
+}
+.prerequisiteStat#preTitle.ps_4 {
+    top: 30px;
+}
+
+.prerequisiteStat#preNumber {
+    font-size: 1em;
+    width: 40px;
+    height: 40px;
+
+    line-height: 40px;
+    text-align: center;
+
+    transform: translate(13%, 12%);
+    border-radius: 50%;
+
+    z-index: 20;
+}
+.prerequisiteStat#preNumber.ps_1 {
+    background-color: hsla(219, 86%, 10%, 0.6);
+    top: 30px;
+}
+.prerequisiteStat#preNumber.ps_2 {
+    background-color: hsla(0, 86%, 10%, 0.6);
+    top: 75px;
+}
+.prerequisiteStat#preNumber.ps_3 {
+    background-color: hsla(129, 86%, 10%, 0.6);
+    top: 120px;
+}
+.prerequisiteStat#preNumber.ps_4 {
+    background-color: hsla(219, 86%, 10%, 0.6);
+    top: 30px;
+    font-size: .7em;
+}
+
+
+/* Course header styling*/
+.courseHeader {
+    margin-left: 32px;
+    margin-bottom: -4px;
+}
+.courseHeader::before {
+    content: '✦';
+    position: absolute;
+    left: 8px;
+    margin-top: -2.5px;
+    display: inline-block;
+}
+.courseContainer.clicked .courseHeader::before { /* Star rotation effect */
+    animation: rotateStar 4s infinite linear;
+}
+
+.mouseBox {
+    position: absolute;
+    font-size: 0.85em;
+
+    /* Center EVERYTHING */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    
+    border-radius: 10px;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.66);
+
+    pointer-events: none; /* Ignore mouse events */
+    cursor: grabbing;
+    animation: grow 0.2s cubic-bezier(0, 0, 0, 1.2);
+    overflow-x: wrap;
+    z-index: 9999999; /* Ensure it stays on top of other elements */
+    
+    background-color: rgba(150, 150, 150, .6);
+    outline: 6px solid rgba(201, 201, 201, .6);
+}
+body.grabbing { /* Apply cursor to body when dragging */
+   cursor: grabbing;
+}
+.mouseBox.honors {
+    background-color: rgba(189, 78, 209, .6);
+    outline: 6px solid rgba(232, 99, 255, .6);
+}
+.mouseBox.CONC {
+    background-image: linear-gradient(to bottom right, rgba(130, 17, 148, .5), rgba(0, 225, 255, .6));
+    outline: 6px solid rgba(189, 78, 209, .6);
+}
+.mouseBox.advancedPlacement {
+    background-image: linear-gradient(to bottom right, rgba(101, 9, 116, .6), rgba(255, 123, 0, .6));
+    outline: 6px solid rgba(189, 78, 209, .6);
+}
+
+.mouseBox:has(#flexAppendage) {
+    outline: 6px solid rgba(255, 174, 0, 0.6);
+}
+
+.mouseBox #flexAppendage {
+    position: absolute;
+    text-align: center;
+    color: black;
+    background-color: rgb(255, 187, 0);
+    border-radius: 10px;
+
+    /* Center EVERYTHING */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+    min-width: 60px;
+    height: 18px;
+    bottom: 54.5px;
+    left: 0px;
+}
+
+/* Honors styling*/
+.courseHeader.honors::before {
+    background: rgb(165, 81, 179);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.courseHeader.honors {
+    background: rgb(189, 78, 209);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+
+/* CONC styling*/
+.courseHeader.CONC::before {
+    background: rgb(166, 31, 255);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.courseHeader.CONC {
+    background: linear-gradient(to right, rgb(166, 31, 255), rgb(0, 255, 200));
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+
+/* AP styling*/
+.courseHeader.advancedPlacement::before {
+    background: rgb(255, 0, 140);
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
+.courseHeader.advancedPlacement {
+    background: linear-gradient(to right, rgb(255, 0, 140), rgb(255, 174, 0));
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+            background-clip: text;
+}
