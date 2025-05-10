@@ -1,10 +1,103 @@
+/* These colors apply universally (some are generated from others) */
+:root {
+    /* GENERAL */
+    --color-body-background: rgb(24, 24, 24);
+    --color-container-background: rgb(32, 32, 32);
+    --color-container-border: rgb(0, 102, 36);
+    --color-panel-offering: rgb(0, 255, 13);
+    --color-box-shadow: rgba(0, 0, 0, .66);
+    --color-text-shadow: rgba(0, 0, 0, .2);
+
+    /* PANEL */
+    --color-panel-selected: rgb(50, 50, 50);
+    --color-panel-course-code: rgb(97, 97, 97);
+    --color-panel-note: rgba(255, 255, 255, .5);
+
+    --color-panel-used-selected: rgb(48, 24, 26);
+    --color-panel-used-course-code: rgb(128, 40, 40);
+    --color-panel-used-note: rgba(255, 126, 126, 0.5);
+    --color-panel-used-text: rgb(255, 147, 147);
+
+    --color-panel-prerequisite-stat-blue: rgba(4, 19, 47, 0.6);
+    --color-panel-prerequisite-stat-red: rgba(47, 4, 4, 0.6);
+    --color-panel-prerequisite-stat-green: rgba(4, 47, 10, 0.6);
+
+    /* TABLE */
+    --color-table-header: rgb(50, 50, 50);
+    --color-table-header-hover: rgba(150, 150, 150, .5);
+    --color-table-data-hover-background: rgb(40, 40, 40);
+    --color-table-data-hover-outline: rgba(80, 80, 80, 0.5);
+    --color-table-border: rgb(24, 24, 24);
+
+    /* INDICATORS */
+    --color-indicator-extraElectiveBad-background: rgb(236, 57, 57);
+    --color-indicator-extraElectiveBad-outline: rgb(56, 0, 0);
+    --color-indicator-extraElectiveGood-background: rgb(57, 236, 81);
+    --color-indicator-extraElectiveGood-outline: rgb(0, 39, 29);
+    --color-gold: rgb(255, 187, 0);
+    --colorN-gold: transparent; /* Created dynamically */
+
+    /* MODIFIERS */
+    --color-flex-spot-background: rgb(58, 42, 17);
+    --color-flex-spot-outline-hover: rgba(126, 81, 22, 0.5);
+    --color-flex-outline-occupied-hover: rgba(150, 95, 23, 0.5);
+    --color-unavailable-background: rgb(34, 16, 16);
+    --color-unavailable-border: rgb(27, 12, 12);
+    --color-semi-unavailable-background: rgb(37, 25, 25);
+    --color-semi-unavailable-border: rgb(32, 19, 19);
+
+    /* COURSES */
+
+        /* Regular */
+        --color-regular-background: rgb(42, 42, 42);
+        --color-regular-background-hover: rgb(60, 60, 60);
+        --color-regular-background-bright: rgb(90, 90, 90);
+        --color-regular-background-bright-mousebox: transparent; /* Created dynamically */
+        --color-regular-outline: rgba(140, 140, 140, .5);
+        --color-regular-outline-bright: rgb(121, 121, 121);
+        --color-regular-outline-bright-mousebox: transparent; /* Created dynamically */
+
+        /* Honors */
+        --color-honors-background: rgb(69, 40, 83);
+        --color-honors-background-hover: rgb(90, 53, 109);
+        --color-honors-background-bright: rgb(120, 59, 134);
+        --color-honors-background-bright-mousebox: transparent; /* Created dynamically */
+        --color-honors-outline: rgba(173, 65, 216, 0.5);
+        --color-honors-outline-bright: rgb(189, 78, 209);
+        --color-honors-outline-bright-mousebox: transparent; /* Created dynamically */
+        
+        /* Concurrent */
+        --color-conc-text-left: rgb(166, 31, 255);
+        --color-conc-text-right: rgb(0, 255, 200);
+        --color-conc-background-left: rgb(130, 17, 148);
+        --color-conc-background-right: rgb(0, 225, 255);
+        --color-conc-background-left-mousebox: transparent; /* Created dynamically */
+        --color-conc-background-right-mousebox: transparent; /* Created dynamically */
+
+        /* Advanced Placement */
+        --color-ap-text-left: rgb(255, 0, 140);
+        --color-ap-text-right: rgb(255, 187, 0);
+        --color-ap-background-left: rgb(130, 17, 148);
+        --color-ap-background-right: rgb(255, 102, 0);
+        --color-ap-background-left-mousebox: transparent; /* Created dynamically */
+        --color-ap-background-right-mousebox: transparent; /* Created dynamically */
+
+    /* PATHWAYS */
+    --color-pathways-tile: rgb(104, 104, 104);
+    --color-pathways-border: rgba(255, 255, 255, .25);
+}
+
 body {
-    background-color: rgb(24, 24, 24);
+    background-color: var(--color-body-background);
     font-family: Arial, sans-serif;
-    color: rgb(255, 255, 255);
+    color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
     margin: 0;
-    overflow-y: hidden;
+    overflow: hidden;
+}
+/* Apply cursor to body when dragging */
+body.grabbing {
+   cursor: grabbing;
 }
 
 header {
@@ -15,6 +108,7 @@ button {
     cursor: pointer;
 }
 
+/* Applies to all checkboxes */
 input.checkbox {
     cursor: pointer;
 }
@@ -26,7 +120,7 @@ input.checkbox {
 #appContainer {
     position: absolute;
     display: flex;
-    flex-direction: row; /* SET TO `row-reverse` TO FLIP LEFT AND RIGHT PANELS! */
+    flex-direction: row; /* `row` and `row-reverse` determine arrangement! */
     justify-content: space-evenly;
     width: 100%;
     height: 90%;
@@ -42,7 +136,7 @@ input.checkbox {
 
 @keyframes outlineFlashGreen {
     0% {
-        outline: 1px solid rgb(0, 255, 23);
+        outline: 1px solid var(--color-panel-offering);
     }
 }
 
@@ -54,11 +148,11 @@ input.checkbox {
 
 @keyframes outlineFlashWhite {
     0% {
-        outline: 1px solid rgb(255, 255, 255);
+        outline: 1px solid white;
     }
 }
 
-@keyframes rotateStar {
+@keyframes rotate {
     100% {
         transform: rotate(360deg); /* Rotate to 360 degrees */
     }
@@ -78,35 +172,34 @@ input.checkbox {
 @keyframes flashGreen {
     0% {
         outline: 10px solid rgb(6, 95, 18);
-        background-color: rgb(6, 95, 18);
+        background-color:   rgb(6, 95, 18);
     }
 }
 
 @keyframes flashGray {
     0% {
-        outline: 10px solid rgb(121, 121, 121);
-        background-color: rgb(100, 100, 100);
+        outline: 10px solid var(--color-regular-outline-bright-mousebox);
+        background-color: var(--color-regular-background-bright)
     }
 }
 
 @keyframes flashPurple {
     0% {
-        outline: 10px solid rgb(153, 72, 183);
-        background-color: rgb(134, 59, 161);
-        
+        outline: 10px solid var(--color-honors-outline-bright-mousebox);
+        background-color: var(--color-honors-background-bright);
     }
 }
 
 @keyframes flashRed {
     0% {
         outline: 10px solid rgb(177, 45, 45);
-        background-color: rgb(136, 35, 35);
+        background-color:   rgb(136, 35, 35);
     }
 }
 
 @keyframes flashGold {
     0% {
-        outline: 10px solid rgba(255, 174, 0, 0.6);
-        background-color: rgb(110, 77, 6);
+        outline: 10px solid rgba( var(--colorN-gold), 0.6 );
+        background-color:   rgba( var(--colorN-gold), 0.42);
     }
 }

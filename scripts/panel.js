@@ -18,6 +18,26 @@ function toggleCollapse(id, header_id) {
     }
 }
 
+// Collapses every subject at once
+function collapseAll() {
+    for (const [subject, offerings] of Object.entries(courses)) {
+        for (const [offering, coursesArray] of Object.entries(offerings)) {
+            document.getElementById(`${offering}_contents`).style.display = 'none';
+            document.getElementById(`${offering}_header`).style.setProperty('--icon', '"➤"');
+        }
+    }
+}
+
+// Opens every subject at once
+function openAll() {
+    for (const [subject, offerings] of Object.entries(courses)) {
+        for (const [offering, coursesArray] of Object.entries(offerings)) {
+            document.getElementById(`${offering}_contents`).style.display = 'block';
+            document.getElementById(`${offering}_header`).style.setProperty('--icon', '"⮟"');
+        }
+    }
+}
+
 // Creates the master class panel on the right-hand side of the screen and populates it with all classes
 for (const [subject, offerings] of Object.entries(courses)) {
     newElement('div', 'classContainer', '', subject, 'subjectContainer'); // Container for each subject (holds offerings)

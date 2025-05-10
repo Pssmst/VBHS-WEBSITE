@@ -7,29 +7,12 @@
     overflow: hidden; /* Prevent unnecessary overflow */
 }
 
-#classContainer {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    gap: 10px;
-}
-#classContainer > div { /* Aw yeah epic child operator use */
-    background-color: rgb(32, 32, 32);
-    box-shadow: inset 0 0 9px black;
-    border: 4px solid rgb(0, 102, 36);
-    border-radius: 6px;
-}
-
-ul {
-    margin-left: 20px;
-}
-
 /* SEARCH BAR ******************************************************************/
 #searchContainer {
     flex: 0; /* Allow equal height proportion */
-    background-color: rgb(32, 32, 32);
+    background-color: var(--color-container-background);
     box-shadow: inset 0 0 9px black;
-    border: 4px solid rgb(0, 102, 36);
+    border: 4px solid var(--color-container-border);
     border-radius: 6px;
     padding: 20px;
     margin-bottom: 2%;
@@ -71,6 +54,25 @@ ul {
     display: none;
 }
 
+/* COURSES ******************************************************************/
+
+#classContainer {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 10px;
+}
+#classContainer > div { /* Aw yeah epic child operator use */
+    background-color: var(--color-container-background);
+    box-shadow: inset 0 0 9px black;
+    border: 4px solid var(--color-container-border);
+    border-radius: 6px;
+}
+
+ul {
+    margin-left: 20px;
+}
+
 /* h1 ***************************************************************************/
 .subjectContainer {
     padding: 20px;
@@ -85,7 +87,7 @@ ul {
 /* h2 ***************************************************************************/
 .offeringHeader {
     display: inline-block;
-    color: rgb(0, 255, 13);
+    color: var(--color-panel-offering);
     padding-left: 36px;
     margin-bottom: 10px;
 
@@ -95,17 +97,17 @@ ul {
     border-radius: 10px;
 }
 .offeringHeader:hover {
-    background-color: rgb(50, 50, 50);
-    outline: 8px solid rgb(50, 50, 50);
+    background-color: var(--color-panel-selected);
+    outline: 8px solid var(--color-panel-selected);
     animation: outlineFlashGreen .3s alternate;
-    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    box-shadow: 7px 7px 10px var(--color-box-shadow);
     cursor: default;
 }
 
 .offeringHeader::before {
     position: absolute;
     content: var(--icon, "⮟");
-    color: rgb(0, 255, 13);
+    color: var(--color-panel-offering);
     left: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -120,15 +122,15 @@ ul {
     border-radius: 10px;
 }
 .courseContainer:hover {
-    background-color: rgb(50, 50, 50);
-    outline: 8px solid rgb(50, 50, 50);
+    background-color: var(--color-panel-selected);
+    outline: 8px solid var(--color-panel-selected);
     animation: outlineFlashGray .3s alternate;
-    box-shadow: 7px 7px 10px rgba(0, 0, 0, .66);
+    box-shadow: 7px 7px 10px var(--box-shadow-black);
     cursor: grab;
 }
 .courseContainer.clicked {
-    background-color: rgb(50, 50, 50);
-    outline: 8px solid rgb(50, 50, 50);
+    background-color: var(--color-panel-selected);
+    outline: 8px solid var(--color-panel-selected);
 }
 .courseContainer.clicked:hover {
     cursor: grabbing;
@@ -136,29 +138,29 @@ ul {
 
 .courseContainer.used {
     transition: background-color 0.25s ease, outline 0.25s ease, box-shadow 0.25s ease, color .25s ease;
-    color: rgb(255, 147, 147);
+    color: var(--color-panel-used-text);
 }
 .courseContainer.used:hover {
     animation: outlineFlashRed .3s alternate;
-    background-color: rgb(48, 24, 26);
-    outline: 8px solid rgb(48, 24, 26);
+    background-color: var(--color-panel-used-selected);
+    outline: 8px solid var(--color-panel-used-selected);
     cursor: not-allowed;
 }
 
-/* Note display under the header */
+/* Note display, bottom right of course*/
 .note {
     transition: color .25s ease;
-    color: rgb(255, 255, 255, .5);
+    color: var(--color-panel-note);
     font-style: italic;
     padding-left: 30px;
 }
 .courseContainer.used .note {
     transition: color 0.4s ease;
-    color: rgba(255, 126, 126, 0.5);
+    color: var(--color-panel-used-note);
 }
 .flex {
     transition: color .25s ease;
-    color: rgba(255, 193, 7);
+    color: var(--color-gold);
     font-style: italic;
     padding-left: 30px;
 }
@@ -167,8 +169,8 @@ ul {
 /* Course code display at top left */
 .courseCode {
     transition: opacity .2s ease, color .2s ease, text-shadow .2s ease;
-    color: rgba(97, 97, 97, 0);
-    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0);
+    color: transparent;
+    text-shadow: 7px 7px 10px transparent;
 
     position: absolute;
     bottom: 0;
@@ -182,20 +184,20 @@ ul {
 
 .courseContainer:hover .courseCode, .courseContainer.clicked .courseCode {
     opacity: 1;
-    color: rgba(97, 97, 97, 1);
-    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0.2);
+    color: var(--color-panel-course-code);
+    text-shadow: 7px 7px 10px var(--color-text-shadow);
 }
 .courseContainer:hover.used .courseCode, .courseContainer.used.clicked .courseCode {
     opacity: 1;
-    color: rgb(128, 40, 40);
-    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
+    color: var(--color-panel-used-course-code);
+    text-shadow: 7px 7px 10px var(--color-text-shadow);
 }
 
 
 /* ACT and GPA display at left */
 .prerequisiteStat {
-    color: rgb(255, 255, 255);
-    text-shadow: 7px 7px 10px rgba(0, 0, 0, 0);
+    color: white;
+    text-shadow: 7px 7px 10px transparent;
     text-align: center;
     line-height: 1em;
 
@@ -238,19 +240,19 @@ ul {
     z-index: 20;
 }
 .prerequisiteStat#preNumber.ps_1 {
-    background-color: hsla(219, 86%, 10%, 0.6);
+    background-color: var(--color-panel-prerequisite-stat-blue);
     top: 30px;
 }
 .prerequisiteStat#preNumber.ps_2 {
-    background-color: hsla(0, 86%, 10%, 0.6);
+    background-color: var(--color-panel-prerequisite-stat-red);
     top: 75px;
 }
 .prerequisiteStat#preNumber.ps_3 {
-    background-color: hsla(129, 86%, 10%, 0.6);
+    background-color: var(--color-panel-prerequisite-stat-green);
     top: 120px;
 }
 .prerequisiteStat#preNumber.ps_4 {
-    background-color: hsla(219, 86%, 10%, 0.6);
+    background-color: var(--color-panel-prerequisite-stat-blue);
     top: 30px;
     font-size: .7em;
 }
@@ -269,7 +271,7 @@ ul {
     display: inline-block;
 }
 .courseContainer.clicked .courseHeader::before { /* Star rotation effect */
-    animation: rotateStar 4s infinite linear;
+    animation: rotate 4s infinite linear;
 }
 
 .mouseBox {
@@ -283,7 +285,7 @@ ul {
     justify-content: center;
     
     border-radius: 10px;
-    box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.66);
+    box-shadow: 7px 7px 10px var(--color-box-shadow);
 
     pointer-events: none; /* Ignore mouse events */
     cursor: grabbing;
@@ -291,34 +293,32 @@ ul {
     overflow-x: wrap;
     z-index: 9999999; /* Ensure it stays on top of other elements */
     
-    background-color: rgba(150, 150, 150, .6);
-    outline: 6px solid rgba(201, 201, 201, .6);
-}
-body.grabbing { /* Apply cursor to body when dragging */
-   cursor: grabbing;
+    background-color: var(--color-regular-background-bright-mousebox);
+    outline: 6px solid var(--color-regular-outline-bright-mousebox);
 }
 .mouseBox.honors {
-    background-color: rgba(189, 78, 209, .6);
-    outline: 6px solid rgba(232, 99, 255, .6);
+    background-color: var(--color-honors-background-bright-mousebox);
+    outline: 6px solid var(--color-honors-outline-bright-mousebox);
 }
 .mouseBox.CONC {
-    background-image: linear-gradient(to bottom right, rgba(130, 17, 148, .5), rgba(0, 225, 255, .6));
-    outline: 6px solid rgba(189, 78, 209, .6);
+    background-image: linear-gradient(to bottom right, var(--color-conc-background-left-mousebox), var(--color-conc-background-right-mousebox));
+    outline: 6px solid var(--color-honors-outline-bright-mousebox);
+    
 }
 .mouseBox.advancedPlacement {
-    background-image: linear-gradient(to bottom right, rgba(101, 9, 116, .6), rgba(255, 123, 0, .6));
-    outline: 6px solid rgba(189, 78, 209, .6);
+    background-image: linear-gradient(to bottom right, var(--color-ap-background-left-mousebox), var(--color-ap-background-right-mousebox));
+    outline: 6px solid var(--color-honors-outline-bright-mousebox);
 }
 
 .mouseBox:has(#flexAppendage) {
-    outline: 6px solid rgba(255, 174, 0, 0.6);
+    outline: 6px solid rgba(var(--colorN-gold), 0.6);
 }
 
 .mouseBox #flexAppendage {
     position: absolute;
     text-align: center;
     color: black;
-    background-color: rgb(255, 187, 0);
+    background-color: var(--color-gold);
     border-radius: 10px;
 
     /* Center EVERYTHING */
@@ -335,13 +335,13 @@ body.grabbing { /* Apply cursor to body when dragging */
 
 /* Honors styling*/
 .courseHeader.honors::before {
-    background: rgb(165, 81, 179);
+    background: var(--color-honors-outline-bright);
     -webkit-text-fill-color: transparent; 
     -webkit-background-clip: text; 
             background-clip: text;
 }
 .courseHeader.honors {
-    background: rgb(189, 78, 209);
+    background: var(--color-honors-outline-bright);
     -webkit-text-fill-color: transparent; 
     -webkit-background-clip: text; 
             background-clip: text;
@@ -349,13 +349,13 @@ body.grabbing { /* Apply cursor to body when dragging */
 
 /* CONC styling*/
 .courseHeader.CONC::before {
-    background: rgb(166, 31, 255);
+    background: var(--color-conc-text-left);
     -webkit-text-fill-color: transparent; 
     -webkit-background-clip: text; 
             background-clip: text;
 }
 .courseHeader.CONC {
-    background: linear-gradient(to right, rgb(166, 31, 255), rgb(0, 255, 200));
+    background: linear-gradient(to right, var(--color-conc-text-left), var(--color-conc-text-right));
     -webkit-text-fill-color: transparent; 
     -webkit-background-clip: text; 
             background-clip: text;
@@ -363,13 +363,13 @@ body.grabbing { /* Apply cursor to body when dragging */
 
 /* AP styling*/
 .courseHeader.advancedPlacement::before {
-    background: rgb(255, 0, 140);
+    background: var(--color-ap-text-left);
     -webkit-text-fill-color: transparent; 
     -webkit-background-clip: text; 
             background-clip: text;
 }
 .courseHeader.advancedPlacement {
-    background: linear-gradient(to right, rgb(255, 0, 140), rgb(255, 174, 0));
+    background: linear-gradient(to right, var(--color-ap-text-left), var(--color-ap-text-right));
     -webkit-text-fill-color: transparent; 
     -webkit-background-clip: text; 
             background-clip: text;

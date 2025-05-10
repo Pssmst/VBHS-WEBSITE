@@ -81,23 +81,3 @@ function newElement(typeOfElement, parent, text, id, class1, class2, class3) {
     if (class3 != '' && class3) { e.classList.add(class3); }
     document.getElementById(parent).appendChild(e);
 }
-
-// Collapses every subject at once
-function collapseAll() {
-    for (const [subject, offerings] of Object.entries(courses)) {
-        for (const [offering, coursesArray] of Object.entries(offerings)) {
-            document.getElementById(`${offering}_contents`).style.display = 'none';
-            document.getElementById(`${offering}_header`).style.setProperty('--icon', '"➤"');
-        }
-    }
-}
-
-// Opens every subject at once
-function openAll() {
-    for (const [subject, offerings] of Object.entries(courses)) {
-        for (const [offering, coursesArray] of Object.entries(offerings)) {
-            document.getElementById(`${offering}_contents`).style.display = 'block';
-            document.getElementById(`${offering}_header`).style.setProperty('--icon', '"⮟"');
-        }
-    }
-}
