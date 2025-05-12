@@ -73,7 +73,7 @@ function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLeng
  
 // Look at a cell and determines if it should be unavailable
 function determineIfUnavailable(subject, course, cell) {
-    const allowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
+    const withinAllowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
 
     let allowedGradesArray = [];
     for (let i = 0; i < course.grades.length; i++) {
@@ -81,9 +81,9 @@ function determineIfUnavailable(subject, course, cell) {
             allowedGradesArray.push(i+1);
         }
     }
-    const allowedGrades = allowedGradesArray.includes(Number(cell.id[1]));
+    const withinAllowedGrades = allowedGradesArray.includes(Number(cell.id[1]));
     const isFlexSpot = cell.classList.contains('flexCourseSpot');
-    return [allowedSubjects, allowedGrades, isFlexSpot];
+    return [withinAllowedSubjects, withinAllowedGrades, isFlexSpot];
 }
 
 // Set cell modifiers (class, text, etc.)
@@ -172,10 +172,10 @@ function determineWhichEE() {
 
         // If cell name exists in the courseMap...
         if (course) {
-            [allowedSubjects, allowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, cell);
+            [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, cell);
 
             // If unavailable...
-            if (!(allowedSubjects && allowedGrades)) {
+            if (!(withinAllowedSubjects && withinAllowedGrades)) {
                 cell.classList.add('extraElective');
 
                 // Extra elective (WITH flex credit substituting it) [GOOD]
@@ -314,11 +314,11 @@ for (const [subject, offerings] of Object.entries(courses)) {
 
                         // Iterate through every cell for gaming purposes
                         tableCells.forEach(cell => {
-                            [allowedSubjects, allowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, cell);
-                            if (!(allowedSubjects && allowedGrades)) {
+                            [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, cell);
+                            if (!(withinAllowedSubjects && withinAllowedGrades)) {
                                 cell.classList.add('unavailable');
                             }
-                            if (!allowedSubjects && allowedGrades) {
+                            if (!withinAllowedSubjects && withinAllowedGrades) {
                                 cell.classList.add('semiUnavailable');
                             }
                         });
@@ -334,13 +334,13 @@ for (const [subject, offerings] of Object.entries(courses)) {
                         svg.innerHTML = ''; // Clear existing lines
                         let elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
 
-                        [allowedSubjects, allowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, elementUnderCursor);
+                        [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, elementUnderCursor);
 
                         // See if any prerequisite is not fulfilled
                         const fulfilledPrerequities = getFulfilledPrerequisites(elementUnderCursor, course.prerequisites, course.courseLength);
                         let allPrerequisitesFulfilled = !Object.values(fulfilledPrerequities).some(fulfilled => !fulfilled);
 
-                        if (elementUnderCursor && elementUnderCursor.tagName === 'TD' && allowedGrades && allPrerequisitesFulfilled) {
+                        if (elementUnderCursor && elementUnderCursor.tagName === 'TD' && withinAllowedGrades && allPrerequisitesFulfilled) {
 
                             // Handle previous class if it exists
                             if (elementUnderCursor.textContent) {
