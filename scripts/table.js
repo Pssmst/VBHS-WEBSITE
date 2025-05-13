@@ -29,28 +29,32 @@ function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLeng
     if (prerequisites.length === 0) return { "": true }; // Return early if no prerequisites
  
     let prereqsUsed = {};
-    const offset = courseLength === 1 ? 2 : 1; // Define offset based on course length
+    const offset = courseLength*2;
  
-    if (elementUnderCursor.tagName !== 'TD') return prereqsUsed; // Ensure we are processing a table cell
+    // Ensure we are processing a table cell
+    if (elementUnderCursor.tagName !== 'TD') {
+        return prereqsUsed;
+    }
  
+    // Define table to iterate through later
     const table = document.getElementById('table');
-    if (!table) return prereqsUsed;
- 
+    if (!table) { return prereqsUsed; }
+    
     const cellIndex = elementUnderCursor.cellIndex; // Get column index
  
-    // Handle special case where placing in the first semester (index 0)
+    // Handle special case where user places course in the first semester (index 0)
     if (cellIndex - offset === -1) {
         for (const prerequisite of prerequisites) {
-            prereqsUsed[prerequisite] = prerequisite === "PAP Algebra 1" && (algebra1Taken ? true : false);
+            prereqsUsed[prerequisite] = (prerequisite === "PAP Algebra 1" && algebra1Taken);
         }
        return prereqsUsed;
     }
- 
+
     // Iterate through all rows and check prerequisites
     Array.from(table.rows).forEach(row => {
         
         /* ITERATE THROUGH CELLS IN THE ROW
-            cellIndex = the current horizontal index of the cell (freshman year semester 1 = 1, senior year semester 2 = 8)
+            cellIndex = the current horizontal index of the cell (freshman semester one = 1, senior semester two = 8)
             offset = 2 for year-long classes, 1 for semester-long classes
             i >= 0; stops at subject column (index 0)
             i--; goes backwards from the year to the left of the cell to the subject column
@@ -63,7 +67,7 @@ function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLeng
                 if (getTextContent(cell).includes(prerequisite)) {
                     prereqsUsed[prerequisite] = true;
                 } else if (!(prerequisite in prereqsUsed)) {
-                    prereqsUsed[prerequisite] = prerequisite === "PAP Algebra 1" && (algebra1Taken ? true : false);
+                    prereqsUsed[prerequisite] = (prerequisite === "PAP Algebra 1" && algebra1Taken);
                 }
             }
         }
@@ -71,17 +75,16 @@ function getFulfilledPrerequisites(elementUnderCursor, prerequisites, courseLeng
     return prereqsUsed;
 }
  
-// Look at a cell and determines if it should be unavailable
-function determineIfUnavailable(subject, course, cell) {
-    const withinAllowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
-
-    let allowedGradesArray = [];
+// Look at a cell and determines if it should be allowed to exist
+function provideAvailabilityDetails(subject, course, cell) {
+    let allowedGrades = [];
     for (let i = 0; i < course.grades.length; i++) {
         if (course.grades[i]) {
-            allowedGradesArray.push(i+1);
+            allowedGrades.push(i+1);
         }
     }
-    const withinAllowedGrades = allowedGradesArray.includes(Number(cell.id[1]));
+    const withinAllowedSubjects = [subject, "Elective 1", "Elective 2", "Elective 3"].includes(getLeftmostTH(cell));
+    const withinAllowedGrades = allowedGrades.includes(Number(cell.id[1]));
     const isFlexSpot = cell.classList.contains('flexCourseSpot');
     return [withinAllowedSubjects, withinAllowedGrades, isFlexSpot];
 }
@@ -107,15 +110,11 @@ function setCellModifiers(course, elementUnderCursor) {
 let advancedFlexbars = {};
 
 // Applies and removes the flexCourseSpot modifier on cells
-function toggleFlexCourse(condition, cellIds, ifAdd) {
+function toggleFlexCourse(cellIds, ifAdd) {
     cellIds.forEach(id => {
         const cell = document.getElementById(id);
-        if (cell && condition) {
-            if (ifAdd) {
-                cell.classList.add('flexCourseSpot');
-            } else {
-                cell.classList.remove('flexCourseSpot');
-            }
+        if (cell) {
+            (ifAdd ? cell.classList.add('flexCourseSpot') : cell.classList.remove('flexCourseSpot'));
         }
     });
 }
@@ -134,23 +133,30 @@ function evaluateCoursesInTable(ifAdd) {
         if (courseContainer) { courseContainer.classList.add('used'); }
     });
 
-    // Finds flex courses in the table and determine what spots are available for extra electives for each flex course
+    // Finds flex courses in the table and determines locations of flex spots for extra electives to safely exist
     if (coursesInTable.length > 0) {
-        toggleFlexCourse(true, ["s5", "s6", "m7", "m8"], false);
+        toggleFlexCourse(["s5", "s6", "m7", "m8"], false);
+
         for (let courseInTable of coursesInTable) {
             if (courseInTable && courseInTable[0].flex) { // Check if it's valid
-                toggleFlexCourse(courseInTable[0].flex === "Science", ["s5", "s6"], ifAdd);
-                toggleFlexCourse((courseInTable[0].flex === "Math") || (courseInTable[0].flex === "Math after Algebra 2" && (getFulfilledPrerequisites(elementUnderCursor, ["Algebra 2"], 1)["Algebra 2"] || getFulfilledPrerequisites(elementUnderCursor, ["Honors Algebra 2"], 1)["Honors Algebra 2"])), ["m7", "m8"], ifAdd);
-                toggleFlexCourse(courseInTable[0].flex === "World History", ["h3", "h4"], ifAdd);
-
+                if (courseInTable[0].flex === "Science") {
+                    toggleFlexCourse(["s5", "s6"], ifAdd);
+                }
+                if ((courseInTable[0].flex === "Math") || (courseInTable[0].flex === "Math after Algebra 2" && (getFulfilledPrerequisites(elementUnderCursor, ["Algebra 2"], 1)["Algebra 2"] || getFulfilledPrerequisites(elementUnderCursor, ["Honors Algebra 2"], 1)["Honors Algebra 2"]))) {
+                    toggleFlexCourse(["m7", "m8"], ifAdd);
+                }
+                if (courseInTable[0].flex === "World History") {
+                    toggleFlexCourse(["h3", "h4"], ifAdd);
+                }
+                
                 if (courseInTable[0].flex === "Science OR Math" && advancedFlexbars[courseInTable[1]]) {
                     index = advancedFlexbars[courseInTable[1]][0];
 
                     if (advancedFlexbars[courseInTable[1]][1][index] === "Science") {
-                        toggleFlexCourse(true, ["s5", "s6"], ifAdd);
+                        toggleFlexCourse(["s5", "s6"], ifAdd);
                     }
                     else if (advancedFlexbars[courseInTable[1]][1][index] === "Math") {
-                        toggleFlexCourse(true, ["m7", "m8"], ifAdd);
+                        toggleFlexCourse(["m7", "m8"], ifAdd);
                     }
                 }
             }
@@ -168,11 +174,11 @@ function determineWhichEE() {
     // Iterates through every cell and determines whether it's an EE given by a flex course or an EE that is from a plain unavailable cell
     tableCells.forEach(cell => {
         const subject = courseMap.get(getTextContent(cell))?.subject;
-        const course = courseMap.get(getTextContent(cell)); // May sometimes be false bc of empty cells
+        const course = courseMap.get(getTextContent(cell));
 
         // If cell name exists in the courseMap...
         if (course) {
-            [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, cell);
+            [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = provideAvailabilityDetails(subject, course, cell);
 
             // If unavailable...
             if (!(withinAllowedSubjects && withinAllowedGrades)) {
@@ -227,8 +233,10 @@ function determineWhichEE() {
     });
 }
 
-// MOUSE BOX ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MAIN TABLE LOOP ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// This displays those prerequisite lines that are kinda annoying tbh
+// TODO: Rework the displaying of these lines bc they do NOT work on PC
 function updateLinesFromMouseBox(course) {
     svg.innerHTML = ''; // Clear existing lines
     const fromElement = document.getElementById(`${course.name}_mouseBox`);
@@ -280,10 +288,11 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     const courseContainer = document.querySelector(`[id="${course.name}_courseContainer"]`);
                     courseContainer.classList.add('clicked'); // Start the rotation
 
-                    // Create the mousebox
+                    // Create the mouseBox
                     const mouseBox = document.createElement('div');
                     document.body.appendChild(mouseBox);
 
+                    // Display mouse as grabbing all the time
                     document.body.classList.add("grabbing");
 
                     // Determine size and contents
@@ -297,7 +306,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     }
                     mouseBox.textContent = course.name;
 
-                    // MouseBox modifiers
+                    // mouseBox modifiers
                     mouseBox.classList.add('mouseBox');
                     mouseBox.id = `${course.name}_mouseBox`;
                     if (course.honors) { mouseBox.classList.add('honors'); }
@@ -305,16 +314,16 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     if (course.advancedPlacement) { mouseBox.classList.add('advancedPlacement'); }
                     if (course.flex.length > 0) { newElement('div', `${course.name}_mouseBox`, 'flex', 'flexAppendage'); }
 
-                    // FUNCTION THAT RUNS EVERY FRAME THAT MOUSEBOX IS BEING MOVED AND ALSO ONCE ON-CLICK
+                    // Moves mouseBox to cursor every frame and on-click to make it seem like the mouse is dragging the box
                     function moveBox(e) {
                         mouseBox.style.position = 'absolute';
 
                         mouseBox.style.left = `${e.pageX - mouseBox.clientWidth/2}px`;
                         mouseBox.style.top = `${e.pageY - mouseBox.clientHeight/2}px`;
 
-                        // Iterate through every cell for gaming purposes
+                        // Display availability of cells! Very important! Should probably move this and turn it into a function!
                         tableCells.forEach(cell => {
-                            [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, cell);
+                            [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = provideAvailabilityDetails(subject, course, cell);
                             if (!(withinAllowedSubjects && withinAllowedGrades)) {
                                 cell.classList.add('unavailable');
                             }
@@ -334,7 +343,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
                         svg.innerHTML = ''; // Clear existing lines
                         let elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
 
-                        [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = determineIfUnavailable(subject, course, elementUnderCursor);
+                        [withinAllowedSubjects, withinAllowedGrades, isFlexSpot] = provideAvailabilityDetails(subject, course, elementUnderCursor);
 
                         // See if any prerequisite is not fulfilled
                         const fulfilledPrerequities = getFulfilledPrerequisites(elementUnderCursor, course.prerequisites, course.courseLength);
@@ -389,9 +398,9 @@ for (const [subject, offerings] of Object.entries(courses)) {
                     document.addEventListener('mousemove', moveBox);
                     document.addEventListener('wheel', moveBox);
                     document.addEventListener('click', function handleClick(event) {
-                        moveBox(event); // Trigger moveBox animation on click
-                        resetAvailability(); // Clear unavailable cells
-                        document.removeEventListener('click', handleClick); // Ensure resetAvailability only runs once
+                        moveBox(event);
+                        // I don't know why this fixes the unavailable cell bugs but it does :)
+                        document.removeEventListener('click', handleClick);
                     });
                     document.addEventListener('mouseup', handleDrop);
                 }
@@ -400,7 +409,7 @@ for (const [subject, offerings] of Object.entries(courses)) {
     }
 }
 
-// Double-click listener to handle unmerging of cells
+// Double-click listener to delete courses in the table
 tableCells.forEach(cell => {
     cell.addEventListener('dblclick', function(event) {
 
