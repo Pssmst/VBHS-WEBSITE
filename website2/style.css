@@ -1,0 +1,36 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+#pictures {
+    border: 2px solid black;
+    padding: 10px;
+    text-align: center;
+    height: 400px;
+}
+
+#pathways {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pathway {
+    flex: 1 1 calc(33.333% - 16px);
+    box-sizing: border-box;
+    max-width: calc(33.333% - 16px);
+    
+    border: 1px solid black;
+    margin: none;
+
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.pathway:hover {
+    cursor: pointer;
+}
