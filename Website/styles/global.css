@@ -1,0 +1,39 @@
+:root {
+    /*
+    --color-main-bg: rgb(11, 105, 58);
+    --color-main-text: rgb(0, 255, 157);
+
+    --color-pictures-text: white;
+
+    --color-pathway-bg: rgb(255, 233, 218);
+    --color-pathway-bg-highlight: rgb(255, 238, 227);
+    --color-pathway-text: rgb(207, 40, 82);
+    --color-pathway-text-highlight: rgb(65, 127, 207);
+    */
+    
+    --color-main-bg: rgb(25, 95, 54);
+    --color-main-text: rgb(232, 236, 230);
+
+    --color-pictures-text: white;
+
+    --color-pathway-bg: var(--color-main-text);
+    --color-pathway-bg-highlight: rgb(231, 241, 227);
+    --color-pathway-text: var(--color-main-bg);
+    --color-pathway-text-highlight: rgb(50, 168, 96);
+}
+
+@keyframes pathwayBackgroundHighlight {
+    100% {
+        background-color: var(--color-pathway-bg-highlight);
+    }
+}
+@keyframes pathwayTextHighlight {
+    100% {
+        color: var(--color-pathway-text-highlight);
+    }
+}
+@keyframes pathwayBorderTopHighlight {
+    100% {
+        border-top: 2px solid var(--color-pathway-text-highlight);
+    }
+}

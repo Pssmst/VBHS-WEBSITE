@@ -1,17 +1,17 @@
 const pathways = [
     {
         name: "Biomedical Science",
-        description: "Description 1",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "biomedical"
     },
     {
         name: "Computer Science",
-        description: "Description 2",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "computer-science"
     },
     {
         name: "Engineering",
-        description: "Description 3",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "engineering",
         classes: [
             "Intro to Engineering",
@@ -23,32 +23,32 @@ const pathways = [
     },
     {
         name: "Automation Technology",
-        description: "Description 4",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "automation-technology"
     },
     {
         name: "Business",
-        description: "Description 5",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "business"
     },
     {
         name: "Family and Consumer Science (FACS)",
-        description: "Description 6",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "facs"
     },
     {
         name: "Education",
-        description: "Description 7",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "education"
     },
     {
         name: "Agricultural Science",
-        description: "Description 8",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "agricultural-science"
     },
     {
         name: "JROTC",
-        description: "Description 9",
+        description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas harum quos mollitia possimus, quaerat reiciendis voluptas cum? Ratione vel voluptas commodi. Voluptatibus odio unde labore deserunt? Quia exercitationem asperiores consectetur?",
         srcName: "jrotc"
     },
 ]
