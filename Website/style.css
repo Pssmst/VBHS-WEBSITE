@@ -1,0 +1,116 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'Syne';
+}
+h1 {
+    font-weight: 720;
+}
+h2 {
+    font-weight: 700;
+}
+h3 {
+    font-weight: 680;
+}
+
+#main {
+    color: var(--color-main-text);
+    background-color: var(--color-main-bg);
+}
+#main h1 {
+    font-size: 4em;
+    margin: 0;
+    padding: 40px;
+}
+
+#pictures {
+    color: var(--color-pictures-text);
+}
+
+#pathway {
+    color: var(--color-pathway-text);
+    background-color: var(--color-pathway-bg);
+
+    display: flex;
+}
+
+#pathwayDescription {
+    flex: 1 1 0;
+    padding-top: 200px;
+    padding-left: 50px;
+    width: 33%;
+}
+#pathwayDescription h2 {
+    font-size: 3em;
+    margin-bottom: 26px;
+}
+
+#pathwayContents {
+    flex: 2 1 0;
+    display: flex;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#pathwayContents a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.pathwayContainer {
+    flex: 1 1 calc(30% - 16px);
+    max-width: calc(30% - 16px);
+    box-sizing: border-box;
+    
+    border-top: 2px solid var(--color-pathway-text);
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 100px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.pathwayContainer h3 {
+    font-family: 'Syne';
+    font-weight: 680;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.pathwayContainer:hover {
+    background-color: red;
+}
+
+
+.pathwayHeader {
+    color: var(--color-pathways-text);
+}
+
+.box {
+    width: 150px;
+    height: 150px;
+    font-size: 4em;
+    text-align: center;
+    border: 2px solid;
+    margin-bottom: 10px;
+    line-height: 1.05em;
+    margin-left: auto;
+    margin-right: auto;
+
+    animation-duration: 2s;
+}
+
+@keyframes anim1 {
+    from {transform: translateX(200px)}
+}
+#box1 {
+    animation-name: anim1;
+    animation-duration: 2s;
+}

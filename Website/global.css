@@ -1,0 +1,9 @@
+:root {
+    --color-main-bg: rgb(33, 85, 65);
+    --color-main-text: rgb(0, 255, 157);
+
+    --color-pictures-text: white;
+
+    --color-pathway-bg: rgb(24, 22, 128);
+    --color-pathway-text: rgb(65, 211, 255);
+}
