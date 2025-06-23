@@ -1,36 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Pathway</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Engineering Pathway | VBHS Career Night</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Syne:wght@400..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/engineeringStyles.css" />
 </head>
 <body>
-    <!--
-    - Name + Description
-        - What's so great about going into engineering?
-    
-    - The classes
-        
-    - News
-        - Need more girls
-    
-    - Careers
-        - Careers right out of high school
-        - Careers in Engineering (100+ Careers in Engineering)
-    
-    - Videos
-        - Information videos
-        - Interviews with Past Graduates (About how these classes helped them in college)
-        - More great info + videos about engineering on youtube
-    
-    - Teachers bios w/ pics and videos
-    
-    - Connections
-        - WATC (+ info)
-        - PLTW (+ info)
 
-    - FAQ
-    -->
+    <!-- SITE NAVIGATION -->
+    <header class="site-header">
+        <nav class="container">
+            <a href="index.html" class="logo">VBHS Career Pathways</a>
+            <ul class="nav-links">
+                <li>
+                    <a href="#overview">Overview</a>
+                </li>
+                <li>
+                    <a href="#courses">Courses</a>
+                </li>
+                <li>
+                    <a href="#extras">More Info</a>
+                </li>
+                <li>
+                    <a href="#faq">FAQ</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO / INTRO -->
+    <section id="overview" class="hero container">
+        <h1>Pre-Engineering Pathway</h1>
+        <p>Learn CAD, build robots, program CNC mills, and design your own capstone prototype.</p>
+    </section>
+
+    <!-- MAIN + SIDEBAR LAYOUT -->
+
+    <div class="container layout-two-col">
+        <!-- MAIN -->
+        <main>
+            <!-- COURSE TIMELINE -->
+            <section id="courses" class="course-timeline">
+                <h2>Course Sequence</h2>
+                <ul class="timeline">
+                    <li>
+                        <time>9th Grade</time>
+                        <div class="course-card">
+                            <h3>Introduction to Engineering Design (IED)</h3>
+                            <p>Hands-on CAD & design process projects: puzzle cubes, Automoblox, cable cars…</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time>10th Grade</time>
+                        <div class="course-card">
+                            <h3>Principles of Engineering (POE)</h3>
+                            <p>Survey major engineering topics: mechanisms, energy, statics, materials…</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time>11th Grade</time>
+                        <div class="course-card">
+                            <h3>Computer-Integrated Manufacturing (CIM)</h3>
+                            <p>CAD/CAM, CNC mills & lathes, VEX robotics, virtual manufacturing badge.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <time>12th Grade</time>
+                        <div class="course-card">
+                            <h3>Engineering Design & Development (EDD)</h3>
+                            <p>Capstone: team-based open-ended problem, prototype, mentor feedback, panel defense.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- “EXTRAS” GRID -->
+            <section id="extras" class="extras-grid">
+                <h2>Want Even More?</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>PLTW</h3>
+                        <p>Project Lead The Way curriculum overview & benefits.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Info Videos</h3>
+                        <p>Short clips introducing each course—ideal for busy families.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Interviews with Alumni</h3>
+                        <p>Hear how these classes gave them a head start in college and careers.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Meet the Teachers</h3>
+                        <p>Photo bios + short video intros so you know who's guiding you.</p>
+                    </div>
+                    <div class="card">
+                        <h3>100+ Engineering Careers</h3>
+                        <p>Explore the many fields you can enter with these skills.</p>
+                        <a href="link-to-career-list.pdf" class="btn-small">Download PDF</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ ACCORDION -->
+            <section id="faq" class="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-question">Do I need to be good at math?</button>
+                        <div class="accordion-answer">
+                            <p>If you're getting A's or B's in Algebra, you're already set for success!</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-question">Can I still go into other fields?</button>
+                        <div class="accordion-answer">
+                            <p>Absolutely—these design and problem-solving skills apply everywhere!</p>
+                        </div>
+                    </div>
+                    <!-- more items… -->
+                </div>
+            </section>
+        </main>
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Watch on YouTube</h3>
+                <!-- YouTube embed -->
+                <iframe width="100%" height="200" src="https://www.youtube.com/embed/[URL]" frameborder="0" allowfullscreen></iframe>
+                <a href="https://youtube.com/soooieee" class="btn-small">More Videos</a>
+            </div>
+            <div class="sidebar-section call-out">
+                <h3>We Need More Girls in Engineering!</h3>
+                <p>Scholarships & mentorships available—reach out!</p>
+            </div>
+            <div class="sidebar-section so-great">
+                <h3>What's So Great?</h3>
+                <ul>
+                    <li>5.0 GPA weighted credit</li>
+                    <li>3rd-year science credit</li>
+                    <li>Industry certifications (CAD, Excel, PLC…)</li>
+                    <li>Capstone & professional panel</li>
+                </ul>
+            </div>
+            <div class="sidebar-section contact">
+                <h3>Contact Us</h3>
+                <p>Dr. Joe McLean <br> joe.mclean@vbsd.us <br> (479) 310-0714 </p>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="site-footer container">
+        <p>© 2025 Van Buren High School Career Pathways • <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+    
+    <!-- When clicking on accordion question, show accordion answer to the right of the button (click again to hide it) -->
+    <script>
+        document.querySelectorAll('.accordion-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const isOpen = answer.classList.contains('visible');
+
+                // Close all answers
+                document.querySelectorAll('.accordion-answer.visible').forEach(openAns => openAns.classList.remove('visible'));
+
+                // If it wasn't open, open it
+                if (!isOpen) {
+                    answer.classList.add('visible');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

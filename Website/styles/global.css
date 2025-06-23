@@ -1,17 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne&display=swap");
+
 :root {
-    /*
-    --color-main-bg: rgb(11, 105, 58);
-    --color-main-text: rgb(0, 255, 157);
-
-    --color-pictures-text: white;
-
-    --color-pathway-bg: rgb(255, 233, 218);
-    --color-pathway-bg-highlight: rgb(255, 238, 227);
-    --color-pathway-text: rgb(207, 40, 82);
-    --color-pathway-text-highlight: rgb(65, 127, 207);
-    */
-    
     --color-main-bg: rgb(25, 95, 54);
+    --color-main-bg2: rgb(7, 161, 20);
     --color-main-text: rgb(232, 236, 230);
 
     --color-pictures-text: white;
@@ -20,6 +11,24 @@
     --color-pathway-bg-highlight: rgb(231, 241, 227);
     --color-pathway-text: var(--color-main-bg);
     --color-pathway-text-highlight: rgb(50, 168, 96);
+
+    /* Engineering */
+    
+    --color-engineering-header1: var(--color-main-bg2);
+    --color-engineering-header2: rgb(20, 136, 72);
+    --color-engineering-element-bg: rgb(246, 248, 243);
+
+    --color-engineering-text: #333;
+    --color-engineering-footer-text: #666;
+    --color-engineering-border: #ccc;
+
+    --color-engineering-call-out-bg: #fffae6;
+    --color-engineering-call-out-border: #ffe58f;
+    --color-engineering-call-out-text: #b36b00;
+
+    --color-engineering-contact-bg: #e6fbff;
+    --color-engineering-contact-border: #8fdfff;
+    --color-engineering-contact-text: #0071b3;
 }
 
 @keyframes pathwayBackgroundHighlight {
