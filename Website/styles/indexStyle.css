@@ -3,6 +3,7 @@ body {
     padding: 0;
     margin: 0;
     font-size: 1.1em;
+    background-color: var(--color-bg);
 }
 
 h1, h2, h3 {
@@ -18,24 +19,42 @@ h3 {
     font-weight: 680;
 }
 
-#main {
-    color: var(--color-main-text);
-    background: linear-gradient(135deg, var(--color-main-bg) 0%, var(--color-main-bg2) 100%);
-}
-#main h1 {
-    font-size: 4em;
-    margin: 0;
-    padding: 40px;
+.container {
+    width: calc(100% - 20%);
+    margin: 0 auto;
 }
 
-#pictures {
-    color: var(--color-pictures-text);
+/* Header */
+#site-header {
+    display: flex;
+    height: 120px;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: linear-gradient(135deg, var(--color-main-header-bg) 0%, var(--color-main-header-bg2) 100%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+#site-header-container {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#site-header .logo {
+    font-family: 'Syne';
+    font-size: 2.5em;
+    font-weight: 740;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: visible;
+    margin: 0;
+    color: var(--color-pathway-element-bg);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 #pathway {
-    color: var(--color-pathway-text);
-    background-color: var(--color-pathway-bg);
-
+    color: var(--color-main-pathway-text);
     display: flex;
     padding-top: 100px;
     padding-bottom: 80px;
@@ -44,7 +63,6 @@ h3 {
 #pathwayDescription {
     flex: 1 1 0;
     display: flex;
-    justify-content: center;
 }
 #pathwayDescriptionContents {
     max-width: 400px;
@@ -60,7 +78,7 @@ h3 {
 
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-end;
 }
 #pathwayContents a {
     text-decoration: none;
@@ -74,7 +92,7 @@ h3 {
     max-width: calc(40% - 16px);
     box-sizing: border-box;
     
-    border-top: 2px solid var(--color-pathway-text);
+    border-top: 2px solid var(--color-main-pathway-text);
 
     display: flex;
     flex-direction: column;
@@ -82,6 +100,7 @@ h3 {
     padding-top: 20px;
     padding-bottom: 20px;
     margin-bottom: 20px;
+    margin-left: 16px;
 }
 .pathwayContainer h3 {
     font-family: 'Syne';

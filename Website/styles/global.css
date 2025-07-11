@@ -1,48 +1,58 @@
 @import url("https://fonts.googleapis.com/css2?family=Syne&display=swap");
 
 :root {
-    --color-main-bg: rgb(25, 95, 54);
-    --color-main-bg2: rgb(7, 161, 20);
-    --color-main-text: rgb(232, 236, 230);
+    --color-bg: #e8ece6;
 
-    --color-pictures-text: white;
+    --color-main-header-bg: #195f36;
+    --color-main-header-bg2: #07a114;
 
-    --color-pathway-bg: var(--color-main-text);
-    --color-pathway-bg-highlight: rgb(231, 241, 227);
-    --color-pathway-text: var(--color-main-bg);
-    --color-pathway-text-highlight: rgb(50, 168, 96);
+    --color-main-pathway-bg-highlight: rgb(231, 241, 227);
+    --color-main-pathway-text: #195f36;
+    --color-main-pathway-text-highlight: rgb(50, 168, 96);
 
-    /* Engineering */
+    /* Pathways */
     
-    --color-engineering-header1: var(--color-main-bg2);
-    --color-engineering-header2: rgb(20, 136, 72);
-    --color-engineering-element-bg: rgb(246, 248, 243);
+    --color-pathway-header1: #07a114;
+    --color-pathway-header2: #148848;
+    --color-pathway-element-bg: #f6f8f3;
 
-    --color-engineering-text: #333;
-    --color-engineering-footer-text: #666;
-    --color-engineering-border: #ccc;
+    --color-pathway-text: #333;
+    --color-pathway-footer-text: #666666;
+    --color-pathway-border: #cccccc;
 
-    --color-engineering-call-out-bg: #fffae6;
-    --color-engineering-call-out-border: #ffe58f;
-    --color-engineering-call-out-text: #b36b00;
+    --color-pathway-call-out-bg: #fffae6;
+    --color-pathway-call-out-border: #ffe58f;
+    --color-pathway-call-out-text: #b36b00;
 
-    --color-engineering-contact-bg: #e6fbff;
-    --color-engineering-contact-border: #8fdfff;
-    --color-engineering-contact-text: #0071b3;
+    --color-pathway-contact-bg: #e6fbff;
+    --color-pathway-contact-border: #8fdfff;
+    --color-pathway-contact-text: #0071b3;
+
+    --color-pathway-question-top-highlight: #ffee51;
+    --color-pathway-question-top: #ffd633;
+    --color-pathway-question-border: #e2a600;
+    --color-pathway-question-bottom: #ffa600;
+    --color-pathway-question-box-shadow: #ce7018;
+    --color-pathway-question-text: #000000;
+
+    --color-link-highlight: #0084ff;
+    --color-link: #0066ff;
+    --color-link-border: #091d77;
+    --color-link-text: #ffffff;
 }
 
 @keyframes pathwayBackgroundHighlight {
     100% {
-        background-color: var(--color-pathway-bg-highlight);
+        background-color: var(--color-main-pathway-bg-highlight);
     }
 }
 @keyframes pathwayTextHighlight {
     100% {
-        color: var(--color-pathway-text-highlight);
+        color: var(--color-main-pathway-text-highlight);
     }
 }
 @keyframes pathwayBorderTopHighlight {
     100% {
-        border-top: 2px solid var(--color-pathway-text-highlight);
+        border-top: 2px solid var(--color-main-pathway-text-highlight);
     }
 }
